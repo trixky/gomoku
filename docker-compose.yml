@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  api:
+    build:
+      # dev
+      context: ./
+      dockerfile: ./api/Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./api:/api/app
+    restart: unless-stopped
+    ports:
+      - "${API_PORT}:${API_PORT}"
+
+  client:
+    build:
+      # dev
+      context: ./
+      dockerfile: ./client/Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./client/src:/app/src
+      - ./client/static:/app/static
+    depends_on:
+      - api
+    links:
+      - api
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    restart: unless-stopped
+
+volumes:
+  api:
+    driver: local
