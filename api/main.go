@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
-
+import (
+	"os"
+	"fmt"
+	"github.com/trixky/gomoku/server"
+)
 func main() {
-	fmt.Println("Gomoku")
+	api_mode := len(os.Args) == 1
+
+	if api_mode {
+		server.Start()
+	} else {
+		debug.Start()
+	}
 }
