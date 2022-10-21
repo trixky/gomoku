@@ -11,3 +11,19 @@
     --main-height: 80%;
     --footer-height: 10%;
 }
+
+html {
+    /* @apply bg-red-100; */
+}
+
+h1 {
+    @apply text-4xl;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+p {
+    font-size: 16px;
+}

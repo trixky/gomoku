@@ -25,8 +25,9 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.board-container {
-		@apply h-fit;
-		border: 4px solid black;
+		@apply h-fit bg-white;
+		border: 3px solid black;
+		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	}
 
 	.board {
@@ -41,7 +42,7 @@
 	}
 
 	.piece-container {
-		@apply absolute -top-[13px] -left-[14px] grid w-fit;
+		@apply absolute -top-[13px] -left-[14px] grid w-fit ;
 		grid-template-columns: repeat(19, 1fr);
 		grid-template-rows: repeat(19, 1fr);
 	}

@@ -20,7 +20,7 @@ let player_2 = {
 <div class="top-container">
     <div class="player-container left">
         <h2>
-        <span class:turn={turn === 1}>
+        <span>
             Player 1
         </span>
             {#if mode_ia}
@@ -36,7 +36,7 @@ let player_2 = {
     </div>
     <div class="player-container right">
         <h2>
-            <span class:turn={turn === 2}>
+            <span>
                 Player 2
             </span>
             {#if mode_ia}
@@ -83,10 +83,6 @@ let player_2 = {
     }
 
     .player-infos > p {
-        @apply flex text-sm;
-    }
-
-    .turn {
-        @apply underline underline-offset-2;
+        @apply flex;
     }
 </style>
