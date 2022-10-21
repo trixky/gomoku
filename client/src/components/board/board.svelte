@@ -23,28 +23,20 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.board {
-		position: relative;
-		margin: 30px;
+		@apply relative m-7;
 	}
 
 	.cell-container {
-		top: 0;
-		left: 0;
-		display: grid;
+		@apply grid w-fit;
 		grid-template-columns: repeat(18, 1fr);
 		grid-template-rows: repeat(18, 1fr);
-		width: fit-content;
 		border: 1px solid black;
 	}
 
 	.piece-container {
-		position: absolute;
-		top: -13px;
-		left: -13px;
-		display: grid;
+		@apply absolute -top-[13px] -left-[14px] grid w-fit;
 		grid-template-columns: repeat(19, 1fr);
 		grid-template-rows: repeat(19, 1fr);
-		width: fit-content;
 	}
 
 	.piece-container.debug {
@@ -52,22 +44,15 @@
 	}
 
 	.piece-emplacement {
-		width: 26px;
-		height: 26px;
-		max-width: 26px;
-		max-height: 26px;
+		@apply w-[26px] h-[26px] max-w-[26px] max-h-[26px];
 	}
 
 	.piece-emplacement.debug {
 		border: 1px solid rgba(255, 0, 0, 0.151);
 	}
 
-
 	.cell {
-		width: 26px;
-		height: 26px;
-		max-width: 26px;
-		max-height: 26px;
+		@apply w-[26px] h-[26px] max-w-[26px] max-h-[26px];
 		border: 1px solid black;
 	}
 </style>
