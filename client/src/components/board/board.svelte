@@ -7,23 +7,30 @@
 </script>
 
 <!-- ========================= HTML -->
-<div class="board">
-	<div class:debug={debug_mode} class="piece-container">
-		{#each new Array(Config.board.piece_number) as _}
+<div class="board-container">
+	<div class="board">
+		<div class:debug={debug_mode} class="piece-container">
+			{#each new Array(Config.board.piece_number) as _}
 			<div class:debug={debug_mode} class="piece-emplacement" />
-		{/each}
-	</div>
-	<div class="cell-container">
-		{#each new Array(Config.board.cell_number) as _}
+			{/each}
+		</div>
+		<div class="cell-container">
+			{#each new Array(Config.board.cell_number) as _}
 			<div class="cell" />
-		{/each}
+			{/each}
+		</div>
 	</div>
 </div>
 
 <!-- ========================= CSS -->
 <style lang="postcss">
+	.board-container {
+		@apply h-fit;
+		border: 4px solid black;
+	}
+
 	.board {
-		@apply relative m-7;
+		@apply relative m-6;
 	}
 
 	.cell-container {

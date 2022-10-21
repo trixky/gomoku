@@ -7,6 +7,7 @@
 <style lang="postcss">
     header {
         @apply p-8 text-center;
+        height: var(--header-height);
     }
 
     h1 {
