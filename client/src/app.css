@@ -6,4 +6,8 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+
+    --header-height: 10%;
+    --main-height: 80%;
+    --footer-height: 10%;
 }

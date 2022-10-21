@@ -5,6 +5,7 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
     footer {
-        text-align: center;
+        @apply text-center;
+        height: var(--footer-height);
     }
 </style>

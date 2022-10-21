@@ -15,6 +15,7 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
     main {
-        @apply flex justify-center;
+        @apply flex justify-center items-center;
+        height: var(--main-height);
     }
 </style>
