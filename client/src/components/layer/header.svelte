@@ -9,8 +9,4 @@
         @apply p-8 text-center;
         height: var(--header-height);
     }
-
-    h1 {
-        @apply text-2xl;
-    }
 </style>
