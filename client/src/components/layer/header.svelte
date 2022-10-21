@@ -6,6 +6,10 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
     header {
-        text-align: center;
+        @apply p-8 text-center;
+    }
+
+    h1 {
+        @apply text-2xl;
     }
 </style>

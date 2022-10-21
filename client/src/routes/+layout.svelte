@@ -15,7 +15,6 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
     main {
-        display: flex;
-        justify-content: center;
+        @apply flex justify-center;
     }
 </style>
