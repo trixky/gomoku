@@ -16,19 +16,20 @@ type Game struct {
 	alignCond		bool
 	hotseat			bool
 
-	timeToSearch	float64 // 1 or 2
-	depthToSearch	uint8 // min 1 max 10 (?)
+	timeToSearch	int // in ms
+	depthToSearch	uint8 // min 2 max 10
 
 	goban			[19][19]byte
-	whoPlayed		byte // 1 or 2
+	whoPlayed		byte // 5 or 6
 	wherePlayed		Position
 	scoreP1			uint8
 	scoreP2			uint8
 
 	// Send data
 	time			string
-	botStone		Position
-	hints			[3]Position
+	eval			int
+	depth			int
+	stones			[3]Position
 }
 
 func (g *Game) Print() {
@@ -47,10 +48,4 @@ func (g *Game) Print() {
 	}
 	fmt.Println(strings.Repeat("-", 40))
 
-}
-
-func InitGame() *Game {
-	game := &Game{}
-
-	return game
 }
