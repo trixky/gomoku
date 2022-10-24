@@ -3,6 +3,7 @@
 	import Config from '../../config';
 	import { page } from '$app/stores';
 	import BoardStore from '../../stores/board';
+	import ProximityBoardStore from '../../stores/proximity_board';
 	import Cell from './cell.svelte';
 
 	$: debug_mode = $page.url.hash === '#debug';
@@ -18,7 +19,14 @@
 		<div class:debug={debug_mode} class="piece-container">
 			{#each $BoardStore.cells as cells, y}
 				{#each cells as cell, x}
-					<Cell {x} {y} {cell} {debug_mode} handleLeftClick={handleCellClick} />
+					<Cell
+						{x}
+						{y}
+						{cell}
+						{debug_mode}
+						handleLeftClick={handleCellClick}
+						proximity={$ProximityBoardStore[y][x]}
+					/>
 				{/each}
 			{/each}
 		</div>
