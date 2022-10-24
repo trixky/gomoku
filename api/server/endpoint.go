@@ -3,25 +3,48 @@ package server
 import (
 	"fmt"
 	"log"
-	"time"
-	"strings"
+	// "time"
+	"encoding/json"
+	// "strings"
 	"net/http"
-	"io/ioutil"
+	// "io/ioutil"
 
 )
 
+type Goban struct {
+	board [19][19]byte
+}
+
+type Options struct {
+	depth int
+	timeout int
+	selection_treshold int
+}
+
+type requestData struct {
+	options Options
+	goban Goban
+}
+
+type Cryptoresponse []struct {
+	Name              string    `json:"options"`
+}
+
 func resolve(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("POST")
 	if r.Method != "POST" {
 		// If the request method is not POST
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-	body, err := ioutil.ReadAll(r.Body)
-	// b, err := ioutil.ReadAll(resp.Body)  Go.1.15 and earlier
-	if err != nil {
-		log.Fatalln(err)
-	}
+	fmt.Println("POST")
+	decoder := json.NewDecoder(r.Body)
+    var t requestData
+    err := decoder.Decode(&t)
+    if err != nil {
+        panic(err)
+    }
+    log.Println(t.goban)
+    log.Println(t.options)
 	
-	fmt.Fprintf(w, strToFront)
+	fmt.Fprintf(w, "fuck off")
 }
