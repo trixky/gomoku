@@ -41,10 +41,7 @@ func (g *Game) Print() {
 	fmt.Println("Score P2:", g.scoreP2)
 	fmt.Println(strings.Repeat("-", 40))
 	for _, arr := range g.goban {
-		for _, val := range arr {
-			fmt.Print(string(val) + " ")
-		}
-		fmt.Print("\n")
+		fmt.Print(arr)
 	}
 	fmt.Println(strings.Repeat("-", 40))
 
