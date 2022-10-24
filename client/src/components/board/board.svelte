@@ -2,21 +2,29 @@
 <script lang="ts">
 	import Config from '../../config';
 	import { page } from '$app/stores';
+	import BoardStore from '../../stores/board';
+	import Cell from './cell.svelte';
 
-	$: debug_mode = $page.url.hash === "#debug"
+	$: debug_mode = $page.url.hash === '#debug';
+
+	function handleCellClick(player: 1 | 2, x: number, y: number) {
+		BoardStore.refreshPiece(player, x, y);
+	}
 </script>
 
 <!-- ========================= HTML -->
 <div class="board-container">
 	<div class="board">
 		<div class:debug={debug_mode} class="piece-container">
-			{#each new Array(Config.board.piece_number) as _}
-			<div class:debug={debug_mode} class="piece-emplacement" />
+			{#each $BoardStore.cells as cells, y}
+				{#each cells as cell, x}
+					<Cell {x} {y} {cell} {debug_mode} handleLeftClick={handleCellClick} />
+				{/each}
 			{/each}
 		</div>
 		<div class="cell-container">
 			{#each new Array(Config.board.cell_number) as _}
-			<div class="cell" />
+				<div class="cell" />
 			{/each}
 		</div>
 	</div>
@@ -42,20 +50,12 @@
 	}
 
 	.piece-container {
-		@apply absolute -top-[13px] -left-[14px] grid w-fit ;
+		@apply absolute -top-[13px] -left-[13px] grid w-fit;
 		grid-template-columns: repeat(19, 1fr);
 		grid-template-rows: repeat(19, 1fr);
 	}
 
 	.piece-container.debug {
-		border: 1px solid rgba(255, 0, 0, 0.151);
-	}
-
-	.piece-emplacement {
-		@apply w-[26px] h-[26px] max-w-[26px] max-h-[26px];
-	}
-
-	.piece-emplacement.debug {
 		border: 1px solid rgba(255, 0, 0, 0.151);
 	}
 

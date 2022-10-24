@@ -23,6 +23,10 @@ services:
     volumes:
       - ./client/src:/app/src
       - ./client/static:/app/static
+      - ./client/*.js:/app/*.js
+      - ./client/*.cjs:/app/*.cjs
+      - ./client/*.json:/app/*.json
+      - ./client/*.ts:/app/*.ts
     depends_on:
       - api
     links:
