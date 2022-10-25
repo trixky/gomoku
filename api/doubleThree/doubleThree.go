@@ -1,20 +1,13 @@
 package doubleThree
 
-// if new position creates :
-// oo o oo
-// ooo oo
-// oo ooo
+// WIP
 
+// if new position creates :
 func checkDTHorizontal() {
 
 }
 
 // if new position creates :
-// oo o oo
-// ooo oo
-// oo ooo
-// (but vertically)
-
 func checkDTVertical() {
 
 }
@@ -30,6 +23,8 @@ func checkDTLeftDiagonal() {
 func checkDTRightDiagonal() {
 
 }
+
+// WIP
 
 func checkDoubleThree(x int, y int) bool {
 	// check all above
