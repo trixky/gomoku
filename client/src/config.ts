@@ -1,6 +1,14 @@
+import { env } from '$env/dynamic/public';
+
 const size = 19;
 
 export default {
+	environment: {
+		api: {
+			origin: env.PUBLIC_DOMAIN ?? 'localhost',
+			port: env.PUBLIC_API_PORT
+		}
+	},
 	board: {
 		width: size,
 		height: size,

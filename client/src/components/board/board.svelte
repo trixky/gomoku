@@ -3,12 +3,18 @@
 	import Config from '../../config';
 	import { page } from '$app/stores';
 	import BoardStore from '../../stores/board';
+	import StringBoardStore from '../../stores/string_board';
+	import AlgoOptionsStore from '../../stores/algo_options';
 	import ProximityBoardStore from '../../stores/proximity_board';
 	import Cell from './cell.svelte';
+	import PostNext from '../../api/post.next';
 
 	$: debug_mode = $page.url.hash === '#debug';
 
 	function handleCellClick(player: 1 | 2, x: number, y: number) {
+		PostNext($StringBoardStore, $AlgoOptionsStore).then((response) => {
+			console.log(response);
+		});
 		BoardStore.refreshPiece(player, x, y);
 	}
 </script>
