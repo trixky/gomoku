@@ -25,7 +25,7 @@ export default {
 			threshold: {
 				default: 2,
 				min: 1,
-				max: 10
+				max: 36
 			},
 			show: {
 				default: false
