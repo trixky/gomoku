@@ -18,9 +18,9 @@ func coordPlayer(goban Goban, x int, y int, player int) bool {
 	return false
 }
 
-func coordOpponent(goban Goban, x int, y int, player int) bool {
+func coordOpponent(goban Goban, x int, y int, opp int) bool {
 	if coordOnGoban(x, y) == true {
-		if goban[x][y] != 0 && goban[x][y] != byte(player) {
+		if goban[x][y] == byte(opp) {
 			return true
 		}
 	}

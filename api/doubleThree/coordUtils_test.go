@@ -136,71 +136,71 @@ func TestCoordPlayer(t *testing.T) {
 
 func TestCoordOpponent(t *testing.T) {
 	tests := []struct {
-		goban  [19][19]byte
-		x      int
-		y      int
-		player int
-		truth  bool
+		goban    [19][19]byte
+		x        int
+		y        int
+		opponent int
+		truth    bool
 	}{
 		{
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      -1,
-			y:      0,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        -1,
+			y:        0,
+			opponent: 6,
+			truth:    false,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      -1,
-			y:      -1,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        -1,
+			y:        -1,
+			opponent: 6,
+			truth:    false,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      0,
-			y:      -1,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        0,
+			y:        -1,
+			opponent: 6,
+			truth:    false,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      19,
-			y:      0,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        19,
+			y:        0,
+			opponent: 6,
+			truth:    false,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      0,
-			y:      19,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        0,
+			y:        19,
+			opponent: 6,
+			truth:    false,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      19,
-			y:      19,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        19,
+			y:        19,
+			opponent: 6,
+			truth:    false,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      0,
-			y:      18,
-			player: 5,
-			truth:  true,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        0,
+			y:        18,
+			opponent: 6,
+			truth:    true,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      0,
-			y:      18,
-			player: 5,
-			truth:  true,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        0,
+			y:        18,
+			opponent: 6,
+			truth:    true,
 		}, {
-			goban:  [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
-			x:      0,
-			y:      0,
-			player: 5,
-			truth:  false,
+			goban:    [19][19]byte{{5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 6}},
+			x:        0,
+			y:        0,
+			opponent: 6,
+			truth:    false,
 		},
 	}
 
 	for _, test := range tests {
-		testingTruth := coordOpponent(test.goban, test.x, test.y, test.player)
+		testingTruth := coordOpponent(test.goban, test.x, test.y, test.opponent)
 		if testingTruth != test.truth {
 			t.Fatalf("doubleThree: coordUtils: coordOpponent: wrong truth")
 		}
