@@ -1,14 +1,9 @@
-package structures
+package models
 
 import (
 	"fmt"
 	"strings"
 )
-
-type Position struct {
-	x uint16
-	y uint16
-}
 
 type Game struct {
 	// Received data
