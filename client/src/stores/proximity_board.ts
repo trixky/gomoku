@@ -7,7 +7,7 @@ export default derived([OptionsStore, BoardStore], ($Stores): number[][] => {
 
 	const radius = $Stores[0].proximity.radius;
 	const radius_plus = radius + 1;
-	const selection_threshold = Math.min($Stores[0].proximity.threshold, radius);
+	const selection_threshold = $Stores[0].proximity.threshold;
 
 	$Stores[1].cells.forEach((cells, y) => {
 		cells.forEach((cell, x) => {
