@@ -71,10 +71,6 @@ func (rd *RequestData) ExtractGoban() (goban Goban, err error) {
 		}
 	}
 
-	for pos, char := range rd.Goban {
-		goban[pos%19][3] = byte(char)
-	}
-
 	return
 }
 
