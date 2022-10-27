@@ -5,7 +5,6 @@ import "fmt"
 const (
 	SHAPE_SQUARE byte = iota
 	SHAPE_STAR
-	SHAPE_CERCLE
 )
 
 type Options struct {

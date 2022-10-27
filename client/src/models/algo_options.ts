@@ -1,6 +1,5 @@
 export const SHAPE_SQUARE = 0;
 export const SHAPE_STAR = 1;
-export const SHAPE_CERCLE = 2;
 
 export interface AlgoOptions {
 	timeout: number; // ms

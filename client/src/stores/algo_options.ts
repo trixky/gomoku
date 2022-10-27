@@ -1,8 +1,8 @@
 import OptionsStore from './options';
 import type { AlgoOptions as ModelAlgoOptions } from '../models/algo_options';
-import { SHAPE_SQUARE } from '../models/algo_options';
 import { derived } from 'svelte/store';
 import lastMoveStore from './last_move';
+import Config from '../config';
 
 export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOptions => {
 	return <ModelAlgoOptions>{
@@ -12,15 +12,15 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			y: $Stores[1].y
 		},
 		depth: {
-			max: 2,
-			min: 1,
-			pruning: true
+			max: Config.options.depth.max.default,
+			min: Config.options.depth.min.default,
+			pruning: Config.options.depth.pruning.default
 		},
 		proximity: {
 			radius: $Stores[0].proximity.radius,
 			threshold: $Stores[0].proximity.threshold,
-			shape: SHAPE_SQUARE,
-			no_update: false
+			shape: Config.options.proximity.shape.default,
+			no_update: Config.options.proximity.no_update.default
 		}
 	};
 });

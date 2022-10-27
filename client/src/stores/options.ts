@@ -5,9 +5,9 @@ import type OptionsModel from '../models/options';
 function generateOptions(): OptionsModel {
 	return <OptionsModel>{
 		proximity: {
-			radius: Config.options.poximity.radius.default,
-			threshold: Config.options.poximity.threshold.default,
-			show: Config.options.poximity.show.default
+			radius: Config.options.proximity.radius.default,
+			threshold: Config.options.proximity.threshold.default,
+			show: Config.options.proximity.show.default
 		}
 	};
 }
@@ -34,8 +34,8 @@ function createOptionsStore() {
 
 				if (
 					!isNaN(_radius) &&
-					_radius >= Config.options.poximity.radius.min &&
-					_radius <= Config.options.poximity.radius.max
+					_radius >= Config.options.proximity.radius.min &&
+					_radius <= Config.options.proximity.radius.max
 				)
 					options.proximity.radius = _radius;
 				return options;
@@ -46,8 +46,8 @@ function createOptionsStore() {
 
 				if (
 					!isNaN(_threshold) &&
-					_threshold >= Config.options.poximity.threshold.min &&
-					_threshold <= Config.options.poximity.threshold.max
+					_threshold >= Config.options.proximity.threshold.min &&
+					_threshold <= Config.options.proximity.threshold.max
 				) {
 					options.proximity.threshold = _threshold;
 				}

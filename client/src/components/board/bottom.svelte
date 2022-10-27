@@ -25,16 +25,16 @@
 			<input
 				type="number"
 				on:change={handleProximityRadius}
-				min={Config.options.poximity.radius.min}
-				max={Config.options.poximity.radius.max}
+				min={Config.options.proximity.radius.min}
+				max={Config.options.proximity.radius.max}
 				value={$OptionsStore.proximity.radius}
 			/>
 			<p>threshold</p>
 			<input
 				type="number"
 				on:change={handleProximityThreshold}
-				min={Config.options.poximity.threshold.min}
-				max={Config.options.poximity.threshold.max}
+				min={Config.options.proximity.threshold.min}
+				max={Config.options.proximity.threshold.max}
 				value={$OptionsStore.proximity.threshold}
 			/>
 		</div>

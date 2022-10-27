@@ -38,9 +38,9 @@ func next(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	context.Print()
+	context.Goban.ComputeProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
 
-	context.Negamax()
+	context.Print()
 
 	fmt.Fprintf(w, "fuck off")
 }

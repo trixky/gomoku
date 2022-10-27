@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/public';
-
+import { SHAPE_SQUARE } from './models/algo_options';
 const size = 19;
 
 export default {
@@ -27,7 +27,7 @@ export default {
 				max: 10
 			},
 			min: {
-				default: 2,
+				default: 0,
 				min: 0,
 				max: 10
 			},
@@ -35,7 +35,7 @@ export default {
 				default: true
 			}
 		},
-		poximity: {
+		proximity: {
 			radius: {
 				default: 2,
 				min: 1,
@@ -47,6 +47,12 @@ export default {
 				max: 36
 			},
 			show: {
+				default: false
+			},
+			shape: {
+				default: SHAPE_SQUARE
+			},
+			no_update: {
 				default: false
 			}
 		}
