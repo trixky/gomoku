@@ -9,6 +9,7 @@ type State struct {
 	// Scores
 	Alpha int32
 	Beta  int32
+	Super int
 
 	LastMove Move
 	Depth    uint8

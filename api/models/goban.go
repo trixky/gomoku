@@ -2,6 +2,8 @@ package models
 
 import (
 	"fmt"
+
+	"github.com/trixky/gomoku/utils"
 )
 
 type Goban [19][19]uint8
@@ -13,6 +15,71 @@ const (
 	colorRed    = "\033[31m"
 	colorYellow = "\033[33m"
 )
+
+func (g *Goban) ComputeProximity(threshold uint8, radius uint8, shape byte) {
+	radius_plus := radius + 1
+	radius_end := 19 - radius
+
+	for x := uint8(0); x < 19; x++ {
+		// For each line
+		for y := uint8(0); y < 19; y++ {
+			// For each cell
+			if g[y][x] >= PLAYER_1 {
+				// Compute sub xx start
+				var xx_start uint8
+				if x > radius {
+					xx_start = x - radius
+				} else {
+					xx_start = 0
+				}
+
+				// Compute sub yy start
+				var yy_start uint8
+				if y > radius {
+					yy_start = y - radius
+				} else {
+					yy_start = 0
+				}
+
+				// // Compute sub xx end
+				var xx_end uint8
+				if x <= radius_end {
+					xx_end = x + radius_plus
+				} else {
+					xx_end = 19
+				}
+
+				// // Compute sub yy end
+				var yy_end uint8
+				if y <= radius_end {
+					yy_end = y + radius_plus
+				} else {
+					yy_end = 19
+				}
+
+				for yy := yy_start; yy < yy_end; yy++ {
+					// For each line of local radius
+					for xx := xx_start; xx < xx_end; xx++ {
+						// For each cell of local radius
+
+						// Compute x and y diffs
+						diff_x := utils.DiffUint8(x, xx)
+						diff_y := utils.DiffUint8(y, yy)
+
+						if g[yy][xx] < PLAYER_1 {
+							// If the cell is not taken by a player
+							if shape == SHAPE_SQUARE || diff_x == diff_y || diff_x == 0 || diff_y == 0 {
+								// If the cell is in the shape
+								g[yy][xx] += radius + 1 - utils.MaxUint8(diff_x, diff_y)
+								g[yy][xx] = utils.MinUint8(g[yy][xx], threshold)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 // PrintPlayers prints the 2D goban representation with players in stdout
 func (g *Goban) PrintPlayers() {

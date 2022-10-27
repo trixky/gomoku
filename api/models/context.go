@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	PLAYER_0 byte = 0
-	PLAYER_1 byte = 254
-	PLAYER_2 byte = 255
+	PLAYER_0 uint8 = 0
+	PLAYER_1 uint8 = 254
+	PLAYER_2 uint8 = 255
 )
 
 type Context struct {
@@ -32,8 +32,8 @@ func (c *Context) Next(position Position) (context Context) {
 	return
 }
 
-// Negamax compute the heuristic score for the current state
-func (c *Context) Negamax() {
+// OldNegamax ...
+func (c *Context) OldNegamax() {
 	// https://en.wikipedia.org/wiki/Negamax
 
 	if c.State.Depth < c.Options.DepthMax {
@@ -52,7 +52,7 @@ func (c *Context) Negamax() {
 						Y: uint8(y),
 					})
 
-					child_context.Negamax()
+					child_context.OldNegamax()
 
 					// @@@ value := max(value, −negamax(child, depth − 1, −β, −α, −color))
 
@@ -72,6 +72,39 @@ func (c *Context) Negamax() {
 		}
 	} else {
 		c.State.Alpha = rand.Int31n(100)
+	}
+}
+
+// Negamax ...
+func (c *Context) Negamax() {
+	if c.State.Depth < c.Options.DepthMax {
+		best := math.MinInt
+
+		for y, line := range c.Goban {
+			// For each line
+			for x, cell := range line {
+				// For each cell
+				if cell >= c.Options.ProximityThreshold {
+
+					child_context := c.Next(Position{
+						X: uint8(x),
+						Y: uint8(y),
+					})
+
+					child_context.Negamax()
+					child_score := -child_context.State.Super
+
+					if child_score > best {
+						best = int(child_score)
+					}
+				}
+			}
+		}
+
+		c.State.Super = best
+	} else {
+		super := int(rand.Int31n(100)) - 50
+		c.State.Super = super
 	}
 }
 
