@@ -87,7 +87,8 @@ func (c *Context) Print() {
 	// Prints state attributes
 	c.State.Print()
 	// Prints goban attributes
-	c.Goban.Print()
+	c.Goban.PrintPlayers()
+	c.Goban.PrintProximity(&c.Options.ProximityThreshold)
 	// Prints options attributes
 	c.Options.Print()
 
