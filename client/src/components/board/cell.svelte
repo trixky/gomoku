@@ -14,7 +14,9 @@
 
 <!-- ========================= HTML -->
 <div
-	title="{cell.player > 0 ? `player: ${cell.player}` : ''}&#013;proximity: {proximity}"
+	title="{cell.player > 0
+		? `player: ${cell.player}`
+		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}"
 	class:debug={debug_mode}
 	class="piece-emplacement"
 	style={$OptionsStore.proximity.show

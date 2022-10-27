@@ -16,6 +16,25 @@ export default {
 		cell_number: Math.pow(size - 1, 2)
 	},
 	options: {
+		timeout: {
+			min: 100, // ms
+			max: 60000 // ms
+		},
+		depth: {
+			max: {
+				default: 2,
+				min: 0,
+				max: 10
+			},
+			min: {
+				default: 2,
+				min: 0,
+				max: 10
+			},
+			pruning: {
+				default: true
+			}
+		},
 		poximity: {
 			radius: {
 				default: 2,

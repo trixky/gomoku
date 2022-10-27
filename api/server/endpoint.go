@@ -2,29 +2,15 @@ package server
 
 import (
 	"fmt"
-	"log"
 
 	// "time"
 	"encoding/json"
 	// "strings"
 	"net/http"
+
+	"github.com/trixky/gomoku/models"
 	// "io/ioutil"
 )
-
-type Goban struct {
-	board [19][19]byte
-}
-
-type Options struct {
-	depth              int
-	timeout            int
-	selection_treshold int
-}
-
-type requestData struct {
-	options Options
-	goban   Goban
-}
 
 func next(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
@@ -32,15 +18,29 @@ func next(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-	fmt.Println("POST")
+
+	// Decode the data from JSON
 	decoder := json.NewDecoder(r.Body)
-	var t requestData
-	err := decoder.Decode(&t)
-	if err != nil {
-		panic(err)
+	data := models.RequestData{}
+
+	if err := decoder.Decode(&data); err != nil {
+		// If JSON unmarshalling failed
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-	log.Println(t.goban)
-	log.Println(t.options)
+
+	// Compute a new context from the data
+	context, err := data.ComputeContext()
+
+	if err != nil {
+		// If the context computation failed
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	context.Print()
+
+	context.Negamax()
 
 	fmt.Fprintf(w, "fuck off")
 }

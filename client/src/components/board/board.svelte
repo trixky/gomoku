@@ -8,14 +8,16 @@
 	import ProximityBoardStore from '../../stores/proximity_board';
 	import Cell from './cell.svelte';
 	import PostNext from '../../api/post.next';
+	import lastMoveStore from '../../stores/last_move';
 
 	$: debug_mode = $page.url.hash === '#debug';
 
 	function handleCellClick(player: 1 | 2, x: number, y: number) {
-		PostNext($StringBoardStore, $AlgoOptionsStore).then((response) => {
+		BoardStore.refreshPiece(player, x, y);
+		lastMoveStore.update(player, x, y);
+		PostNext($StringBoardStore, $AlgoOptionsStore, x, y).then((response) => {
 			console.log(response);
 		});
-		BoardStore.refreshPiece(player, x, y);
 	}
 </script>
 
