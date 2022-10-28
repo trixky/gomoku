@@ -19,7 +19,7 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 		proximity: {
 			radius: $Stores[0].proximity.radius,
 			threshold: $Stores[0].proximity.threshold,
-			shape: Config.options.proximity.shape.default,
+			shape: $Stores[0].proximity.shape,
 			no_update: Config.options.proximity.no_update.default
 		}
 	};

@@ -3,5 +3,6 @@ export default interface Options {
 		radius: number;
 		threshold: number;
 		show: boolean;
+		shape: number;
 	};
 }

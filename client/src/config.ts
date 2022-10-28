@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/public';
-import { SHAPE_SQUARE } from './models/algo_options';
+import { SHAPES } from './models/algo_options';
 const size = 19;
 
 export default {
@@ -50,7 +50,7 @@ export default {
 				default: false
 			},
 			shape: {
-				default: SHAPE_SQUARE
+				default: SHAPES.square
 			},
 			no_update: {
 				default: false
