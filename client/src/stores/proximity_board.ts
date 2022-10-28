@@ -1,5 +1,6 @@
 import BoardStore from './board';
 import OptionsStore from './options';
+import { SHAPES } from '../models/algo_options';
 import { derived } from 'svelte/store';
 
 export default derived([OptionsStore, BoardStore], ($Stores): number[][] => {
@@ -22,10 +23,17 @@ export default derived([OptionsStore, BoardStore], ($Stores): number[][] => {
 							const diff = radius_plus - Math.max(Math.abs(local_x), Math.abs(local_y));
 
 							if (real_x >= 0 && real_x < 19) {
-								proximity_cells[real_y][real_x] = Math.min(
-									proximity_cells[real_y][real_x] + diff,
-									selection_threshold
-								);
+								if (
+									$Stores[0].proximity.shape === SHAPES.square ||
+									Math.abs(local_x) === Math.abs(local_y) ||
+									local_x === 0 ||
+									local_y === 0
+								) {
+									proximity_cells[real_y][real_x] = Math.min(
+										proximity_cells[real_y][real_x] + diff,
+										selection_threshold
+									);
+								}
 							}
 						}
 				}
