@@ -8,7 +8,8 @@ function generateOptions(): OptionsModel {
 		depth: {
 			max: Config.options.depth.max.default,
 			min: Config.options.depth.min.default,
-			pruning: Config.options.depth.pruning.default
+			pruning: Config.options.depth.pruning.default,
+			reduction: Config.options.depth.reduction.default
 		},
 		proximity: {
 			radius: Config.options.proximity.radius.default,
@@ -106,6 +107,11 @@ function createOptionsStore() {
 		setDepthPruning: (pruning: boolean) =>
 			update((options) => {
 				options.depth.pruning = pruning;
+				return options;
+			}),
+		setDepthReduction: (reduction: boolean) =>
+			update((options) => {
+				options.depth.reduction = reduction;
 				return options;
 			})
 	};

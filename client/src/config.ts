@@ -33,6 +33,9 @@ export default {
 			},
 			pruning: {
 				default: false
+			},
+			reduction: {
+				default: false
 			}
 		},
 		proximity: {

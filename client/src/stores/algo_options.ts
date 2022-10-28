@@ -13,7 +13,8 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 		depth: {
 			max: $Stores[0].depth.max,
 			min: $Stores[0].depth.min,
-			pruning: $Stores[0].depth.pruning
+			pruning: $Stores[0].depth.pruning,
+			reduction: $Stores[0].depth.reduction
 		},
 		proximity: {
 			radius: $Stores[0].proximity.radius,

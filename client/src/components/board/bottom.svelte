@@ -98,16 +98,23 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="options-form">
 			<h3>Depth</h3>
 			<div class="options">
 				<div class="option">
 					<p>pruning</p>
-
 					<input
 						type="checkbox"
 						checked={$OptionsStore.depth.pruning}
+						on:change={handleDepthPruning}
+						disabled
+					/>
+				</div>
+				<div class="option">
+					<p>reduction</p>
+					<input
+						type="checkbox"
+						checked={$OptionsStore.depth.reduction}
 						on:change={handleDepthPruning}
 						disabled
 					/>
