@@ -43,7 +43,7 @@ func (g *Goban) ComputeProximity(threshold uint8, radius uint8, shape byte) {
 
 				// // Compute sub xx end
 				var xx_end uint8
-				if x <= radius_end {
+				if x < radius_end {
 					xx_end = x + radius_plus
 				} else {
 					xx_end = 19
@@ -51,7 +51,7 @@ func (g *Goban) ComputeProximity(threshold uint8, radius uint8, shape byte) {
 
 				// // Compute sub yy end
 				var yy_end uint8
-				if y <= radius_end {
+				if y < radius_end {
 					yy_end = y + radius_plus
 				} else {
 					yy_end = 19
