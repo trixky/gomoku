@@ -20,7 +20,7 @@ type Options struct {
 	ProximityRadius    uint8
 	ProximityThreshold uint8
 	ProximityShape     byte
-	ProximityNoUpdate  bool
+	ProximityEvolution bool
 }
 
 // Print prints options attributes
@@ -42,5 +42,5 @@ func (o *Options) Print() {
 	fmt.Println("radius:\t", o.ProximityRadius)
 	fmt.Println("threshold:\t", o.ProximityThreshold)
 	fmt.Println("shape:\t", o.ProximityShape)
-	fmt.Println("no update:\t", o.ProximityNoUpdate)
+	fmt.Println("evolution:\t", o.ProximityEvolution)
 }

@@ -18,6 +18,6 @@ export interface AlgoOptions {
 		radius: number;
 		threshold: number;
 		shape: number;
-		no_update: boolean;
+		evolution: boolean;
 	};
 }

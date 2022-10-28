@@ -32,7 +32,7 @@ export default {
 				max: 10
 			},
 			pruning: {
-				default: true
+				default: false
 			}
 		},
 		proximity: {
@@ -52,8 +52,8 @@ export default {
 			shape: {
 				default: SHAPES.square
 			},
-			no_update: {
-				default: false
+			evolution: {
+				default: true
 			}
 		}
 	}

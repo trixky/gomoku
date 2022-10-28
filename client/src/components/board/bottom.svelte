@@ -6,38 +6,68 @@
 	import optionsStore from '../../stores/options';
 
 	function handleProximityVisibility(e: any) {
-		e.target.checked ? OptionsStore.show() : OptionsStore.hide();
+		e.target.checked ? OptionsStore.showProximity() : OptionsStore.hideProximity();
+	}
+
+	function handleProximityEvolution(e: any) {
+		OptionsStore.setProximityEvolution(e.target.checked);
 	}
 
 	function handleProximityShape(e: any) {
-		const shape_id = parseInt(e.target.value);
-
-		if (!isNaN(shape_id)) {
-			optionsStore.setShape(shape_id);
-		}
+		optionsStore.setProximityShape(e.target.value);
 	}
 
 	function handleProximityRadius(e: any) {
-		OptionsStore.setRadius(e.target.value);
+		OptionsStore.setProximityRadius(e.target.value);
 	}
 
 	function handleProximityThreshold(e: any) {
-		OptionsStore.setThreshold(e.target.value);
+		OptionsStore.setProximityThreshold(e.target.value);
+	}
+
+	function handleDepthMax(e: any) {
+		OptionsStore.setDepthMax(e.target.value);
+	}
+
+	function handleDepthMin(e: any) {
+		OptionsStore.setDepthMin(e.target.value);
+	}
+
+	function handleDepthPruning(e: any) {
+		OptionsStore.setDepthPruning(e.target.checked);
 	}
 </script>
 
 <!-- ========================= HTML -->
 <div class="bottom-container">
-	<div class="w-full">
-		<div class="options-containers">
+	<div class="options-containers">
+		<div class="options-form">
 			<h3>Proximity</h3>
 			<div class="options">
 				<div class="option">
 					<p>show</p>
-					<input type="checkbox" on:change={handleProximityVisibility} />
+					<input
+						type="checkbox"
+						checked={$OptionsStore.proximity.show}
+						on:change={handleProximityVisibility}
+					/>
 				</div>
 				<div class="option">
-					<p>shape</p>
+					<p>evolution</p>
+					<input
+						type="checkbox"
+						checked={$OptionsStore.proximity.evolution}
+						on:change={handleProximityEvolution}
+						disabled
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="options-form">
+			<h3>Shape</h3>
+			<div class="options">
+				<div class="option">
+					<p>type</p>
 					<select value={$OptionsStore.proximity.shape} on:change={handleProximityShape}>
 						{#each Object.entries(SHAPES) as shape}
 							<option value={shape[1]}>
@@ -46,7 +76,6 @@
 						{/each}
 					</select>
 				</div>
-
 				<div class="option">
 					<p>radius</p>
 					<input
@@ -69,6 +98,43 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="options-form">
+			<h3>Depth</h3>
+			<div class="options">
+				<div class="option">
+					<p>pruning</p>
+
+					<input
+						type="checkbox"
+						checked={$OptionsStore.depth.pruning}
+						on:change={handleDepthPruning}
+						disabled
+					/>
+				</div>
+				<div class="option">
+					<p>max</p>
+					<input
+						type="number"
+						on:change={handleDepthMax}
+						min={Config.options.depth.max.min}
+						max={Config.options.depth.max.max}
+						value={$OptionsStore.depth.max}
+					/>
+				</div>
+				<div class="option">
+					<p>min</p>
+					<input
+						type="number"
+						on:change={handleDepthMin}
+						min={Config.options.depth.min.min}
+						max={Config.options.depth.min.max}
+						value={$OptionsStore.depth.min}
+						disabled={!$OptionsStore.depth.pruning}
+					/>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -79,7 +145,11 @@
 	}
 
 	.options-containers {
-		@apply flex justify-between w-full;
+		@apply w-full;
+	}
+
+	.options-form {
+		@apply flex justify-between w-full mt-3;
 	}
 
 	.options {

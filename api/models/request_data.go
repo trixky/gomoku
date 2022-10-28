@@ -25,7 +25,7 @@ type RequestProximityData struct {
 	Radius    uint8 `json:"radius"`
 	Threshold uint8 `json:"threshold"`
 	Shape     uint8 `json:"shape"`
-	NoUpdate  bool  `json:"no_update"`
+	Evolution bool  `json:"evolution"`
 }
 
 type RequestOptionData struct {
@@ -88,7 +88,7 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	options.ProximityRadius = rd.Options.RequestProximityData.Radius
 	options.ProximityThreshold = rd.Options.RequestProximityData.Threshold
 	options.ProximityShape = rd.Options.RequestProximityData.Shape
-	options.ProximityNoUpdate = rd.Options.RequestProximityData.NoUpdate
+	options.ProximityEvolution = rd.Options.RequestProximityData.Evolution
 
 	return
 }
