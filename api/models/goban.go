@@ -81,6 +81,26 @@ func (g *Goban) ComputeProximity(threshold uint8, radius uint8, shape byte) {
 	}
 }
 
+func (g *Goban) ToString() (str string) {
+	for _, line := range g {
+		for _, cell := range line {
+			switch cell {
+			case PLAYER_1:
+				str += "1"
+				break
+			case PLAYER_2:
+				str += "2"
+				break
+			default:
+				str += "0"
+				break
+			}
+		}
+	}
+
+	return
+}
+
 // PrintPlayers prints the 2D goban representation with players in stdout
 func (g *Goban) PrintPlayers() {
 	fmt.Println("============================= [GOBAN players]")

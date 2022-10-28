@@ -42,5 +42,15 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Print()
 
-	fmt.Fprintf(w, "fuck off")
+	best_child := context.Negamax()
+
+	_json, err := best_child.ToJSON()
+
+	if err != nil {
+		// If the context computation failed
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, _json)
 }

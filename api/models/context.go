@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
 	"math/rand"
@@ -21,11 +22,14 @@ type Context struct {
 func (c *Context) Next(position Position) (context Context) {
 	context.Options = c.Options
 	context.State = c.State
+	context.State.Super = math.MinInt32
+
 	context.Goban = c.Goban
 
 	context.State.Depth++
 
 	context.State.LastMove.Player = !c.State.LastMove.Player // color
+	context.State.LastMove.Position = position
 	context.State.Alpha = -c.State.Beta
 	context.State.Beta = -c.State.Alpha
 
@@ -76,36 +80,43 @@ func (c *Context) OldNegamax() {
 }
 
 // Negamax ...
-func (c *Context) Negamax() {
+func (c *Context) Negamax() *Context {
 	if c.State.Depth < c.Options.DepthMax {
-		best := math.MinInt
+		best_child := Context{}
+		best_child.State.Init()
 
 		for y, line := range c.Goban {
 			// For each line
 			for x, cell := range line {
 				// For each cell
-				if cell >= c.Options.ProximityThreshold {
+				if cell >= c.Options.ProximityThreshold && cell < PLAYER_1 {
 
-					child_context := c.Next(Position{
+					child := c.Next(Position{
 						X: uint8(x),
 						Y: uint8(y),
 					})
 
-					child_context.Negamax()
-					child_score := -child_context.State.Super
+					child.Negamax()
+					child_score := -child.State.Super
 
-					if child_score > best {
-						best = int(child_score)
+					if child_score > best_child.State.Super {
+						best_child = child
 					}
 				}
 			}
 		}
 
-		c.State.Super = best
+		c.State.Super = best_child.State.Super
+
+		if c.State.Depth == 0 {
+			return &best_child
+		}
 	} else {
 		super := int(rand.Int31n(100)) - 50
 		c.State.Super = super
 	}
+
+	return nil
 }
 
 // Print prints context attributes
@@ -127,4 +138,13 @@ func (c *Context) Print() {
 
 	// Prints the footer separator
 	fmt.Println(" * * * * * * * * * * * * * * * * * * * *")
+}
+
+func (c *Context) ToJSON() (string, error) {
+	response := ResponseData{}
+	response.computeResponse(c)
+
+	marshalled, err := json.Marshal(response)
+
+	return string(marshalled), err
 }
