@@ -5,10 +5,16 @@ import { SHAPES } from '../models/algo_options';
 
 function generateOptions(): OptionsModel {
 	return <OptionsModel>{
+		depth: {
+			max: Config.options.depth.max.default,
+			min: Config.options.depth.min.default,
+			pruning: Config.options.depth.pruning.default
+		},
 		proximity: {
 			radius: Config.options.proximity.radius.default,
 			threshold: Config.options.proximity.threshold.default,
 			show: Config.options.proximity.show.default,
+			evolution: Config.options.proximity.evolution.default,
 			shape: SHAPES.square
 		}
 	};
@@ -20,17 +26,18 @@ function createOptionsStore() {
 	return {
 		subscribe,
 		reset: () => set(generateOptions()),
-		show: () =>
+		// ----------------------- set proximity
+		showProximity: () =>
 			update((options) => {
 				options.proximity.show = true;
 				return options;
 			}),
-		hide: () =>
+		hideProximity: () =>
 			update((options) => {
 				options.proximity.show = false;
 				return options;
 			}),
-		setRadius: (radius: string) =>
+		setProximityRadius: (radius: string) =>
 			update((options) => {
 				const _radius = parseInt(radius);
 
@@ -42,7 +49,7 @@ function createOptionsStore() {
 					options.proximity.radius = _radius;
 				return options;
 			}),
-		setThreshold: (threshold: string) =>
+		setProximityThreshold: (threshold: string) =>
 			update((options) => {
 				const _threshold = parseInt(threshold);
 
@@ -50,16 +57,55 @@ function createOptionsStore() {
 					!isNaN(_threshold) &&
 					_threshold >= Config.options.proximity.threshold.min &&
 					_threshold <= Config.options.proximity.threshold.max
-				) {
+				)
 					options.proximity.threshold = _threshold;
-				}
+
 				return options;
 			}),
-		setShape: (shape: number) =>
+		setProximityShape: (shape: string) =>
 			update((options) => {
-				if (Object.values(SHAPES).includes(shape)) {
-					options.proximity.shape = shape;
-				}
+				const _shape = parseInt(shape);
+
+				if (!isNaN(_shape) && Object.values(SHAPES).includes(_shape))
+					options.proximity.shape = _shape;
+
+				return options;
+			}),
+		setProximityEvolution: (evolution: boolean) =>
+			update((options) => {
+				options.proximity.evolution = evolution;
+				return options;
+			}),
+		// ----------------------- set depth
+		setDepthMax: (max: string) =>
+			update((options) => {
+				const _max = parseInt(max);
+
+				if (
+					!isNaN(_max) &&
+					_max >= Config.options.depth.max.min &&
+					_max <= Config.options.depth.max.max
+				)
+					options.depth.max = _max;
+
+				return options;
+			}),
+		setDepthMin: (min: string) =>
+			update((options) => {
+				const _min = parseInt(min);
+
+				if (
+					!isNaN(_min) &&
+					_min >= Config.options.depth.min.min &&
+					_min <= Config.options.depth.min.max
+				)
+					options.depth.min = _min;
+
+				return options;
+			}),
+		setDepthPruning: (pruning: boolean) =>
+			update((options) => {
+				options.depth.pruning = pruning;
 				return options;
 			})
 	};
