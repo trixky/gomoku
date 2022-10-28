@@ -17,6 +17,7 @@ type State struct {
 
 // Init Inits the state
 func (s *State) Init() {
+	s.Super = math.MinInt32
 	s.Alpha = math.MinInt32
 	s.Beta = math.MaxInt32
 }

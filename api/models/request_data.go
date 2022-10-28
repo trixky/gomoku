@@ -10,11 +10,6 @@ var (
 	ERR_RD_LAST_MOVE_NO_PLAYER      = errors.New("cell of the last move need to be taken by a player")
 )
 
-type RequestPositionData struct {
-	X uint8 `json:"x"`
-	Y uint8 `json:"y"`
-}
-
 type RequestDepthyData struct {
 	Max     uint8 `json:"max"`
 	Min     uint8 `json:"min"`
@@ -30,7 +25,7 @@ type RequestProximityData struct {
 
 type RequestOptionData struct {
 	Timeout              uint16               `json:"timeout"` // ms
-	RequestPositionData  RequestPositionData  `json:"position"`
+	Position             Position             `json:"position"`
 	RequestDepthyData    RequestDepthyData    `json:"depth"`
 	RequestProximityData RequestProximityData `json:"proximity"`
 }
@@ -98,7 +93,7 @@ func (rd *RequestData) ExtractState() (state State, err error) {
 	var player bool
 
 	// Find the player of the last move
-	switch rd.Goban[int32(rd.Options.RequestPositionData.Y)*19+int32(rd.Options.RequestPositionData.X)] {
+	switch rd.Goban[int32(rd.Options.Position.Y)*19+int32(rd.Options.Position.X)] {
 	case '0':
 		// If no player on the last position move
 		return state, ERR_RD_LAST_MOVE_NO_PLAYER
@@ -121,8 +116,8 @@ func (rd *RequestData) ExtractState() (state State, err error) {
 	state.LastMove = Move{
 		Player: player,
 		Position: Position{
-			X: rd.Options.RequestPositionData.X,
-			Y: rd.Options.RequestPositionData.Y,
+			X: rd.Options.Position.X,
+			Y: rd.Options.Position.Y,
 		},
 	}
 
