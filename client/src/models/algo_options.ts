@@ -1,5 +1,7 @@
-export const SHAPE_SQUARE = 0;
-export const SHAPE_STAR = 1;
+export const SHAPES = {
+	square: 0,
+	star: 1
+};
 
 export interface AlgoOptions {
 	timeout: number; // ms

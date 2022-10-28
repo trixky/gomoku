@@ -2,8 +2,19 @@
 <script lang="ts">
 	import Config from '../../config';
 	import OptionsStore from '../../stores/options';
+	import { SHAPES } from '../../models/algo_options';
+	import optionsStore from '../../stores/options';
+
 	function handleProximityVisibility(e: any) {
 		e.target.checked ? OptionsStore.show() : OptionsStore.hide();
+	}
+
+	function handleProximityShape(e: any) {
+		const shape_id = parseInt(e.target.value);
+
+		if (!isNaN(shape_id)) {
+			optionsStore.setShape(shape_id);
+		}
 	}
 
 	function handleProximityRadius(e: any) {
@@ -17,26 +28,46 @@
 
 <!-- ========================= HTML -->
 <div class="bottom-container">
-	<div class="options">
-		<div>
+	<div class="w-full">
+		<div class="options-containers">
 			<h3>Proximity</h3>
-			<input type="checkbox" on:change={handleProximityVisibility} />
-			<p>radius</p>
-			<input
-				type="number"
-				on:change={handleProximityRadius}
-				min={Config.options.proximity.radius.min}
-				max={Config.options.proximity.radius.max}
-				value={$OptionsStore.proximity.radius}
-			/>
-			<p>threshold</p>
-			<input
-				type="number"
-				on:change={handleProximityThreshold}
-				min={Config.options.proximity.threshold.min}
-				max={Config.options.proximity.threshold.max}
-				value={$OptionsStore.proximity.threshold}
-			/>
+			<div class="options">
+				<div class="option">
+					<p>show</p>
+					<input type="checkbox" on:change={handleProximityVisibility} />
+				</div>
+				<div class="option">
+					<p>shape</p>
+					<select value={$OptionsStore.proximity.shape} on:change={handleProximityShape}>
+						{#each Object.entries(SHAPES) as shape}
+							<option value={shape[1]}>
+								{shape[0]}
+							</option>
+						{/each}
+					</select>
+				</div>
+
+				<div class="option">
+					<p>radius</p>
+					<input
+						type="number"
+						on:change={handleProximityRadius}
+						min={Config.options.proximity.radius.min}
+						max={Config.options.proximity.radius.max}
+						value={$OptionsStore.proximity.radius}
+					/>
+				</div>
+				<div class="option">
+					<p>threshold</p>
+					<input
+						type="number"
+						on:change={handleProximityThreshold}
+						min={Config.options.proximity.threshold.min}
+						max={Config.options.proximity.threshold.max}
+						value={$OptionsStore.proximity.threshold}
+					/>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -44,24 +75,52 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.bottom-container {
-		@apply flex justify-center mt-4;
+		@apply flex justify-center mt-6;
+	}
+
+	.options-containers {
+		@apply flex justify-between w-full;
 	}
 
 	.options {
-		@apply flex;
+		@apply inline-flex justify-end w-full;
 	}
 
-	.options > div > h3,
-	p {
+	h3 {
+		@apply inline-block opacity-30;
+	}
+
+	.option {
+		@apply mr-3;
+	}
+
+	.option {
+		@apply mr-3;
+	}
+
+	.option:last-child {
+		@apply mr-0;
+	}
+
+	.option > p {
 		@apply inline-block;
 	}
 
+	input {
+		@apply mx-1;
+	}
+
 	input[type='checkbox'] {
-		@apply mx-2 align-middle;
+		@apply align-middle;
 	}
 
 	input[type='number'] {
-		@apply mx-2 align-middle rounded-sm pl-1;
+		@apply align-middle rounded-sm pl-1;
+		border: solid 1px black;
+	}
+
+	select {
+		@apply bg-white rounded-sm mx-1;
 		border: solid 1px black;
 	}
 </style>
