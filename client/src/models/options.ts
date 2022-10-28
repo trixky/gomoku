@@ -4,6 +4,7 @@ export default interface Options {
 		max: number;
 		min: number;
 		pruning: boolean;
+		reduction: boolean;
 	};
 	proximity: {
 		radius: number;

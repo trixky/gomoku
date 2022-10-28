@@ -13,6 +13,7 @@ export interface AlgoOptions {
 		max: number;
 		min: number;
 		pruning: boolean;
+		reduction: boolean;
 	};
 	proximity: {
 		radius: number;
