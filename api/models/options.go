@@ -23,11 +23,11 @@ type Options struct {
 	ProximityEvolution bool
 
 	// Heuristics
-	HeuristicsPotentialAlignement uint8
-	HeuristicsWinByAlignement     uint8
-	HeuristicsPotentialCapture    uint8
-	HeuristicsCapture             uint8
-	HeuristicsRandom              uint8
+	HeuristicPotentialAlignementWeight int
+	HeuristicAlignementWeight          int
+	HeuristicPotentialCaptureWeight    int
+	HeuristicCaptureWeight             int
+	HeuristicRandomWeight              int
 }
 
 // Print prints options attributes
@@ -53,9 +53,9 @@ func (o *Options) Print() {
 
 	// Prints heuristics
 	fmt.Println("--------------- [heuristics]")
-	fmt.Printf("potential alignement:\t%2d/10\n", o.HeuristicsPotentialAlignement)
-	fmt.Printf("win by alignement:\t\t%2d/10\n", o.HeuristicsWinByAlignement)
-	fmt.Printf("potential capture:\t\t%2d/10\n", o.HeuristicsPotentialCapture)
-	fmt.Printf("capture:\t\t\t%2d/10\n", o.HeuristicsRandom)
-	fmt.Printf("random:\t\t\t%2d/10\n", o.HeuristicsRandom)
+	fmt.Printf("potential alignement:\t%2d/10\n", o.HeuristicPotentialAlignementWeight)
+	fmt.Printf("alignement:\t\t\t%2d/10\n", o.HeuristicAlignementWeight)
+	fmt.Printf("potential capture:\t\t%2d/10\n", o.HeuristicPotentialCaptureWeight)
+	fmt.Printf("capture:\t\t\t%2d/10\n", o.HeuristicCaptureWeight)
+	fmt.Printf("random:\t\t\t%2d/10\n", o.HeuristicRandomWeight)
 }

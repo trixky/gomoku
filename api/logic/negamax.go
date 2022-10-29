@@ -1,8 +1,7 @@
 package logic
 
 import (
-	"math/rand"
-
+	"github.com/trixky/gomoku/heuristics"
 	"github.com/trixky/gomoku/models"
 )
 
@@ -38,8 +37,7 @@ func Negamax(context *models.Context) *models.Context {
 
 		context.State.HeuristicScore = -best_child.State.HeuristicScore
 	} else {
-		heuristicScore := int(rand.Int31n(101)) - 50
-		context.State.HeuristicScore = heuristicScore
+		context.State.HeuristicScore = heuristics.All(context)
 	}
 
 	return nil

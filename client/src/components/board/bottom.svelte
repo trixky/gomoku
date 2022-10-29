@@ -44,8 +44,8 @@
 		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
 	}
 
-	function handleHeuristicsWinByAlignement(e: any) {
-		OptionsStore.setHeuristicsWinByAlignement(e.target.value);
+	function handleHeuristicsAlignement(e: any) {
+		OptionsStore.setHeuristicsAlignement(e.target.value);
 	}
 
 	function handleHeuristicsPotentialCapture(e: any) {
@@ -181,15 +181,15 @@
 					</p>
 				</div>
 				<div class="option">
-					<p>win by alignement</p>
+					<p>alignement</p>
 					<input
 						type="range"
 						min={Config.options.heuristics.min}
 						max={Config.options.heuristics.max}
-						on:input={handleHeuristicsWinByAlignement}
+						on:input={handleHeuristicsAlignement}
 					/>
 					<p class="range-value">
-						{$OptionsStore.heuristics.win_by_alignement}/{Config.options.heuristics.max}
+						{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.max}
 					</p>
 				</div>
 				<div class="option">
