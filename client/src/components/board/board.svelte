@@ -8,13 +8,19 @@
 	import Cell from './cell.svelte';
 	import PostNext from '../../api/post.next';
 	import lastMoveStore from '../../stores/last_move';
+	import boardStore from '../../stores/board';
 
-	function handleCellClick(player: 1 | 2, x: number, y: number) {
-		BoardStore.refreshPiece(player, x, y);
-		lastMoveStore.update(player, x, y);
-		PostNext($StringBoardStore, $AlgoOptionsStore).then((response) => {
-			console.log(response);
-		});
+	function handleCellClick(x: number, y: number) {
+		if ($BoardStore.cells[y][x].player === 0) {
+			lastMoveStore.push(x, y);
+			BoardStore.addPiece($lastMoveStore.player, x, y);
+			PostNext($StringBoardStore, $AlgoOptionsStore).then((response) => {
+				const json_response = JSON.parse(response);
+
+				lastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
+				boardStore.addPiece($lastMoveStore.player, $lastMoveStore.x, $lastMoveStore.y);
+			});
+		}
 	}
 </script>
 
