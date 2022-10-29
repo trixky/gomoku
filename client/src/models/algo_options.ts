@@ -21,4 +21,11 @@ export interface AlgoOptions {
 		shape: number;
 		evolution: boolean;
 	};
+	heuristics: {
+		potential_alignement: number;
+		win_by_alignement: number;
+		potential_capture: number;
+		capture: number;
+		random: number;
+	};
 }

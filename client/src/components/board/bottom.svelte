@@ -5,6 +5,7 @@
 	import { SHAPES } from '../../models/algo_options';
 	import optionsStore from '../../stores/options';
 
+	// ----------------------- handle proximity
 	function handleProximityVisibility(e: any) {
 		e.target.checked ? OptionsStore.showProximity() : OptionsStore.hideProximity();
 	}
@@ -25,6 +26,7 @@
 		OptionsStore.setProximityThreshold(e.target.value);
 	}
 
+	// ----------------------- handle depth
 	function handleDepthMax(e: any) {
 		OptionsStore.setDepthMax(e.target.value);
 	}
@@ -35,6 +37,27 @@
 
 	function handleDepthPruning(e: any) {
 		OptionsStore.setDepthPruning(e.target.checked);
+	}
+
+	// ----------------------- handle depth
+	function handleHeuristicsPotentialAlignement(e: any) {
+		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
+	}
+
+	function handleHeuristicsWinByAlignement(e: any) {
+		OptionsStore.setHeuristicsWinByAlignement(e.target.value);
+	}
+
+	function handleHeuristicsPotentialCapture(e: any) {
+		OptionsStore.setHeuristicsPotentialCapture(e.target.value);
+	}
+
+	function handleHeuristicsCapture(e: any) {
+		OptionsStore.setHeuristicsCapture(e.target.value);
+	}
+
+	function handleHeuristicsRandom(e: any) {
+		OptionsStore.setHeuristicsRandom(e.target.value);
 	}
 </script>
 
@@ -142,6 +165,71 @@
 				</div>
 			</div>
 		</div>
+		<div class="options-form">
+			<h3>Heuristics</h3>
+			<div class="range-container">
+				<div class="option">
+					<p>potential alignement</p>
+					<input
+						type="range"
+						min={Config.options.heuristics.min}
+						max={Config.options.heuristics.max}
+						on:input={handleHeuristicsPotentialAlignement}
+					/>
+					<p class="range-value">
+						{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.max}
+					</p>
+				</div>
+				<div class="option">
+					<p>win by alignement</p>
+					<input
+						type="range"
+						min={Config.options.heuristics.min}
+						max={Config.options.heuristics.max}
+						on:input={handleHeuristicsWinByAlignement}
+					/>
+					<p class="range-value">
+						{$OptionsStore.heuristics.win_by_alignement}/{Config.options.heuristics.max}
+					</p>
+				</div>
+				<div class="option">
+					<p>potential capture</p>
+					<input
+						type="range"
+						min={Config.options.heuristics.min}
+						max={Config.options.heuristics.max}
+						on:input={handleHeuristicsPotentialCapture}
+					/>
+					<p class="range-value">
+						{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.max}
+					</p>
+				</div>
+				<div class="option">
+					<p>capture</p>
+					<input
+						type="range"
+						min={Config.options.heuristics.min}
+						max={Config.options.heuristics.max}
+						on:input={handleHeuristicsCapture}
+					/>
+					<p class="range-value">
+						{$OptionsStore.heuristics.capture}/{Config.options.heuristics.max}
+					</p>
+				</div>
+				<div class="option">
+					<p>random</p>
+					<input
+						type="range"
+						min={Config.options.heuristics.min}
+						max={Config.options.heuristics.max}
+						on:input={handleHeuristicsRandom}
+					/>
+					<p class="range-value">
+						{$OptionsStore.heuristics.random}/{Config.options.heuristics.max}
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -163,6 +251,10 @@
 		@apply inline-flex justify-end w-full;
 	}
 
+	.range-container {
+		@apply flex flex-col justify-end content-end align-bottom items-end;
+	}
+
 	h3 {
 		@apply inline-block opacity-30;
 	}
@@ -171,12 +263,12 @@
 		@apply mr-3;
 	}
 
-	.option {
-		@apply mr-3;
+	.options > .option:last-child {
+		@apply mr-0;
 	}
 
-	.option:last-child {
-		@apply mr-0;
+	.range-container > .option {
+		@apply mr-1;
 	}
 
 	.option > p {
@@ -199,5 +291,13 @@
 	select {
 		@apply bg-white rounded-sm mx-1;
 		border: solid 1px black;
+	}
+
+	input[type='range'] {
+		@apply w-48 my-0 mx-2 translate-y-[6px];
+	}
+
+	.range-value {
+		@apply w-10 text-right;
 	}
 </style>

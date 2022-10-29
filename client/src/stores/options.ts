@@ -17,6 +17,13 @@ function generateOptions(): OptionsModel {
 			show: Config.options.proximity.show.default,
 			evolution: Config.options.proximity.evolution.default,
 			shape: SHAPES.square
+		},
+		heuristics: {
+			potential_alignement: Config.options.heuristics.default,
+			win_by_alignement: Config.options.heuristics.default,
+			potential_capture: Config.options.heuristics.default,
+			capture: Config.options.heuristics.default,
+			random: Config.options.heuristics.default
 		}
 	};
 }
@@ -112,6 +119,43 @@ function createOptionsStore() {
 		setDepthReduction: (reduction: boolean) =>
 			update((options) => {
 				options.depth.reduction = reduction;
+				return options;
+			}),
+		// ----------------------- set depth
+		setHeuristicsPotentialAlignement: (potential_alignement: string) =>
+			update((options) => {
+				const _potential_alignement = parseInt(potential_alignement);
+
+				if (!isNaN(_potential_alignement))
+					options.heuristics.potential_alignement = _potential_alignement;
+				return options;
+			}),
+		setHeuristicsWinByAlignement: (win_by_alignement: string) =>
+			update((options) => {
+				const _win_by_alignement = parseInt(win_by_alignement);
+
+				if (!isNaN(_win_by_alignement)) options.heuristics.win_by_alignement = _win_by_alignement;
+				return options;
+			}),
+		setHeuristicsPotentialCapture: (potential_capture: string) =>
+			update((options) => {
+				const _potential_capture = parseInt(potential_capture);
+
+				if (!isNaN(_potential_capture)) options.heuristics.potential_capture = _potential_capture;
+				return options;
+			}),
+		setHeuristicsCapture: (capture: string) =>
+			update((options) => {
+				const _capture = parseInt(capture);
+
+				if (!isNaN(_capture)) options.heuristics.capture = _capture;
+				return options;
+			}),
+		setHeuristicsRandom: (random: string) =>
+			update((options) => {
+				const _random = parseInt(random);
+
+				if (!isNaN(_random)) options.heuristics.random = _random;
 				return options;
 			})
 	};
