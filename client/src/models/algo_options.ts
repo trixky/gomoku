@@ -23,7 +23,7 @@ export interface AlgoOptions {
 	};
 	heuristics: {
 		potential_alignement: number;
-		win_by_alignement: number;
+		alignement: number;
 		potential_capture: number;
 		capture: number;
 		random: number;

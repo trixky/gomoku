@@ -24,11 +24,11 @@ type RequestProximityData struct {
 }
 
 type RequestHeuristicsData struct {
-	PotentialAlignement uint8 `json:"potential_alignement"`
-	WinByAlignement     uint8 `json:"win_by_alignement"`
-	PotentialCapture    uint8 `json:"potential_capture"`
-	Capture             uint8 `json:"capture"`
-	Random              uint8 `json:"random"`
+	PotentialAlignementWeight int `json:"potential_alignement"`
+	AlignementWeight          int `json:"alignement"`
+	PotentialCaptureWeight    int `json:"potential_capture"`
+	CaptureWeight             int `json:"capture"`
+	RandomWeight              int `json:"random"`
 }
 
 type RequestOptionData struct {
@@ -95,11 +95,11 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	options.ProximityEvolution = rd.Options.RequestProximityData.Evolution
 
 	// Heuristics
-	options.HeuristicsPotentialAlignement = rd.Options.RequestHeuristicsData.PotentialAlignement
-	options.HeuristicsWinByAlignement = rd.Options.RequestHeuristicsData.WinByAlignement
-	options.HeuristicsPotentialCapture = rd.Options.RequestHeuristicsData.PotentialCapture
-	options.HeuristicsCapture = rd.Options.RequestHeuristicsData.Capture
-	options.HeuristicsRandom = rd.Options.RequestHeuristicsData.Random
+	options.HeuristicPotentialAlignementWeight = rd.Options.RequestHeuristicsData.PotentialAlignementWeight
+	options.HeuristicAlignementWeight = rd.Options.RequestHeuristicsData.AlignementWeight
+	options.HeuristicPotentialCaptureWeight = rd.Options.RequestHeuristicsData.PotentialCaptureWeight
+	options.HeuristicCaptureWeight = rd.Options.RequestHeuristicsData.CaptureWeight
+	options.HeuristicRandomWeight = rd.Options.RequestHeuristicsData.RandomWeight
 
 	return
 }

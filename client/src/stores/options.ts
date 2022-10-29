@@ -20,7 +20,7 @@ function generateOptions(): OptionsModel {
 		},
 		heuristics: {
 			potential_alignement: Config.options.heuristics.default,
-			win_by_alignement: Config.options.heuristics.default,
+			alignement: Config.options.heuristics.default,
 			potential_capture: Config.options.heuristics.default,
 			capture: Config.options.heuristics.default,
 			random: Config.options.heuristics.default
@@ -130,11 +130,11 @@ function createOptionsStore() {
 					options.heuristics.potential_alignement = _potential_alignement;
 				return options;
 			}),
-		setHeuristicsWinByAlignement: (win_by_alignement: string) =>
+		setHeuristicsAlignement: (alignement: string) =>
 			update((options) => {
-				const _win_by_alignement = parseInt(win_by_alignement);
+				const _alignement = parseInt(alignement);
 
-				if (!isNaN(_win_by_alignement)) options.heuristics.win_by_alignement = _win_by_alignement;
+				if (!isNaN(_alignement)) options.heuristics.alignement = _alignement;
 				return options;
 			}),
 		setHeuristicsPotentialCapture: (potential_capture: string) =>
