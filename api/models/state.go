@@ -7,9 +7,7 @@ import (
 
 type State struct {
 	// Scores
-	Alpha int32
-	Beta  int32
-	Super int
+	HeuristicScore int
 
 	LastMove Move
 	Depth    uint8
@@ -17,9 +15,7 @@ type State struct {
 
 // Init Inits the state
 func (s *State) Init() {
-	s.Super = math.MinInt32
-	s.Alpha = math.MinInt32
-	s.Beta = math.MaxInt32
+	s.HeuristicScore = math.MinInt32
 }
 
 // Print prints state attributes
@@ -29,9 +25,8 @@ func (s *State) Print() {
 	fmt.Println("depth:\t", s.Depth)
 
 	// Prints scores
-	fmt.Println("--------------- [scores]")
-	fmt.Println("alpha:\t", s.Alpha)
-	fmt.Println("beta:\t", s.Beta)
+	fmt.Println("--------------- [heuristic]")
+	fmt.Println("score:\t", s.HeuristicScore)
 
 	// Prints last move
 	s.LastMove.Print()

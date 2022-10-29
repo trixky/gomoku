@@ -47,6 +47,8 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	_json, err := best_child.ToJSON()
 
+	best_child.Print()
+
 	if err != nil {
 		// If the context computation failed
 		http.Error(w, err.Error(), http.StatusInternalServerError)
