@@ -5,12 +5,12 @@
 
 	let player_1 = {
 		pieces_nbr: 0,
-		max: 0
+		captures: 0
 	};
 
 	let player_2 = {
 		pieces_nbr: 0,
-		max: 0
+		captures: 0
 	};
 </script>
 
@@ -25,7 +25,7 @@
 		</h2>
 		<div class="player-infos left">
 			<p>pieces: {player_1.pieces_nbr}</p>
-			<p>max: {player_1.max}</p>
+			<p>captures: {player_1.captures}</p>
 		</div>
 	</div>
 	<div class="player-container right">
@@ -36,8 +36,9 @@
 			{/if}
 		</h2>
 		<div class="player-infos right">
+			<p>time: {0} ms</p>
 			<p>pieces: {player_2.pieces_nbr}</p>
-			<p>max: {player_2.max}</p>
+			<p>captures: {player_2.captures}</p>
 		</div>
 	</div>
 </div>

@@ -10,16 +10,27 @@
 	import lastMoveStore from '../../stores/last_move';
 	import boardStore from '../../stores/board';
 
-	function handleCellClick(x: number, y: number) {
-		if ($BoardStore.cells[y][x].player === 0) {
-			lastMoveStore.push(x, y);
-			BoardStore.addPiece($lastMoveStore.player, x, y);
-			PostNext($StringBoardStore, $AlgoOptionsStore).then((response) => {
-				const json_response = JSON.parse(response);
+	let loading = false;
 
-				lastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
-				boardStore.addPiece($lastMoveStore.player, $lastMoveStore.x, $lastMoveStore.y);
-			});
+	function handleCellClick(x: number, y: number) {
+		if (!loading) {
+			loading = true;
+			if ($BoardStore.cells[y][x].player === 0) {
+				lastMoveStore.push(x, y);
+				BoardStore.addPiece($lastMoveStore.player, x, y);
+				PostNext($StringBoardStore, $AlgoOptionsStore)
+					.then((response) => {
+						const json_response = JSON.parse(response);
+
+						lastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
+						boardStore.addPiece($lastMoveStore.player, $lastMoveStore.x, $lastMoveStore.y);
+						loading = false;
+					})
+					.catch(() => {
+						alert('an error occured from api');
+						loading = false;
+					});
+			}
 		}
 	}
 </script>
