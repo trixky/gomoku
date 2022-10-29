@@ -21,6 +21,13 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			threshold: $Stores[0].proximity.threshold,
 			shape: $Stores[0].proximity.shape,
 			evolution: $Stores[0].proximity.evolution
+		},
+		heuristics: {
+			potential_alignement: $Stores[0].heuristics.potential_alignement,
+			win_by_alignement: $Stores[0].heuristics.win_by_alignement,
+			potential_capture: $Stores[0].heuristics.potential_capture,
+			capture: $Stores[0].heuristics.capture,
+			random: $Stores[0].heuristics.random
 		}
 	};
 });

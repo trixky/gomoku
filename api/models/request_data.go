@@ -23,11 +23,20 @@ type RequestProximityData struct {
 	Evolution bool  `json:"evolution"`
 }
 
+type RequestHeuristicsData struct {
+	PotentialAlignement uint8 `json:"potential_alignement"`
+	WinByAlignement     uint8 `json:"win_by_alignement"`
+	PotentialCapture    uint8 `json:"potential_capture"`
+	Capture             uint8 `json:"capture"`
+	Random              uint8 `json:"random"`
+}
+
 type RequestOptionData struct {
-	Timeout              uint16               `json:"timeout"` // ms
-	Position             Position             `json:"position"`
-	RequestDepthyData    RequestDepthyData    `json:"depth"`
-	RequestProximityData RequestProximityData `json:"proximity"`
+	Timeout               uint16                `json:"timeout"` // ms
+	Position              Position              `json:"position"`
+	RequestDepthyData     RequestDepthyData     `json:"depth"`
+	RequestProximityData  RequestProximityData  `json:"proximity"`
+	RequestHeuristicsData RequestHeuristicsData `json:"heuristics"`
 }
 
 type RequestData struct {
@@ -84,6 +93,13 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	options.ProximityThreshold = rd.Options.RequestProximityData.Threshold
 	options.ProximityShape = rd.Options.RequestProximityData.Shape
 	options.ProximityEvolution = rd.Options.RequestProximityData.Evolution
+
+	// Heuristics
+	options.HeuristicsPotentialAlignement = rd.Options.RequestHeuristicsData.PotentialAlignement
+	options.HeuristicsWinByAlignement = rd.Options.RequestHeuristicsData.WinByAlignement
+	options.HeuristicsPotentialCapture = rd.Options.RequestHeuristicsData.PotentialCapture
+	options.HeuristicsCapture = rd.Options.RequestHeuristicsData.Capture
+	options.HeuristicsRandom = rd.Options.RequestHeuristicsData.Random
 
 	return
 }
