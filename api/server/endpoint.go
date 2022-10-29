@@ -8,6 +8,7 @@ import (
 	// "strings"
 	"net/http"
 
+	"github.com/trixky/gomoku/logic"
 	"github.com/trixky/gomoku/models"
 	// "io/ioutil"
 )
@@ -42,7 +43,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Print()
 
-	best_child := context.Negamax()
+	best_child := logic.Negamax(&context)
 
 	_json, err := best_child.ToJSON()
 

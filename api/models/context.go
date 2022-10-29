@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
-	"math/rand"
 )
 
 const (
@@ -34,45 +33,6 @@ func (c *Context) Next(position Position) (context Context) {
 	context.State.Beta = -c.State.Alpha
 
 	return
-}
-
-// Negamax ...
-func (c *Context) Negamax() *Context {
-	if c.State.Depth < c.Options.DepthMax {
-		best_child := Context{}
-		best_child.State.Init()
-
-		for y, line := range c.Goban {
-			// For each line
-			for x, cell := range line {
-				// For each cell
-				if cell >= c.Options.ProximityThreshold && cell < PLAYER_1 {
-
-					child := c.Next(Position{
-						X: uint8(x),
-						Y: uint8(y),
-					})
-
-					child.Negamax()
-
-					if child.State.Super > best_child.State.Super {
-						best_child = child
-					}
-				}
-			}
-		}
-
-		c.State.Super = -best_child.State.Super
-
-		if c.State.Depth == 0 {
-			return &best_child
-		}
-	} else {
-		super := int(rand.Int31n(101)) - 50
-		c.State.Super = super
-	}
-
-	return nil
 }
 
 // Print prints context attributes
