@@ -97,22 +97,21 @@ func (c *Context) Negamax() *Context {
 					})
 
 					child.Negamax()
-					child_score := -child.State.Super
 
-					if child_score > best_child.State.Super {
+					if child.State.Super > best_child.State.Super {
 						best_child = child
 					}
 				}
 			}
 		}
 
-		c.State.Super = best_child.State.Super
+		c.State.Super = -best_child.State.Super
 
 		if c.State.Depth == 0 {
 			return &best_child
 		}
 	} else {
-		super := int(rand.Int31n(100)) - 50
+		super := int(rand.Int31n(101)) - 50
 		c.State.Super = super
 	}
 
