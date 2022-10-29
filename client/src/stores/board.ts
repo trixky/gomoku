@@ -22,9 +22,12 @@ function createBoardStore() {
 	return {
 		subscribe,
 		reset: () => set(generateBoard()),
-		refreshPiece: (player: 0 | 1 | 2, x: number, y: number) => {
+		addPiece: (player: 1 | 2, x: number, y: number) => {
 			update((board) => {
-				board.cells[y][x].player = player;
+				board.cells[y][x] = <CellModel>{
+					player
+				};
+
 				return board;
 			});
 		}

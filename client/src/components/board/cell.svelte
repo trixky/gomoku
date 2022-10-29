@@ -7,7 +7,7 @@
 	export let x: number;
 	export let y: number;
 	export let cell: CellModel;
-	export let handleLeftClick: (player: 1 | 2, x: number, y: number) => void;
+	export let handleLeftClick: (x: number, y: number) => void;
 	export let proximity: number;
 </script>
 
@@ -22,7 +22,7 @@
 				$OptionsStore.proximity.threshold === proximity ? 255 : 0
 		  }, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
 		: ''}
-	on:mousedown={() => handleLeftClick(cell.player === 0 || cell.player === 2 ? 1 : 2, x, y)}
+	on:mousedown={() => handleLeftClick(x, y)}
 >
 	{#if cell.player != 0}
 		<Piece player={cell.player} />
