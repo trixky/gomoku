@@ -15,7 +15,7 @@
 	function handleCellClick(player: 1 | 2, x: number, y: number) {
 		BoardStore.refreshPiece(player, x, y);
 		lastMoveStore.update(player, x, y);
-		PostNext($StringBoardStore, $AlgoOptionsStore, x, y).then((response) => {
+		PostNext($StringBoardStore, $AlgoOptionsStore).then((response) => {
 			console.log(response);
 		});
 	}
