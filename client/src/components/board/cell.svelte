@@ -7,7 +7,6 @@
 	export let x: number;
 	export let y: number;
 	export let cell: CellModel;
-	export let debug_mode: boolean;
 	export let handleLeftClick: (player: 1 | 2, x: number, y: number) => void;
 	export let proximity: number;
 </script>
@@ -17,7 +16,6 @@
 	title="{cell.player > 0
 		? `player: ${cell.player}`
 		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}"
-	class:debug={debug_mode}
 	class="piece-emplacement"
 	style={$OptionsStore.proximity.show
 		? `background-color: rgba(${
@@ -37,11 +35,6 @@
 		@apply flex justify-center items-center w-[26px] h-[26px] max-w-[26px] max-h-[26px] transition-all duration-75;
 	}
 
-	.piece-emplacement.debug {
-		border: 1px solid rgba(255, 0, 0, 0.151);
-	}
-
-	.piece-emplacement:hover.debug,
 	.piece-emplacement:hover {
 		border: 2px solid rgb(111, 169, 207);
 		cursor: pointer;
