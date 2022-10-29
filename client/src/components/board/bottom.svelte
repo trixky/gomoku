@@ -236,7 +236,7 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.bottom-container {
-		@apply flex justify-center mt-6;
+		@apply flex justify-center mt-6 mb-10;
 	}
 
 	.options-containers {
