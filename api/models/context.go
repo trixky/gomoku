@@ -21,7 +21,7 @@ type Context struct {
 func (c *Context) Next(position Position) (context Context) {
 	context.Options = c.Options
 	context.State = c.State
-	context.State.Super = math.MinInt32
+	context.State.HeuristicScore = math.MinInt32
 
 	context.Goban = c.Goban
 
@@ -29,8 +29,6 @@ func (c *Context) Next(position Position) (context Context) {
 
 	context.State.LastMove.Player = !c.State.LastMove.Player // color
 	context.State.LastMove.Position = position
-	context.State.Alpha = -c.State.Beta
-	context.State.Beta = -c.State.Alpha
 
 	return
 }

@@ -25,7 +25,7 @@ func Negamax(context *models.Context) *models.Context {
 
 					Negamax(&child)
 
-					if child.State.Super > best_child.State.Super {
+					if child.State.HeuristicScore > best_child.State.HeuristicScore {
 						best_child = child
 					}
 				}
@@ -36,10 +36,10 @@ func Negamax(context *models.Context) *models.Context {
 			return &best_child
 		}
 
-		context.State.Super = -best_child.State.Super
+		context.State.HeuristicScore = -best_child.State.HeuristicScore
 	} else {
-		super := int(rand.Int31n(101)) - 50
-		context.State.Super = super
+		heuristicScore := int(rand.Int31n(101)) - 50
+		context.State.HeuristicScore = heuristicScore
 	}
 
 	return nil
