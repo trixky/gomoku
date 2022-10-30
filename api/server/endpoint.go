@@ -39,7 +39,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	context.Goban.ComputeProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
+	context.Goban.ComputeGlobalProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
 
 	context.Print()
 
