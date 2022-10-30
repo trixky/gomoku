@@ -16,6 +16,11 @@ type Options struct {
 	DepthMin     uint8
 	DepthPruning bool
 
+	// Width
+	WidthMax            int
+	WidthMultiThreading bool
+	WidthPruning        bool
+
 	// Proximity
 	ProximityRadius    uint8
 	ProximityThreshold uint8
@@ -43,6 +48,12 @@ func (o *Options) Print() {
 	fmt.Println("max:\t", o.DepthMax)
 	fmt.Println("min:\t", o.DepthMin)
 	fmt.Println("pruning:\t", o.DepthPruning)
+
+	// Prints width
+	fmt.Println("--------------- [width]")
+	fmt.Println("max:\t\t", o.WidthMax)
+	fmt.Println("multi-threading:\t", o.WidthMultiThreading)
+	fmt.Println("pruning:\t\t", o.WidthPruning)
 
 	// Prints proximity
 	fmt.Println("--------------- [proximity]")

@@ -38,8 +38,17 @@
 	function handleDepthPruning(e: any) {
 		OptionsStore.setDepthPruning(e.target.checked);
 	}
-
-	// ----------------------- handle depth
+	// ----------------------- handle width
+	function handleWidthMultiThreading(e: any) {
+		OptionsStore.setWidthMultiThreading(e.target.checked);
+	}
+	function handleWidthPruning(e: any) {
+		OptionsStore.setWidthPruning(e.target.checked);
+	}
+	function handleWidthMax(e: any) {
+		OptionsStore.setWidthMax(e.target.value);
+	}
+	// ----------------------- handle heuristics
 	function handleHeuristicsPotentialAlignement(e: any) {
 		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
 	}
@@ -116,6 +125,38 @@
 						min={Config.options.proximity.threshold.min}
 						max={Config.options.proximity.threshold.max}
 						value={$OptionsStore.proximity.threshold}
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="options-form">
+			<h3>Width</h3>
+			<div class="options">
+				<div class="option">
+					<p>multi-threading</p>
+					<input
+						type="checkbox"
+						checked={$OptionsStore.width.multi_threading}
+						on:change={handleWidthMultiThreading}
+					/>
+				</div>
+				<div class="option">
+					<p>pruning</p>
+					<input
+						type="checkbox"
+						checked={$OptionsStore.width.pruning}
+						on:change={handleWidthPruning}
+						disabled
+					/>
+				</div>
+				<div class="option">
+					<p>max</p>
+					<input
+						type="number"
+						on:change={handleWidthMax}
+						min={Config.options.width.max.min}
+						max={Config.options.width.max.max}
+						value={$OptionsStore.width.max}
 					/>
 				</div>
 			</div>

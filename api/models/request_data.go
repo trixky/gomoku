@@ -10,10 +10,16 @@ var (
 	ERR_RD_LAST_MOVE_NO_PLAYER      = errors.New("cell of the last move need to be taken by a player")
 )
 
-type RequestDepthyData struct {
+type RequestDepthData struct {
 	Max     uint8 `json:"max"`
 	Min     uint8 `json:"min"`
 	Pruning bool  `json:"pruning"`
+}
+
+type RequestWidthData struct {
+	Max            int  `json:"max"`
+	MultiThreading bool `json:"multi_threading"`
+	Pruning        bool `json:"pruning"`
 }
 
 type RequestProximityData struct {
@@ -32,11 +38,12 @@ type RequestHeuristicsData struct {
 }
 
 type RequestOptionData struct {
-	Timeout               uint16                `json:"timeout"` // ms
-	Position              Position              `json:"position"`
-	RequestDepthyData     RequestDepthyData     `json:"depth"`
-	RequestProximityData  RequestProximityData  `json:"proximity"`
-	RequestHeuristicsData RequestHeuristicsData `json:"heuristics"`
+	Timeout    uint16                `json:"timeout"` // ms
+	Position   Position              `json:"position"`
+	Depth      RequestDepthData      `json:"depth"`
+	Width      RequestWidthData      `json:"width"`
+	Proximity  RequestProximityData  `json:"proximity"`
+	Heuristics RequestHeuristicsData `json:"heuristics"`
 }
 
 type RequestData struct {
@@ -83,23 +90,28 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	// Constraints
 	options.Timeout = rd.Options.Timeout
 
-	// Flow
-	options.DepthMax = rd.Options.RequestDepthyData.Max
-	options.DepthMin = rd.Options.RequestDepthyData.Min
-	options.DepthPruning = rd.Options.RequestDepthyData.Pruning
+	// Depth
+	options.DepthMax = rd.Options.Depth.Max
+	options.DepthMin = rd.Options.Depth.Min
+	options.DepthPruning = rd.Options.Depth.Pruning
+
+	// Width
+	options.WidthMax = rd.Options.Width.Max
+	options.WidthMultiThreading = rd.Options.Width.MultiThreading
+	options.WidthPruning = rd.Options.Width.Pruning
 
 	// Proximity
-	options.ProximityRadius = rd.Options.RequestProximityData.Radius
-	options.ProximityThreshold = rd.Options.RequestProximityData.Threshold
-	options.ProximityShape = rd.Options.RequestProximityData.Shape
-	options.ProximityEvolution = rd.Options.RequestProximityData.Evolution
+	options.ProximityRadius = rd.Options.Proximity.Radius
+	options.ProximityThreshold = rd.Options.Proximity.Threshold
+	options.ProximityShape = rd.Options.Proximity.Shape
+	options.ProximityEvolution = rd.Options.Proximity.Evolution
 
 	// Heuristics
-	options.HeuristicPotentialAlignementWeight = rd.Options.RequestHeuristicsData.PotentialAlignementWeight
-	options.HeuristicAlignementWeight = rd.Options.RequestHeuristicsData.AlignementWeight
-	options.HeuristicPotentialCaptureWeight = rd.Options.RequestHeuristicsData.PotentialCaptureWeight
-	options.HeuristicCaptureWeight = rd.Options.RequestHeuristicsData.CaptureWeight
-	options.HeuristicRandomWeight = rd.Options.RequestHeuristicsData.RandomWeight
+	options.HeuristicPotentialAlignementWeight = rd.Options.Heuristics.PotentialAlignementWeight
+	options.HeuristicAlignementWeight = rd.Options.Heuristics.AlignementWeight
+	options.HeuristicPotentialCaptureWeight = rd.Options.Heuristics.PotentialCaptureWeight
+	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
+	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
 
 	return
 }
