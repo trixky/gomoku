@@ -15,6 +15,11 @@ export interface AlgoOptions {
 		pruning: boolean;
 		reduction: boolean;
 	};
+	width: {
+		max: number;
+		multi_threading: boolean;
+		pruning: boolean;
+	};
 	proximity: {
 		radius: number;
 		threshold: number;

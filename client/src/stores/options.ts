@@ -11,6 +11,11 @@ function generateOptions(): OptionsModel {
 			pruning: Config.options.depth.pruning.default,
 			reduction: Config.options.depth.reduction.default
 		},
+		width: {
+			max: Config.options.width.max.default,
+			pruning: Config.options.width.pruning.default,
+			multi_threading: Config.options.width.multi_threading.default
+		},
 		proximity: {
 			radius: Config.options.proximity.radius.default,
 			threshold: Config.options.proximity.threshold.default,
@@ -121,7 +126,31 @@ function createOptionsStore() {
 				options.depth.reduction = reduction;
 				return options;
 			}),
-		// ----------------------- set depth
+		// ----------------------- set width
+		setWidthPruning: (pruning: boolean) =>
+			update((options) => {
+				options.width.pruning = pruning;
+				return options;
+			}),
+		setWidthMultiThreading: (multi_threading: boolean) =>
+			update((options) => {
+				options.width.multi_threading = multi_threading;
+				return options;
+			}),
+		setWidthMax: (max: string) =>
+			update((options) => {
+				const _max = parseInt(max);
+
+				if (
+					!isNaN(_max) &&
+					_max >= Config.options.width.max.min &&
+					_max <= Config.options.width.max.max
+				)
+					options.width.max = _max;
+
+				return options;
+			}),
+		// ----------------------- set heuristics
 		setHeuristicsPotentialAlignement: (potential_alignement: string) =>
 			update((options) => {
 				const _potential_alignement = parseInt(potential_alignement);

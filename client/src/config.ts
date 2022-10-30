@@ -38,6 +38,19 @@ export default {
 				default: false
 			}
 		},
+		width: {
+			max: {
+				default: 361,
+				min: 1,
+				max: 361
+			},
+			pruning: {
+				default: false
+			},
+			multi_threading: {
+				default: true
+			}
+		},
 		proximity: {
 			radius: {
 				default: 2,

@@ -16,6 +16,11 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			pruning: $Stores[0].depth.pruning,
 			reduction: $Stores[0].depth.reduction
 		},
+		width: {
+			max: $Stores[0].width.max,
+			pruning: $Stores[0].width.pruning,
+			multi_threading: $Stores[0].width.multi_threading
+		},
 		proximity: {
 			radius: $Stores[0].proximity.radius,
 			threshold: $Stores[0].proximity.threshold,

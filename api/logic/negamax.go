@@ -25,15 +25,20 @@ func Negamax(context *models.Context, channel chan *models.Context) {
 						Y: uint8(y),
 					})
 
-					if context.State.Depth == 0 {
+					if context.State.Depth == 0 && context.Options.WidthMultiThreading {
 						go Negamax(&child, channel)
 					} else {
 						Negamax(&child, channel)
+					}
+
+					if child_to_wait >= context.Options.WidthMax {
+						goto childs_judgment
 					}
 				}
 			}
 		}
 
+	childs_judgment:
 		for i := 0; i < child_to_wait; i++ {
 			child := <-channel
 
