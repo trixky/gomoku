@@ -43,7 +43,11 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Print()
 
-	best_child := logic.Negamax(&context)
+	channel := make(chan *models.Context, 400)
+
+	logic.Negamax(&context, channel)
+
+	best_child := <-channel
 
 	_json, err := best_child.ToJSON()
 
