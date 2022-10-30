@@ -18,6 +18,7 @@ type Context struct {
 	Goban   Goban
 }
 
+// Next copy and update a sub context from this parent
 func (c *Context) Next(position Position) (context Context) {
 	context.Options = c.Options
 	context.State = c.State
@@ -29,6 +30,16 @@ func (c *Context) Next(position Position) (context Context) {
 
 	context.State.LastMove.Player = !c.State.LastMove.Player // color
 	context.State.LastMove.Position = position
+
+	if c.State.LastMove.Player {
+		context.Goban[position.Y][position.X] = PLAYER_2
+	} else {
+		context.Goban[position.Y][position.X] = PLAYER_1
+	}
+
+	if c.Options.ProximityEvolution {
+		context.Goban.ComputePieceProximity(&position, context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
+	}
 
 	return
 }
