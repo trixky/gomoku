@@ -81,7 +81,6 @@
 						type="checkbox"
 						checked={$OptionsStore.proximity.evolution}
 						on:change={handleProximityEvolution}
-						disabled
 					/>
 				</div>
 			</div>
