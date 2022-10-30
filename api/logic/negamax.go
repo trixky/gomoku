@@ -6,12 +6,13 @@ import (
 )
 
 // Negamax ...
-func Negamax(context *models.Context, channel chan *models.Context) {
+func Negamax(context *models.Context, parent_channel chan *models.Context) {
 	if context.State.Depth < context.Options.DepthMax {
 		best_child := models.Context{}
 		best_child.State.Init()
 
 		child_to_wait := 0
+		child_channel := make(chan *models.Context, context.Options.WidthMax)
 
 		for y, line := range context.Goban {
 			// For each line
@@ -26,9 +27,9 @@ func Negamax(context *models.Context, channel chan *models.Context) {
 					})
 
 					if context.State.Depth == 0 && context.Options.WidthMultiThreading {
-						go Negamax(&child, channel)
+						go Negamax(&child, child_channel)
 					} else {
-						Negamax(&child, channel)
+						Negamax(&child, child_channel)
 					}
 
 					if child_to_wait >= context.Options.WidthMax {
@@ -40,7 +41,7 @@ func Negamax(context *models.Context, channel chan *models.Context) {
 
 	childs_judgment:
 		for i := 0; i < child_to_wait; i++ {
-			child := <-channel
+			child := <-child_channel
 
 			if child.State.HeuristicScore > best_child.State.HeuristicScore {
 				best_child = *child
@@ -49,13 +50,9 @@ func Negamax(context *models.Context, channel chan *models.Context) {
 
 		context.State.HeuristicScore = -best_child.State.HeuristicScore
 
-		if channel != nil {
-			channel <- &best_child
-		}
+		parent_channel <- &best_child
 	} else {
 		context.State.HeuristicScore = heuristics.All(context)
-		if channel != nil {
-			channel <- context
-		}
+		parent_channel <- context
 	}
 }

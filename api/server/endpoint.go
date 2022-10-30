@@ -3,14 +3,11 @@ package server
 import (
 	"fmt"
 
-	// "time"
 	"encoding/json"
-	// "strings"
 	"net/http"
 
 	"github.com/trixky/gomoku/logic"
 	"github.com/trixky/gomoku/models"
-	// "io/ioutil"
 )
 
 func next(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +40,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Print()
 
-	channel := make(chan *models.Context, 400)
+	channel := make(chan *models.Context, 1)
 
 	logic.Negamax(&context, channel)
 
