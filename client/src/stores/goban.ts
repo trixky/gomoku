@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
 import type CellModel from '../models/cell';
-import type BoardModel from '../models/board';
+import type GobanModel from '../models/goban';
 
-function generateBoard(): BoardModel {
+function generateBoard(): GobanModel {
 	const cells: CellModel[][] = new Array(19);
 	for (let i = 0; i < 19; i++) {
 		cells[i] = [];
@@ -11,7 +11,7 @@ function generateBoard(): BoardModel {
 		}
 	}
 
-	return <BoardModel>{
+	return <GobanModel>{
 		cells
 	};
 }

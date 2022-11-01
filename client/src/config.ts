@@ -9,7 +9,7 @@ export default {
 			port: env.PUBLIC_API_PORT
 		}
 	},
-	board: {
+	goban: {
 		width: size,
 		height: size,
 		piece_number: Math.pow(size, 2),

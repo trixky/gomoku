@@ -1,4 +1,4 @@
-import BoardStore from './board';
+import BoardStore from './goban';
 import { derived } from 'svelte/store';
 
 export default derived(BoardStore, ($BoardStore): string => {

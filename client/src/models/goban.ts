@@ -1,5 +1,5 @@
 import type CellModel from './cell';
 
-export default interface Board {
+export default interface Goban {
 	cells: CellModel[][];
 }

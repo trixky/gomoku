@@ -1,4 +1,4 @@
-import BoardStore from './board';
+import BoardStore from './goban';
 import OptionsStore from './options';
 import { SHAPES } from '../models/algo_options';
 import { derived } from 'svelte/store';
