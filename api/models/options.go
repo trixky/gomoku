@@ -9,7 +9,7 @@ const (
 
 type Options struct {
 	// Constraints
-	Timeout uint16 // ms
+	TimeOut uint16 // ms
 
 	// Depth
 	DepthMax     uint8
@@ -41,7 +41,7 @@ func (o *Options) Print() {
 
 	// Prints constraints
 	fmt.Println("--------------- [constraints]")
-	fmt.Println("timeout:\t", o.Timeout, "ms")
+	fmt.Println("timeout:\t", o.TimeOut, "ms")
 
 	// Prints depth
 	fmt.Println("--------------- [depth]")

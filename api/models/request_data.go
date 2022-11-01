@@ -38,7 +38,7 @@ type RequestHeuristicsData struct {
 }
 
 type RequestOptionData struct {
-	Timeout    uint16                `json:"timeout"` // ms
+	TimeOut    uint16                `json:"time_out"` // ms
 	Position   Position              `json:"position"`
 	Depth      RequestDepthData      `json:"depth"`
 	Width      RequestWidthData      `json:"width"`
@@ -88,7 +88,7 @@ func (rd *RequestData) ExtractGoban() (goban Goban, err error) {
 // ExtractOptions extracts the options from the request data
 func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	// Constraints
-	options.Timeout = rd.Options.Timeout
+	options.TimeOut = rd.Options.TimeOut
 
 	// Depth
 	options.DepthMax = rd.Options.Depth.Max

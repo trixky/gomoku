@@ -16,7 +16,8 @@ export default {
 		cell_number: Math.pow(size - 1, 2)
 	},
 	options: {
-		timeout: {
+		time_out: {
+			default: 500,
 			min: 100, // ms
 			max: 60000 // ms
 		},

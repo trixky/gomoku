@@ -4,7 +4,7 @@ export const SHAPES = {
 };
 
 export interface AlgoOptions {
-	timeout: number; // ms
+	time_out: number; // ms
 	position: {
 		x: number;
 		y: number;
