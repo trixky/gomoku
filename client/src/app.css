@@ -32,6 +32,10 @@ p {
     animation: blink 1s linear infinite;
 }
 
+input[type='number'] {
+    @apply w-[72px];
+}
+
 @keyframes blink {
     0% {
         opacity: 100%;
