@@ -6,9 +6,10 @@ import { derived } from 'svelte/store';
 export default derived([OptionsStore, BoardStore], ($Stores): number[][] => {
 	const proximity_cells = new Array(19).fill(undefined).map(() => new Array(19).fill(0));
 
-	const radius = $Stores[0].proximity.radius;
+	const shape_neighboor = $Stores[0].proximity.shape == SHAPES.neighbour;
+	const radius = shape_neighboor ? 1 : $Stores[0].proximity.radius;
 	const radius_plus = radius + 1;
-	const selection_threshold = $Stores[0].proximity.threshold;
+	const selection_threshold = shape_neighboor ? 1 : $Stores[0].proximity.threshold;
 
 	$Stores[1].cells.forEach((cells, y) => {
 		cells.forEach((cell, x) => {

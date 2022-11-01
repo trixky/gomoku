@@ -22,7 +22,7 @@ function generateOptions(): OptionsModel {
 			threshold: Config.options.proximity.threshold.default,
 			show: Config.options.proximity.show.default,
 			evolution: Config.options.proximity.evolution.default,
-			shape: SHAPES.square
+			shape: Config.options.proximity.shape.default
 		},
 		heuristics: {
 			potential_alignement: Config.options.heuristics.values.default,
