@@ -19,7 +19,6 @@
 			optionsStore.hideHeuristics();
 		} else {
 			OptionsStore.hideProximity();
-			optionsStore.showHeuristics();
 		}
 	}
 
@@ -68,7 +67,6 @@
 			optionsStore.hideProximity();
 		} else {
 			OptionsStore.hideHeuristics();
-			OptionsStore.showProximity();
 		}
 	}
 
