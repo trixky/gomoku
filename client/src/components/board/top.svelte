@@ -44,7 +44,7 @@
 		<div class="player-infos right">
 			<p>
 				time:&nbsp;<span class="min-w-[74px] text-right"
-					>{#if $LoadingStore}<span in:fade={fade_parameters}>loading</span>{:else}
+					>{#if $LoadingStore}<span in:fade={fade_parameters} class="blink">loading</span>{:else}
 						<span in:fade={fade_parameters}>{$TimeStore} ms</span>
 					{/if}</span
 				>

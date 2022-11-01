@@ -28,6 +28,24 @@ p {
     font-size: 16px;
 }
 
+.blink {
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 100%;
+    }
+
+    50% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
 /* ====================================================== range inputs */
 /* https://www.cssportal.com/style-input-range/ */
 input[type=range] {
