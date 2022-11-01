@@ -1,5 +1,10 @@
 <!-- ========================= SCRIPT -->
 <script lang="ts">
+	import { fade } from 'svelte/transition';
+	import LoadingStore from '../../stores/loading';
+
+	const fade_parameters = { duration: 250 };
+
 	export let mode_ia: boolean;
 	export let turn: 1 | 2;
 
@@ -36,7 +41,13 @@
 			{/if}
 		</h2>
 		<div class="player-infos right">
-			<p>time: {0} ms</p>
+			<p>
+				time:&nbsp;<span class="min-w-[48px] text-right"
+					>{#if $LoadingStore}<span in:fade={fade_parameters}>loading</span>{:else}
+						<span in:fade={fade_parameters}>{0} ms</span>
+					{/if}</span
+				>
+			</p>
 			<p>pieces: {player_2.pieces_nbr}</p>
 			<p>captures: {player_2.captures}</p>
 		</div>
