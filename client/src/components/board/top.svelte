@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import LoadingStore from '../../stores/loading';
+	import TimeStore from '../../stores/time';
 
 	const fade_parameters = { duration: 250 };
 
@@ -42,9 +43,9 @@
 		</h2>
 		<div class="player-infos right">
 			<p>
-				time:&nbsp;<span class="min-w-[48px] text-right"
+				time:&nbsp;<span class="min-w-[74px] text-right"
 					>{#if $LoadingStore}<span in:fade={fade_parameters}>loading</span>{:else}
-						<span in:fade={fade_parameters}>{0} ms</span>
+						<span in:fade={fade_parameters}>{$TimeStore} ms</span>
 					{/if}</span
 				>
 			</p>
