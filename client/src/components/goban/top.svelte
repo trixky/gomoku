@@ -1,13 +1,13 @@
 <!-- ========================= SCRIPT -->
 <script lang="ts">
 	import { fade } from 'svelte/transition';
+	import LastMoveStore from '../../stores/last_move';
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
 
 	const fade_parameters = { duration: 250 };
 
 	export let mode_ia: boolean;
-	export let turn: 1 | 2;
 
 	let player_1 = {
 		pieces_nbr: 0,
@@ -24,7 +24,7 @@
 <div class="top-container">
 	<div class="player-container left">
 		<h2>
-			<span> Player 1 </span>
+			<span class:my-turn={$LastMoveStore.player === 2}> Player 1 </span>
 			{#if mode_ia}
 				<span class="opacity-20"> (You) </span>
 			{/if}
@@ -36,7 +36,7 @@
 	</div>
 	<div class="player-container right">
 		<h2>
-			<span> Player 2 </span>
+			<span class:my-turn={$LastMoveStore.player === 1}> Player 2 </span>
 			{#if mode_ia}
 				<span class="opacity-20"> (AI) </span>
 			{/if}
@@ -87,5 +87,13 @@
 
 	.player-infos > p {
 		@apply flex;
+	}
+
+	h2 > span {
+		@apply transition-all duration-300 border-b-transparent border-b-[1px] pb-1;
+	}
+
+	h2 > .my-turn {
+		@apply border-b-neutral-500;
 	}
 </style>
