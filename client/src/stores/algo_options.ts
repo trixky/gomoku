@@ -2,8 +2,11 @@ import OptionsStore from './options';
 import type { AlgoOptions as ModelAlgoOptions } from '../models/algo_options';
 import { derived } from 'svelte/store';
 import lastMoveStore from './last_move';
+import { SHAPES } from '../models/algo_options';
 
 export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOptions => {
+	const shape_neighboor = $Stores[0].proximity.shape == SHAPES.neighbour;
+
 	return <ModelAlgoOptions>{
 		time_out: $Stores[0].time_out,
 		position: {
@@ -22,9 +25,9 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			multi_threading: $Stores[0].width.multi_threading
 		},
 		proximity: {
-			radius: $Stores[0].proximity.radius,
-			threshold: $Stores[0].proximity.threshold,
-			shape: $Stores[0].proximity.shape,
+			radius: shape_neighboor ? 1 : $Stores[0].proximity.radius,
+			threshold: shape_neighboor ? 1 : $Stores[0].proximity.threshold,
+			shape: shape_neighboor ? SHAPES.square : $Stores[0].proximity.shape,
 			evolution: $Stores[0].proximity.evolution
 		},
 		heuristics: {

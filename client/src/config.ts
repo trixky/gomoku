@@ -67,7 +67,7 @@ export default {
 				default: false
 			},
 			shape: {
-				default: SHAPES.square
+				default: SHAPES.neighbour
 			},
 			evolution: {
 				default: true

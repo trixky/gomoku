@@ -6,6 +6,7 @@
 	import optionsStore from '../../stores/options';
 
 	let advanced_mode = false;
+	$: shape_neighboor = $OptionsStore.proximity.shape == SHAPES.neighbour;
 
 	// ----------------------- handle time out
 	function handleTimeOut(e: any) {
@@ -155,7 +156,8 @@
 							on:change={handleProximityRadius}
 							min={Config.options.proximity.radius.min}
 							max={Config.options.proximity.radius.max}
-							value={$OptionsStore.proximity.radius}
+							value={shape_neighboor ? 1 : $OptionsStore.proximity.radius}
+							disabled={shape_neighboor}
 						/>
 					</div>
 					<div class="option">
@@ -165,7 +167,8 @@
 							on:change={handleProximityThreshold}
 							min={Config.options.proximity.threshold.min}
 							max={Config.options.proximity.threshold.max}
-							value={$OptionsStore.proximity.threshold}
+							value={shape_neighboor ? 1 : $OptionsStore.proximity.threshold}
+							disabled={shape_neighboor}
 						/>
 					</div>
 				</div>

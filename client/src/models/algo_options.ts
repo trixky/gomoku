@@ -1,6 +1,7 @@
 export const SHAPES = {
-	square: 0,
-	star: 1
+	neighbour: 2,
+	star: 1,
+	square: 0
 };
 
 export interface AlgoOptions {
