@@ -32,6 +32,10 @@ p {
     animation: blink 1s linear infinite;
 }
 
+input {
+    @apply hover:cursor-pointer;
+}
+
 input[type='number'] {
     @apply w-[72px];
 }
