@@ -13,7 +13,6 @@
 	export let heuristic: number;
 
 	$: piece = cell.player != 0;
-	$: heuristic_is_max = heuristic === $HeuristicStatsStore.max;
 
 	$: heuristic_ratio =
 		(heuristic - $HeuristicStatsStore.min) / ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
@@ -32,9 +31,7 @@
 				$OptionsStore.proximity.threshold === proximity ? 255 : 0
 		  }, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
 		: $OptionsStore.heuristics.show
-		? `background-color: rgba(${120 - heuristic_ratio * 120}, 255, ${
-				heuristic_is_max ? 255 : 0
-		  }, ${heuristic_opacity})`
+		? `background-color: rgba(${120 - heuristic_ratio * 120}, 255, 0, ${heuristic_opacity})`
 		: ''}
 	on:mousedown={() => handleLeftClick(x, y)}
 >

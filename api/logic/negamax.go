@@ -1,8 +1,6 @@
 package logic
 
 import (
-	"fmt"
-
 	"github.com/trixky/gomoku/heuristics"
 	"github.com/trixky/gomoku/models"
 )
@@ -49,7 +47,6 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 			if context.State.Depth == 0 {
 				childs = append(childs, *child)
 			}
-			fmt.Println("on regarde le:", child.State.HeuristicScore)
 			if child.State.HeuristicScore > best_child.State.HeuristicScore {
 				best_child = child
 			}
@@ -59,8 +56,6 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 
 	} else {
 		context.State.HeuristicScore = heuristics.Random(context)
-
-		fmt.Println("***:", context.State.HeuristicScore)
 
 		if context.State.Depth == 0 {
 			childs = append(childs, *context)
