@@ -25,6 +25,7 @@
 
 						LastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
 						BoardStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
+						BoardStore.heuristicFromString(json_response.heuristic_goban);
 						TimeStore.set(json_response.options.time);
 						LoadingStore.switch(false);
 					})
@@ -49,6 +50,7 @@
 						{cell}
 						handleLeftClick={handleCellClick}
 						proximity={$ProximityBoardStore[y][x]}
+						heuristic={cell.heuristic}
 					/>
 				{/each}
 			{/each}

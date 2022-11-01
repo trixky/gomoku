@@ -14,7 +14,13 @@
 
 	// ----------------------- handle proximity
 	function handleProximityVisibility(e: any) {
-		e.target.checked ? OptionsStore.showProximity() : OptionsStore.hideProximity();
+		if (e.target.checked) {
+			OptionsStore.showProximity();
+			optionsStore.hideHeuristics();
+		} else {
+			OptionsStore.hideProximity();
+			optionsStore.showHeuristics();
+		}
 	}
 
 	function handleProximityEvolution(e: any) {
@@ -56,6 +62,16 @@
 		OptionsStore.setWidthMax(e.target.value);
 	}
 	// ----------------------- handle heuristics
+	function handleHeuristicsVisibility(e: any) {
+		if (e.target.checked) {
+			OptionsStore.showHeuristics();
+			optionsStore.hideProximity();
+		} else {
+			OptionsStore.hideHeuristics();
+			OptionsStore.showProximity();
+		}
+	}
+
 	function handleHeuristicsPotentialAlignement(e: any) {
 		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
 	}
@@ -236,63 +252,71 @@
 				<h3>Heuristics</h3>
 				<div class="range-container">
 					<div class="option">
+						<p>show</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.heuristics.show}
+							on:change={handleHeuristicsVisibility}
+						/>
+					</div>
+					<div class="option">
 						<p>potential alignement</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.min}
-							max={Config.options.heuristics.max}
+							min={Config.options.heuristics.values.min}
+							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsPotentialAlignement}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.max}
+							{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
 					<div class="option">
 						<p>alignement</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.min}
-							max={Config.options.heuristics.max}
+							min={Config.options.heuristics.values.min}
+							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsAlignement}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.max}
+							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
 					<div class="option">
 						<p>potential capture</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.min}
-							max={Config.options.heuristics.max}
+							min={Config.options.heuristics.values.min}
+							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsPotentialCapture}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.max}
+							{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
 					<div class="option">
 						<p>capture</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.min}
-							max={Config.options.heuristics.max}
+							min={Config.options.heuristics.values.min}
+							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsCapture}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.max}
+							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
 					<div class="option">
 						<p>random</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.min}
-							max={Config.options.heuristics.max}
+							min={Config.options.heuristics.values.min}
+							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsRandom}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.random}/{Config.options.heuristics.max}
+							{$OptionsStore.heuristics.random}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
 				</div>

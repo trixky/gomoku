@@ -3,28 +3,42 @@
 	import type CellModel from '../../models/cell';
 	import Piece from './piece.svelte';
 	import OptionsStore from '../../stores/options';
+	import HeuristicStatsStore from '../../stores/heuristic_stats';
 
 	export let x: number;
 	export let y: number;
 	export let cell: CellModel;
 	export let handleLeftClick: (x: number, y: number) => void;
 	export let proximity: number;
+	export let heuristic: number;
+
+	$: piece = cell.player != 0;
+	$: heuristic_is_max = heuristic === $HeuristicStatsStore.max;
+
+	$: heuristic_ratio =
+		(heuristic - $HeuristicStatsStore.min) / ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
+
+	$: heuristic_opacity = heuristic_ratio * 0.3 + 0.1;
 </script>
 
 <!-- ========================= HTML -->
 <div
 	title="{cell.player > 0
 		? `player: ${cell.player}`
-		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}"
+		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}&#013;heuristic: {heuristic}"
 	class="piece-emplacement"
 	style={$OptionsStore.proximity.show
 		? `background-color: rgba(${
 				$OptionsStore.proximity.threshold === proximity ? 255 : 0
 		  }, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
+		: $OptionsStore.heuristics.show
+		? `background-color: rgba(${120 - heuristic_ratio * 120}, 255, ${
+				heuristic_is_max ? 255 : 0
+		  }, ${heuristic_opacity})`
 		: ''}
 	on:mousedown={() => handleLeftClick(x, y)}
 >
-	{#if cell.player != 0}
+	{#if piece}
 		<Piece player={cell.player} />
 	{/if}
 </div>

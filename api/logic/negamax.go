@@ -6,7 +6,7 @@ import (
 )
 
 // Negamax ...
-func Negamax(context *models.Context, parent_channel chan *models.Context) {
+func Negamax(context *models.Context, parent_channel chan *models.Context) (childs []models.Context) {
 	if context.State.Depth < context.Options.DepthMax {
 		best_child := models.Context{}
 		best_child.State.Init()
@@ -40,9 +40,13 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) {
 		}
 
 	childs_judgment:
+
 		for i := 0; i < child_to_wait; i++ {
 			child := <-child_channel
 
+			if context.State.Depth == 0 {
+				childs = append(childs, *child)
+			}
 			if child.State.HeuristicScore > best_child.State.HeuristicScore {
 				best_child = *child
 			}
@@ -52,7 +56,14 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) {
 
 		parent_channel <- &best_child
 	} else {
-		context.State.HeuristicScore = heuristics.All(context)
+		context.State.HeuristicScore = heuristics.Random(context)
+
+		if context.State.Depth == 0 {
+			childs = append(childs, *context)
+		}
+
 		parent_channel <- context
 	}
+
+	return
 }

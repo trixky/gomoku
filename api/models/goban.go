@@ -93,6 +93,7 @@ func (g *Goban) ComputePieceProximity(position *Position, threshold uint8, radiu
 	}
 }
 
+// ToString convert the 2D goban to the string format
 func (g *Goban) ToString() (str string) {
 	for _, line := range g {
 		for _, cell := range line {

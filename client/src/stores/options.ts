@@ -25,11 +25,12 @@ function generateOptions(): OptionsModel {
 			shape: SHAPES.square
 		},
 		heuristics: {
-			potential_alignement: Config.options.heuristics.default,
-			alignement: Config.options.heuristics.default,
-			potential_capture: Config.options.heuristics.default,
-			capture: Config.options.heuristics.default,
-			random: Config.options.heuristics.default
+			potential_alignement: Config.options.heuristics.values.default,
+			alignement: Config.options.heuristics.values.default,
+			potential_capture: Config.options.heuristics.values.default,
+			capture: Config.options.heuristics.values.default,
+			random: Config.options.heuristics.values.default,
+			show: Config.options.heuristics.show.default
 		}
 	};
 }
@@ -165,6 +166,16 @@ function createOptionsStore() {
 				return options;
 			}),
 		// ----------------------- set heuristics
+		showHeuristics: () =>
+			update((options) => {
+				options.heuristics.show = true;
+				return options;
+			}),
+		hideHeuristics: () =>
+			update((options) => {
+				options.heuristics.show = false;
+				return options;
+			}),
 		setHeuristicsPotentialAlignement: (potential_alignement: string) =>
 			update((options) => {
 				const _potential_alignement = parseInt(potential_alignement);

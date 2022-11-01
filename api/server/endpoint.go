@@ -45,13 +45,17 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	channel := make(chan *models.Context, 1)
 
-	logic.Negamax(&context, channel)
+	childs := logic.Negamax(&context, channel)
+
+	heuristic_goban := models.HeuristicGoban{}
+
+	heuristic_goban.Compute(childs)
 
 	best_child := <-channel
 
 	elapsed_time := time.Now().Sub(start_time).Milliseconds()
 
-	_json, err := best_child.ToJSON(elapsed_time)
+	_json, err := best_child.ToJSON(elapsed_time, heuristic_goban)
 
 	best_child.Print()
 

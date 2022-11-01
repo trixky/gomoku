@@ -24,5 +24,6 @@ export default interface Options {
 		potential_capture: number;
 		capture: number;
 		random: number;
+		show: boolean;
 	};
 }
