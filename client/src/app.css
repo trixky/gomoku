@@ -36,6 +36,11 @@ input[type='number'] {
     @apply w-[72px];
 }
 
+select {
+    @apply py-[3px];
+}
+
+
 @keyframes blink {
     0% {
         opacity: 100%;
