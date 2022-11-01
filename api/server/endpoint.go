@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"time"
 
 	"encoding/json"
 	"net/http"
@@ -16,6 +17,8 @@ func next(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
+
+	start_time := time.Now()
 
 	// Decode the data from JSON
 	decoder := json.NewDecoder(r.Body)
@@ -46,7 +49,9 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	best_child := <-channel
 
-	_json, err := best_child.ToJSON()
+	elapsed_time := time.Now().Sub(start_time).Milliseconds()
+
+	_json, err := best_child.ToJSON(elapsed_time)
 
 	best_child.Print()
 

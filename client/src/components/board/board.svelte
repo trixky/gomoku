@@ -9,19 +9,23 @@
 	import PostNext from '../../api/post.next';
 	import LastMoveStore from '../../stores/last_move';
 	import LoadingStore from '../../stores/loading';
+	import TimeStore from '../../stores/time';
+	import type ResponseModel from '../../models/response';
 
 	function handleCellClick(x: number, y: number) {
 		if (!$LoadingStore) {
 			if ($BoardStore.cells[y][x].player === 0) {
 				LoadingStore.switch(true);
+				TimeStore.reset();
 				LastMoveStore.push(x, y);
 				BoardStore.addPiece($LastMoveStore.player, x, y);
 				PostNext($StringBoardStore, $AlgoOptionsStore)
 					.then((response) => {
-						const json_response = JSON.parse(response);
+						const json_response: ResponseModel = JSON.parse(response);
 
 						LastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
 						BoardStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
+						TimeStore.set(json_response.options.time);
 						LoadingStore.switch(false);
 					})
 					.catch(() => {

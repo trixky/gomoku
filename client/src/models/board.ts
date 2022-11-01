@@ -1,5 +1,5 @@
-import type Cell from './cell';
+import type CellModel from './cell';
 
 export default interface Board {
-	cells: Cell[][];
+	cells: CellModel[][];
 }

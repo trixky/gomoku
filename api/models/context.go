@@ -65,9 +65,9 @@ func (c *Context) Print() {
 	fmt.Println(" * * * * * * * * * * * * * * * * * * * *")
 }
 
-func (c *Context) ToJSON() (string, error) {
+func (c *Context) ToJSON(time int64) (string, error) {
 	response := ResponseData{}
-	response.computeResponse(c)
+	response.computeResponse(c, time)
 
 	marshalled, err := json.Marshal(response)
 
