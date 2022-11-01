@@ -74,9 +74,14 @@ export default {
 			}
 		},
 		heuristics: {
-			min: 0,
-			max: 10,
-			default: 5
+			values: {
+				min: 0,
+				max: 10,
+				default: 5
+			},
+			show: {
+				default: false
+			}
 		}
 	}
 };
