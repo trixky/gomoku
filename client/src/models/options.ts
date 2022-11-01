@@ -1,5 +1,5 @@
 export default interface Options {
-	timeout: number; // ms
+	time_out: number; // ms
 	depth: {
 		max: number;
 		min: number;

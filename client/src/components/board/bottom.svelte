@@ -5,6 +5,13 @@
 	import { SHAPES } from '../../models/algo_options';
 	import optionsStore from '../../stores/options';
 
+	let advanced_mode = false;
+
+	// ----------------------- handle time out
+	function handleTimeOut(e: any) {
+		OptionsStore.setTimeOut(e.target.value);
+	}
+
 	// ----------------------- handle proximity
 	function handleProximityVisibility(e: any) {
 		e.target.checked ? OptionsStore.showProximity() : OptionsStore.hideProximity();
@@ -74,202 +81,223 @@
 <div class="bottom-container">
 	<div class="options-containers">
 		<div class="options-form">
-			<h3>Proximity</h3>
+			<h3>Parameters</h3>
 			<div class="options">
 				<div class="option">
-					<p>show</p>
-					<input
-						type="checkbox"
-						checked={$OptionsStore.proximity.show}
-						on:change={handleProximityVisibility}
-					/>
+					<p>advanced</p>
+					<input type="checkbox" bind:checked={advanced_mode} />
 				</div>
 				<div class="option">
-					<p>evolution</p>
+					<p>time out</p>
 					<input
-						type="checkbox"
-						checked={$OptionsStore.proximity.evolution}
-						on:change={handleProximityEvolution}
+						type="number"
+						on:change={handleTimeOut}
+						min={Config.options.time_out.min}
+						max={Config.options.time_out.max}
+						value={$OptionsStore.time_out}
 					/>
 				</div>
 			</div>
 		</div>
-		<div class="options-form">
-			<h3>Shape</h3>
-			<div class="options">
-				<div class="option">
-					<p>type</p>
-					<select value={$OptionsStore.proximity.shape} on:change={handleProximityShape}>
-						{#each Object.entries(SHAPES) as shape}
-							<option value={shape[1]}>
-								{shape[0]}
-							</option>
-						{/each}
-					</select>
-				</div>
-				<div class="option">
-					<p>radius</p>
-					<input
-						type="number"
-						on:change={handleProximityRadius}
-						min={Config.options.proximity.radius.min}
-						max={Config.options.proximity.radius.max}
-						value={$OptionsStore.proximity.radius}
-					/>
-				</div>
-				<div class="option">
-					<p>threshold</p>
-					<input
-						type="number"
-						on:change={handleProximityThreshold}
-						min={Config.options.proximity.threshold.min}
-						max={Config.options.proximity.threshold.max}
-						value={$OptionsStore.proximity.threshold}
-					/>
+		{#if advanced_mode}
+			<div class="options-form">
+				<h3>Proximity</h3>
+				<div class="options">
+					<div class="option">
+						<p>show</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.proximity.show}
+							on:change={handleProximityVisibility}
+						/>
+					</div>
+					<div class="option">
+						<p>evolution</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.proximity.evolution}
+							on:change={handleProximityEvolution}
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="options-form">
-			<h3>Width</h3>
-			<div class="options">
-				<div class="option">
-					<p>multi-threading</p>
-					<input
-						type="checkbox"
-						checked={$OptionsStore.width.multi_threading}
-						on:change={handleWidthMultiThreading}
-					/>
-				</div>
-				<div class="option">
-					<p>pruning</p>
-					<input
-						type="checkbox"
-						checked={$OptionsStore.width.pruning}
-						on:change={handleWidthPruning}
-						disabled
-					/>
-				</div>
-				<div class="option">
-					<p>max</p>
-					<input
-						type="number"
-						on:change={handleWidthMax}
-						min={Config.options.width.max.min}
-						max={Config.options.width.max.max}
-						value={$OptionsStore.width.max}
-					/>
-				</div>
-			</div>
-		</div>
-		<div class="options-form">
-			<h3>Depth</h3>
-			<div class="options">
-				<div class="option">
-					<p>pruning</p>
-					<input
-						type="checkbox"
-						checked={$OptionsStore.depth.pruning}
-						on:change={handleDepthPruning}
-						disabled
-					/>
-				</div>
-				<div class="option">
-					<p>reduction</p>
-					<input
-						type="checkbox"
-						checked={$OptionsStore.depth.reduction}
-						on:change={handleDepthPruning}
-						disabled
-					/>
-				</div>
-				<div class="option">
-					<p>max</p>
-					<input
-						type="number"
-						on:change={handleDepthMax}
-						min={Config.options.depth.max.min}
-						max={Config.options.depth.max.max}
-						value={$OptionsStore.depth.max}
-					/>
-				</div>
-				<div class="option">
-					<p>min</p>
-					<input
-						type="number"
-						on:change={handleDepthMin}
-						min={Config.options.depth.min.min}
-						max={Config.options.depth.min.max}
-						value={$OptionsStore.depth.min}
-						disabled={!$OptionsStore.depth.pruning}
-					/>
+			<div class="options-form">
+				<h3>Shape</h3>
+				<div class="options">
+					<div class="option">
+						<p>type</p>
+						<select value={$OptionsStore.proximity.shape} on:change={handleProximityShape}>
+							{#each Object.entries(SHAPES) as shape}
+								<option value={shape[1]}>
+									{shape[0]}
+								</option>
+							{/each}
+						</select>
+					</div>
+					<div class="option">
+						<p>radius</p>
+						<input
+							type="number"
+							on:change={handleProximityRadius}
+							min={Config.options.proximity.radius.min}
+							max={Config.options.proximity.radius.max}
+							value={$OptionsStore.proximity.radius}
+						/>
+					</div>
+					<div class="option">
+						<p>threshold</p>
+						<input
+							type="number"
+							on:change={handleProximityThreshold}
+							min={Config.options.proximity.threshold.min}
+							max={Config.options.proximity.threshold.max}
+							value={$OptionsStore.proximity.threshold}
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="options-form">
-			<h3>Heuristics</h3>
-			<div class="range-container">
-				<div class="option">
-					<p>potential alignement</p>
-					<input
-						type="range"
-						min={Config.options.heuristics.min}
-						max={Config.options.heuristics.max}
-						on:input={handleHeuristicsPotentialAlignement}
-					/>
-					<p class="range-value">
-						{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.max}
-					</p>
-				</div>
-				<div class="option">
-					<p>alignement</p>
-					<input
-						type="range"
-						min={Config.options.heuristics.min}
-						max={Config.options.heuristics.max}
-						on:input={handleHeuristicsAlignement}
-					/>
-					<p class="range-value">
-						{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.max}
-					</p>
-				</div>
-				<div class="option">
-					<p>potential capture</p>
-					<input
-						type="range"
-						min={Config.options.heuristics.min}
-						max={Config.options.heuristics.max}
-						on:input={handleHeuristicsPotentialCapture}
-					/>
-					<p class="range-value">
-						{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.max}
-					</p>
-				</div>
-				<div class="option">
-					<p>capture</p>
-					<input
-						type="range"
-						min={Config.options.heuristics.min}
-						max={Config.options.heuristics.max}
-						on:input={handleHeuristicsCapture}
-					/>
-					<p class="range-value">
-						{$OptionsStore.heuristics.capture}/{Config.options.heuristics.max}
-					</p>
-				</div>
-				<div class="option">
-					<p>random</p>
-					<input
-						type="range"
-						min={Config.options.heuristics.min}
-						max={Config.options.heuristics.max}
-						on:input={handleHeuristicsRandom}
-					/>
-					<p class="range-value">
-						{$OptionsStore.heuristics.random}/{Config.options.heuristics.max}
-					</p>
+			<div class="options-form">
+				<h3>Width</h3>
+				<div class="options">
+					<div class="option">
+						<p>multi-threading</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.width.multi_threading}
+							on:change={handleWidthMultiThreading}
+						/>
+					</div>
+					<div class="option">
+						<p>pruning</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.width.pruning}
+							on:change={handleWidthPruning}
+							disabled
+						/>
+					</div>
+					<div class="option">
+						<p>max</p>
+						<input
+							type="number"
+							on:change={handleWidthMax}
+							min={Config.options.width.max.min}
+							max={Config.options.width.max.max}
+							value={$OptionsStore.width.max}
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="options-form">
+				<h3>Depth</h3>
+				<div class="options">
+					<div class="option">
+						<p>pruning</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.depth.pruning}
+							on:change={handleDepthPruning}
+							disabled
+						/>
+					</div>
+					<div class="option">
+						<p>reduction</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.depth.reduction}
+							on:change={handleDepthPruning}
+							disabled
+						/>
+					</div>
+					<div class="option">
+						<p>max</p>
+						<input
+							type="number"
+							on:change={handleDepthMax}
+							min={Config.options.depth.max.min}
+							max={Config.options.depth.max.max}
+							value={$OptionsStore.depth.max}
+						/>
+					</div>
+					<div class="option">
+						<p>min</p>
+						<input
+							type="number"
+							on:change={handleDepthMin}
+							min={Config.options.depth.min.min}
+							max={Config.options.depth.min.max}
+							value={$OptionsStore.depth.min}
+							disabled={!$OptionsStore.depth.pruning}
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="options-form">
+				<h3>Heuristics</h3>
+				<div class="range-container">
+					<div class="option">
+						<p>potential alignement</p>
+						<input
+							type="range"
+							min={Config.options.heuristics.min}
+							max={Config.options.heuristics.max}
+							on:input={handleHeuristicsPotentialAlignement}
+						/>
+						<p class="range-value">
+							{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.max}
+						</p>
+					</div>
+					<div class="option">
+						<p>alignement</p>
+						<input
+							type="range"
+							min={Config.options.heuristics.min}
+							max={Config.options.heuristics.max}
+							on:input={handleHeuristicsAlignement}
+						/>
+						<p class="range-value">
+							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.max}
+						</p>
+					</div>
+					<div class="option">
+						<p>potential capture</p>
+						<input
+							type="range"
+							min={Config.options.heuristics.min}
+							max={Config.options.heuristics.max}
+							on:input={handleHeuristicsPotentialCapture}
+						/>
+						<p class="range-value">
+							{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.max}
+						</p>
+					</div>
+					<div class="option">
+						<p>capture</p>
+						<input
+							type="range"
+							min={Config.options.heuristics.min}
+							max={Config.options.heuristics.max}
+							on:input={handleHeuristicsCapture}
+						/>
+						<p class="range-value">
+							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.max}
+						</p>
+					</div>
+					<div class="option">
+						<p>random</p>
+						<input
+							type="range"
+							min={Config.options.heuristics.min}
+							max={Config.options.heuristics.max}
+							on:input={handleHeuristicsRandom}
+						/>
+						<p class="range-value">
+							{$OptionsStore.heuristics.random}/{Config.options.heuristics.max}
+						</p>
+					</div>
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
 

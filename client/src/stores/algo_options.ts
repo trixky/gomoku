@@ -5,7 +5,7 @@ import lastMoveStore from './last_move';
 
 export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOptions => {
 	return <ModelAlgoOptions>{
-		timeout: 1000,
+		time_out: $Stores[0].time_out,
 		position: {
 			x: $Stores[1].x,
 			y: $Stores[1].y

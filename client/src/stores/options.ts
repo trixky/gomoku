@@ -5,6 +5,7 @@ import { SHAPES } from '../models/algo_options';
 
 function generateOptions(): OptionsModel {
 	return <OptionsModel>{
+		time_out: Config.options.time_out.default,
 		depth: {
 			max: Config.options.depth.max.default,
 			min: Config.options.depth.min.default,
@@ -39,6 +40,19 @@ function createOptionsStore() {
 	return {
 		subscribe,
 		reset: () => set(generateOptions()),
+		// ----------------------- set time out
+		setTimeOut: (time_out: string) =>
+			update((options) => {
+				const _time_out = parseInt(time_out);
+
+				if (
+					!isNaN(_time_out) &&
+					_time_out >= Config.options.time_out.min &&
+					_time_out <= Config.options.time_out.max
+				)
+					options.time_out = _time_out;
+				return options;
+			}),
 		// ----------------------- set proximity
 		showProximity: () =>
 			update((options) => {
