@@ -7,28 +7,26 @@
 	import ProximityBoardStore from '../../stores/proximity_board';
 	import Cell from './cell.svelte';
 	import PostNext from '../../api/post.next';
-	import lastMoveStore from '../../stores/last_move';
-	import boardStore from '../../stores/board';
-
-	let loading = false;
+	import LastMoveStore from '../../stores/last_move';
+	import LoadingStore from '../../stores/loading';
 
 	function handleCellClick(x: number, y: number) {
-		if (!loading) {
-			loading = true;
+		if (!$LoadingStore) {
 			if ($BoardStore.cells[y][x].player === 0) {
-				lastMoveStore.push(x, y);
-				BoardStore.addPiece($lastMoveStore.player, x, y);
+				LoadingStore.switch(true);
+				LastMoveStore.push(x, y);
+				BoardStore.addPiece($LastMoveStore.player, x, y);
 				PostNext($StringBoardStore, $AlgoOptionsStore)
 					.then((response) => {
 						const json_response = JSON.parse(response);
 
-						lastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
-						boardStore.addPiece($lastMoveStore.player, $lastMoveStore.x, $lastMoveStore.y);
-						loading = false;
+						LastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
+						BoardStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
+						LoadingStore.switch(false);
 					})
 					.catch(() => {
 						alert('an error occured from api');
-						loading = false;
+						LoadingStore.switch(false);
 					});
 			}
 		}
