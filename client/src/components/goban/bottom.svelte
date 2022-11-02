@@ -27,7 +27,6 @@
 
 	// ----------------------- handle proximity
 	function handleProximityVisibility(e: any) {
-		selected_ai = 'custom';
 		if (e.target.checked) {
 			OptionsStore.showProximity();
 			optionsStore.hideHeuristics();
@@ -88,7 +87,6 @@
 	}
 	// ----------------------- handle heuristics
 	function handleHeuristicsVisibility(e: any) {
-		selected_ai = 'custom';
 		if (e.target.checked) {
 			OptionsStore.showHeuristics();
 			optionsStore.hideProximity();
