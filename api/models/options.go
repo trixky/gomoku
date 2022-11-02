@@ -9,7 +9,7 @@ const (
 
 type Options struct {
 	// Constraints
-	TimeOut uint16 // ms
+	TimeOut int64 // ms
 
 	// Depth
 	DepthMax     uint8
