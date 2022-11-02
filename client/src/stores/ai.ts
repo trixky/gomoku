@@ -5,15 +5,10 @@ import generateOptions from '../utils/generate_options';
 import { SHAPES } from '../models/algo_options';
 
 export default {
-	custom: <AiModel>{
-		options: generateOptions(),
-		description:
-			'Threepio is a humanoid robot, his playing style is very classic. He is a good opponent to train.'
-	},
 	threepio: <AiModel>{
 		options: generateOptions(),
 		description:
-			'Threepio is a humanoid robot, his playing style is very classic. He is a good opponent to train.'
+			'Threepio is a humanoid robot, his playing style is very classic.<br/>He will try not to keep you waiting too long.<br/>He is a good opponent to train.'
 	},
 	ripley: <AiModel>{
 		options: <OptionsModel>{
@@ -47,7 +42,7 @@ export default {
 			}
 		},
 		description:
-			"Chased by a xenomorph, Ripley won't take the time to think about all the possibilities. she'll slip into the first air duct she finds and go as far as she can without looking back."
+			"Chased by a xenomorph, Ripley won't take the time to think about all the possibilities. She'll slip into the first air duct she finds and go as far as she can without looking back."
 	},
 	morty: <AiModel>{
 		options: <OptionsModel>{
@@ -81,7 +76,7 @@ export default {
 			}
 		},
 		description:
-			"Morty really sucks, he can't project himself beyond those feet. Sometimes it feels like he's playing randomly. He knows the rules."
+			"Morty really sucks, he can't project himself beyond those feet.<br/>Sometimes it feels like he's playing randomly.<br/>He knows the rules."
 	},
 	deep: <AiModel>{
 		options: <OptionsModel>{
@@ -115,7 +110,7 @@ export default {
 			}
 		},
 		description:
-			'Deep is an enormous supercomputer, it will think deep and wide. you will can play your second move.. in another life, when your species may have disappeared. Be patient.'
+			'Deep is an enormous supercomputer, it will think deep and wide.<br/>You will can play your second move.. in another life, when your species may have disappeared. Be patient.'
 	},
 	gary: <AiModel>{
 		options: <OptionsModel>{
@@ -149,7 +144,7 @@ export default {
 			}
 		},
 		description:
-			'Gary is a smart, caring and calm snail. He is quite an intellectual, spending most of his days levitating, teleporting, and reading poetry. He sees far, but moves slowly.'
+			'Gary is a smart, caring and calm snail.<br/>He is quite an intellectual, spending most of his days levitating, teleporting, and reading poetry. He sees far, but moves slowly.'
 	},
 	joker: <AiModel>{
 		options: <OptionsModel>{
@@ -183,6 +178,11 @@ export default {
 			}
 		},
 		description:
-			'Joker will take the time to look for moves that may seem innocent at first sight, but which can be devastating later.'
+			'With Joker, everything is planned in advance.<br/>He will take the time to look for moves that may seem innocent at first sight, but which can be devastating later.'
+	},
+	custom: <AiModel>{
+		options: generateOptions(),
+		description:
+			'Customize your own artificial intelligence.<br/>You can take the time to read the description of each parameter by hovering over them with your mouse.'
 	}
 };
