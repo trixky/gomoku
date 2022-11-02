@@ -155,6 +155,15 @@
 				</div>
 			</div>
 		</div>
+		<div class="options-form">
+			<div class="options">
+				<div class="option">
+					<p class="max-w-[400px] text-right italic">
+						{@html Object.entries(AiStore).find((ai) => ai[0] === selected_ai)?.[1].description}
+					</p>
+				</div>
+			</div>
+		</div>
 		{#if advanced_mode}
 			<div class="options-form">
 				<h3>Proximity</h3>
