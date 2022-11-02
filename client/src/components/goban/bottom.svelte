@@ -308,6 +308,7 @@
 							min={Config.options.heuristics.values.min}
 							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsPotentialAlignement}
+							value={$OptionsStore.heuristics.potential_alignement}
 						/>
 						<p class="range-value">
 							{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.values.max}
@@ -320,6 +321,7 @@
 							min={Config.options.heuristics.values.min}
 							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsAlignement}
+							value={$OptionsStore.heuristics.alignement}
 						/>
 						<p class="range-value">
 							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.values.max}
@@ -332,6 +334,7 @@
 							min={Config.options.heuristics.values.min}
 							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsPotentialCapture}
+							value={$OptionsStore.heuristics.potential_capture}
 						/>
 						<p class="range-value">
 							{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.values.max}
@@ -344,6 +347,7 @@
 							min={Config.options.heuristics.values.min}
 							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsCapture}
+							value={$OptionsStore.heuristics.capture}
 						/>
 						<p class="range-value">
 							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.values.max}
@@ -356,6 +360,7 @@
 							min={Config.options.heuristics.values.min}
 							max={Config.options.heuristics.values.max}
 							on:input={handleHeuristicsRandom}
+							value={$OptionsStore.heuristics.random}
 						/>
 						<p class="range-value">
 							{$OptionsStore.heuristics.random}/{Config.options.heuristics.values.max}
