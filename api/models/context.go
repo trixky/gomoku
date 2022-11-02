@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"time"
 )
 
 const (
@@ -13,6 +14,7 @@ const (
 )
 
 type Context struct {
+	Start   time.Time
 	Options *Options
 	State   State
 	Goban   Goban
@@ -20,6 +22,7 @@ type Context struct {
 
 // Next copy and update a sub context from this parent
 func (c *Context) Next(position Position) (context Context) {
+	context.Start = c.Start
 	context.Options = c.Options
 	context.State = c.State
 	context.State.HeuristicScore = math.MinInt32

@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"time"
 )
 
 var (
@@ -38,7 +39,7 @@ type RequestHeuristicsData struct {
 }
 
 type RequestOptionData struct {
-	TimeOut    uint16                `json:"time_out"` // ms
+	TimeOut    int64                 `json:"time_out"` // ms
 	Position   Position              `json:"position"`
 	Depth      RequestDepthData      `json:"depth"`
 	Width      RequestWidthData      `json:"width"`
@@ -154,6 +155,9 @@ func (rd *RequestData) ExtractState() (state State, err error) {
 
 // ComputeContext compute a new context from the request data
 func (rd *RequestData) ComputeContext() (context Context, err error) {
+	// Start the time
+	context.Start = time.Now()
+
 	// Extract the goban
 	if goban, err := rd.ExtractGoban(); err != nil {
 		return context, err

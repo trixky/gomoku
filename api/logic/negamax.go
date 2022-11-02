@@ -1,6 +1,8 @@
 package logic
 
 import (
+	"time"
+
 	"github.com/trixky/gomoku/heuristics"
 	"github.com/trixky/gomoku/models"
 )
@@ -34,7 +36,9 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 						Negamax(&childs[len(childs)-1], child_channel)
 					}
 
-					if len(childs) >= context.Options.WidthMax {
+					elapsed_time := time.Now().Sub(context.Start).Milliseconds()
+
+					if len(childs) >= context.Options.WidthMax || elapsed_time >= context.Options.TimeOut {
 						goto childs_judgment
 					}
 				}

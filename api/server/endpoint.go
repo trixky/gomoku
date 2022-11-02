@@ -18,8 +18,6 @@ func next(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	start_time := time.Now()
-
 	// Decode the data from JSON
 	decoder := json.NewDecoder(r.Body)
 	data := models.RequestData{}
@@ -59,7 +57,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 	}
 	// best_child := <-channel
 
-	elapsed_time := time.Now().Sub(start_time).Milliseconds()
+	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 
 	_json, err := best_child.ToJSON(elapsed_time, heuristic_goban)
 
