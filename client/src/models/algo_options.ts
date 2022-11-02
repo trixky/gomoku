@@ -14,7 +14,6 @@ export interface AlgoOptions {
 		max: number;
 		min: number;
 		pruning: boolean;
-		reduction: boolean;
 	};
 	width: {
 		max: number;
@@ -26,6 +25,7 @@ export interface AlgoOptions {
 		threshold: number;
 		shape: number;
 		evolution: boolean;
+		reduction: boolean;
 	};
 	heuristics: {
 		potential_alignement: number;

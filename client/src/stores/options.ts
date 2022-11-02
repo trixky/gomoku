@@ -1,39 +1,8 @@
 import Config from '../config';
 import { writable } from 'svelte/store';
-import type OptionsModel from '../models/options';
 import { SHAPES } from '../models/algo_options';
-
-function generateOptions(): OptionsModel {
-	return <OptionsModel>{
-		time_out: Config.options.time_out.default,
-		depth: {
-			max: Config.options.depth.max.default,
-			min: Config.options.depth.min.default,
-			pruning: Config.options.depth.pruning.default,
-			reduction: Config.options.depth.reduction.default
-		},
-		width: {
-			max: Config.options.width.max.default,
-			pruning: Config.options.width.pruning.default,
-			multi_threading: Config.options.width.multi_threading.default
-		},
-		proximity: {
-			radius: Config.options.proximity.radius.default,
-			threshold: Config.options.proximity.threshold.default,
-			show: Config.options.proximity.show.default,
-			evolution: Config.options.proximity.evolution.default,
-			shape: Config.options.proximity.shape.default
-		},
-		heuristics: {
-			potential_alignement: Config.options.heuristics.values.default,
-			alignement: Config.options.heuristics.values.default,
-			potential_capture: Config.options.heuristics.values.default,
-			capture: Config.options.heuristics.values.default,
-			random: Config.options.heuristics.values.default,
-			show: Config.options.heuristics.show.default
-		}
-	};
-}
+import type OptionsModel from '..//models/options';
+import generateOptions from '../../src/utils/generate_options';
 
 function createOptionsStore() {
 	const { subscribe, set, update } = writable(generateOptions());
@@ -41,6 +10,10 @@ function createOptionsStore() {
 	return {
 		subscribe,
 		reset: () => set(generateOptions()),
+		// ----------------------- set ai
+		setAi: (ai: OptionsModel) => {
+			set(ai);
+		},
 		// ----------------------- set time out
 		setTimeOut: (time_out: string) =>
 			update((options) => {
@@ -104,6 +77,11 @@ function createOptionsStore() {
 				options.proximity.evolution = evolution;
 				return options;
 			}),
+		setProximityReduction: (reduction: boolean) =>
+			update((options) => {
+				options.proximity.reduction = reduction;
+				return options;
+			}),
 		// ----------------------- set depth
 		setDepthMax: (max: string) =>
 			update((options) => {
@@ -134,11 +112,6 @@ function createOptionsStore() {
 		setDepthPruning: (pruning: boolean) =>
 			update((options) => {
 				options.depth.pruning = pruning;
-				return options;
-			}),
-		setDepthReduction: (reduction: boolean) =>
-			update((options) => {
-				options.depth.reduction = reduction;
 				return options;
 			}),
 		// ----------------------- set width

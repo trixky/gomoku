@@ -16,8 +16,7 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 		depth: {
 			max: $Stores[0].depth.max,
 			min: $Stores[0].depth.min,
-			pruning: $Stores[0].depth.pruning,
-			reduction: $Stores[0].depth.reduction
+			pruning: $Stores[0].depth.pruning
 		},
 		width: {
 			max: $Stores[0].width.max,
@@ -28,7 +27,8 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			radius: shape_neighboor ? 1 : $Stores[0].proximity.radius,
 			threshold: shape_neighboor ? 1 : $Stores[0].proximity.threshold,
 			shape: shape_neighboor ? SHAPES.square : $Stores[0].proximity.shape,
-			evolution: $Stores[0].proximity.evolution
+			evolution: $Stores[0].proximity.evolution,
+			reduction: $Stores[0].proximity.reduction
 		},
 		heuristics: {
 			potential_alignement: $Stores[0].heuristics.potential_alignement,
