@@ -11,7 +11,7 @@
 <!-- ========================= HTML -->
 
 <div class="game">
-	<TopGoban {mode_ia} {turn} />
+	<TopGoban {mode_ia} />
 	<Goban />
 	<BottomGoban />
 </div>

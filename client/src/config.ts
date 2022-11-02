@@ -21,6 +21,9 @@ export default {
 			min: 100, // ms
 			max: 60000 // ms
 		},
+		ai: {
+			default: 'threepio'
+		},
 		depth: {
 			max: {
 				default: 2,
@@ -33,9 +36,6 @@ export default {
 				max: 10
 			},
 			pruning: {
-				default: false
-			},
-			reduction: {
 				default: false
 			}
 		},
@@ -71,6 +71,9 @@ export default {
 			},
 			evolution: {
 				default: true
+			},
+			reduction: {
+				default: false
 			}
 		},
 		heuristics: {

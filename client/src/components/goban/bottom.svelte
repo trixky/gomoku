@@ -4,17 +4,30 @@
 	import OptionsStore from '../../stores/options';
 	import { SHAPES } from '../../models/algo_options';
 	import optionsStore from '../../stores/options';
+	import AiStore from '../../stores/ai';
 
+	let selected_ai = Config.options.ai.default;
 	let advanced_mode = false;
 	$: shape_neighboor = $OptionsStore.proximity.shape == SHAPES.neighbour;
 
+	// ----------------------- handle ai
+	function handleAi(e: any) {
+		let ai: 'custom' | 'threepio' | 'ripley' | 'morty' | 'threepio' | 'deep' | 'gary' | 'joker' =
+			e.target.value;
+
+		if (ai != 'custom') OptionsStore.setAi(AiStore[ai].options);
+		selected_ai = ai;
+	}
+
 	// ----------------------- handle time out
 	function handleTimeOut(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setTimeOut(e.target.value);
 	}
 
 	// ----------------------- handle proximity
 	function handleProximityVisibility(e: any) {
+		selected_ai = 'custom';
 		if (e.target.checked) {
 			OptionsStore.showProximity();
 			optionsStore.hideHeuristics();
@@ -23,36 +36,48 @@
 		}
 	}
 
-	function handleProximityEvolution(e: any) {
-		OptionsStore.setProximityEvolution(e.target.checked);
-	}
-
 	function handleProximityShape(e: any) {
+		selected_ai = 'custom';
 		optionsStore.setProximityShape(e.target.value);
 	}
 
 	function handleProximityRadius(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setProximityRadius(e.target.value);
 	}
 
 	function handleProximityThreshold(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setProximityThreshold(e.target.value);
+	}
+
+	function handleProximityEvolution(e: any) {
+		OptionsStore.setProximityEvolution(e.target.checked);
+	}
+
+	function handleProximityReduction(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setProximityReduction(e.target.checked);
 	}
 
 	// ----------------------- handle depth
 	function handleDepthMax(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setDepthMax(e.target.value);
 	}
 
 	function handleDepthMin(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setDepthMin(e.target.value);
 	}
 
 	function handleDepthPruning(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setDepthPruning(e.target.checked);
 	}
 	// ----------------------- handle width
 	function handleWidthMultiThreading(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setWidthMultiThreading(e.target.checked);
 	}
 	function handleWidthPruning(e: any) {
@@ -63,6 +88,7 @@
 	}
 	// ----------------------- handle heuristics
 	function handleHeuristicsVisibility(e: any) {
+		selected_ai = 'custom';
 		if (e.target.checked) {
 			OptionsStore.showHeuristics();
 			optionsStore.hideProximity();
@@ -72,22 +98,27 @@
 	}
 
 	function handleHeuristicsPotentialAlignement(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
 	}
 
 	function handleHeuristicsAlignement(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setHeuristicsAlignement(e.target.value);
 	}
 
 	function handleHeuristicsPotentialCapture(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setHeuristicsPotentialCapture(e.target.value);
 	}
 
 	function handleHeuristicsCapture(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setHeuristicsCapture(e.target.value);
 	}
 
 	function handleHeuristicsRandom(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setHeuristicsRandom(e.target.value);
 	}
 </script>
@@ -112,6 +143,16 @@
 						value={$OptionsStore.time_out}
 					/>
 				</div>
+				<div class="option">
+					<p>AI</p>
+					<select value={selected_ai} on:change={handleAi}>
+						{#each Object.entries(AiStore) as ai}
+							<option value={ai[0]}>
+								{ai[0]}
+							</option>
+						{/each}
+					</select>
+				</div>
 			</div>
 		</div>
 		{#if advanced_mode}
@@ -124,6 +165,15 @@
 							type="checkbox"
 							checked={$OptionsStore.proximity.show}
 							on:change={handleProximityVisibility}
+						/>
+					</div>
+					<div class="option">
+						<p>reduction</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.proximity.reduction}
+							on:change={handleProximityReduction}
+							disabled
 						/>
 					</div>
 					<div class="option">
@@ -213,15 +263,6 @@
 						<input
 							type="checkbox"
 							checked={$OptionsStore.depth.pruning}
-							on:change={handleDepthPruning}
-							disabled
-						/>
-					</div>
-					<div class="option">
-						<p>reduction</p>
-						<input
-							type="checkbox"
-							checked={$OptionsStore.depth.reduction}
 							on:change={handleDepthPruning}
 							disabled
 						/>
@@ -349,7 +390,7 @@
 	}
 
 	h3 {
-		@apply inline-block opacity-30;
+		@apply inline-block w-[110px] opacity-30;
 	}
 
 	.option {

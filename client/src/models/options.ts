@@ -4,7 +4,6 @@ export default interface Options {
 		max: number;
 		min: number;
 		pruning: boolean;
-		reduction: boolean;
 	};
 	width: {
 		max: number;
@@ -17,6 +16,7 @@ export default interface Options {
 		shape: number;
 		show: boolean;
 		evolution: boolean;
+		reduction: boolean;
 	};
 	heuristics: {
 		potential_alignement: number;
