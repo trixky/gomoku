@@ -135,6 +135,7 @@
 					<p>time out</p>
 					<input
 						type="number"
+						step="100"
 						on:change={handleTimeOut}
 						min={Config.options.time_out.min}
 						max={Config.options.time_out.max}
@@ -254,6 +255,7 @@
 						<p>max</p>
 						<input
 							type="number"
+							step="10"
 							on:change={handleWidthMax}
 							min={Config.options.width.max.min}
 							max={Config.options.width.max.max}
