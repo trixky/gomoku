@@ -13,12 +13,13 @@ export interface AlgoOptions {
 	depth: {
 		max: number;
 		min: number;
-		pruning: boolean;
+		pruning_percentage: number;
 	};
 	width: {
 		max: number;
+		min: number;
+		pruning_percentage: number;
 		multi_threading: boolean;
-		pruning: boolean;
 	};
 	proximity: {
 		radius: number;
