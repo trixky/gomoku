@@ -114,10 +114,36 @@ function createOptionsStore() {
 				options.depth.pruning = pruning;
 				return options;
 			}),
+		setDepthPruningPercentage: (pruning_percentage: string) =>
+			update((options) => {
+				const _pruning_percentage = parseInt(pruning_percentage);
+
+				if (
+					!isNaN(_pruning_percentage) &&
+					_pruning_percentage >= Config.options.depth.pruning_percentage.min &&
+					_pruning_percentage <= Config.options.depth.pruning_percentage.max
+				)
+					options.depth.pruning_percentage = _pruning_percentage;
+
+				return options;
+			}),
 		// ----------------------- set width
 		setWidthPruning: (pruning: boolean) =>
 			update((options) => {
 				options.width.pruning = pruning;
+				return options;
+			}),
+		setWidthPruningPercentage: (pruning_percentage: string) =>
+			update((options) => {
+				const _pruning_percentage = parseInt(pruning_percentage);
+
+				if (
+					!isNaN(_pruning_percentage) &&
+					_pruning_percentage >= Config.options.width.pruning_percentage.min &&
+					_pruning_percentage <= Config.options.width.pruning_percentage.max
+				)
+					options.width.pruning_percentage = _pruning_percentage;
+
 				return options;
 			}),
 		setWidthMultiThreading: (multi_threading: boolean) =>
@@ -135,6 +161,19 @@ function createOptionsStore() {
 					_max <= Config.options.width.max.max
 				)
 					options.width.max = _max;
+
+				return options;
+			}),
+		setWidthMin: (min: string) =>
+			update((options) => {
+				const _min = parseInt(min);
+
+				if (
+					!isNaN(_min) &&
+					_min >= Config.options.width.min.min &&
+					_min <= Config.options.width.min.max
+				)
+					options.width.min = _min;
 
 				return options;
 			}),

@@ -4,11 +4,14 @@ export default interface Options {
 		max: number;
 		min: number;
 		pruning: boolean;
+		pruning_percentage: number;
 	};
 	width: {
 		max: number;
+		min: number;
 		multi_threading: boolean;
 		pruning: boolean;
+		pruning_percentage: number;
 	};
 	proximity: {
 		radius: number;

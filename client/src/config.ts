@@ -17,6 +17,7 @@ export default {
 	},
 	options: {
 		time_out: {
+			step: 100,
 			default: 500,
 			min: 100, // ms
 			max: 60000 // ms
@@ -37,16 +38,34 @@ export default {
 			},
 			pruning: {
 				default: false
+			},
+			pruning_percentage: {
+				step: 10,
+				default: 0,
+				min: 0,
+				max: 1000
 			}
 		},
 		width: {
 			max: {
+				step: 10,
 				default: 361,
 				min: 1,
 				max: 361
 			},
+			min: {
+				default: 0,
+				min: 0,
+				max: 361
+			},
 			pruning: {
 				default: false
+			},
+			pruning_percentage: {
+				step: 10,
+				default: 0,
+				min: 0,
+				max: 1000
 			},
 			multi_threading: {
 				default: true

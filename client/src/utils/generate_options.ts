@@ -7,11 +7,14 @@ export default function generateOptions(): OptionsModel {
 		depth: {
 			max: Config.options.depth.max.default,
 			min: Config.options.depth.min.default,
-			pruning: Config.options.depth.pruning.default
+			pruning: Config.options.depth.pruning.default,
+			pruning_percentage: Config.options.depth.pruning_percentage.default
 		},
 		width: {
 			max: Config.options.width.max.default,
+			min: Config.options.width.min.default,
 			pruning: Config.options.width.pruning.default,
+			pruning_percentage: Config.options.depth.pruning_percentage.default,
 			multi_threading: Config.options.width.multi_threading.default
 		},
 		proximity: {

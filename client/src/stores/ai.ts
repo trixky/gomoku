@@ -17,11 +17,14 @@ export default {
 			depth: {
 				max: 6,
 				min: 3,
-				pruning: true
+				pruning: true,
+				pruning_percentage: 70
 			},
 			width: {
 				max: Config.options.width.max.default,
-				pruning: true,
+				min: Config.options.width.min.default,
+				pruning: false,
+				pruning_percentage: Config.options.width.pruning_percentage.default,
 				multi_threading: Config.options.width.multi_threading.default
 			},
 			proximity: {
@@ -51,11 +54,14 @@ export default {
 			depth: {
 				max: 1,
 				min: 0,
-				pruning: false
+				pruning: false,
+				pruning_percentage: Config.options.depth.pruning_percentage.default
 			},
 			width: {
 				max: Config.options.width.max.default,
-				pruning: false,
+				min: 10,
+				pruning: true,
+				pruning_percentage: 70,
 				multi_threading: Config.options.width.multi_threading.default
 			},
 			proximity: {
@@ -85,11 +91,14 @@ export default {
 			depth: {
 				max: 10,
 				min: 2,
-				pruning: true
+				pruning: false,
+				pruning_percentage: Config.options.depth.pruning_percentage.default
 			},
 			width: {
 				max: Config.options.width.max.default,
-				pruning: true,
+				min: Config.options.width.min.default,
+				pruning: false,
+				pruning_percentage: Config.options.width.pruning_percentage.default,
 				multi_threading: true
 			},
 			proximity: {
@@ -119,11 +128,14 @@ export default {
 			depth: {
 				max: 5,
 				min: 1,
-				pruning: true
+				pruning: true,
+				pruning_percentage: 30
 			},
 			width: {
 				max: Config.options.width.max.default,
-				pruning: true,
+				min: Config.options.width.min.default,
+				pruning: false,
+				pruning_percentage: 60,
 				multi_threading: true
 			},
 			proximity: {
@@ -153,11 +165,14 @@ export default {
 			depth: {
 				max: 4,
 				min: 2,
-				pruning: true
+				pruning: true,
+				pruning_percentage: 20
 			},
 			width: {
 				max: Config.options.width.max.default,
+				min: 20,
 				pruning: true,
+				pruning_percentage: 40,
 				multi_threading: true
 			},
 			proximity: {

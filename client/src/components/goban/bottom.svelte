@@ -51,6 +51,7 @@
 	}
 
 	function handleProximityEvolution(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setProximityEvolution(e.target.checked);
 	}
 
@@ -74,6 +75,11 @@
 		selected_ai = 'custom';
 		OptionsStore.setDepthPruning(e.target.checked);
 	}
+
+	function handleDepthPruningPercentage(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setDepthPruningPercentage(e.target.value);
+	}
 	// ----------------------- handle width
 	function handleWidthMultiThreading(e: any) {
 		selected_ai = 'custom';
@@ -82,8 +88,17 @@
 	function handleWidthPruning(e: any) {
 		OptionsStore.setWidthPruning(e.target.checked);
 	}
+	function handleWidthPruningPercentage(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setWidthPruningPercentage(e.target.value);
+	}
 	function handleWidthMax(e: any) {
+		selected_ai = 'custom';
 		OptionsStore.setWidthMax(e.target.value);
+	}
+	function handleWidthMin(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setWidthMin(e.target.value);
 	}
 	// ----------------------- handle heuristics
 	function handleHeuristicsVisibility(e: any) {
@@ -135,7 +150,7 @@
 					<p>time out</p>
 					<input
 						type="number"
-						step="100"
+						step={Config.options.time_out.step}
 						on:change={handleTimeOut}
 						min={Config.options.time_out.min}
 						max={Config.options.time_out.max}
@@ -164,6 +179,19 @@
 			</div>
 		</div>
 		{#if advanced_mode}
+			<div class="options-form">
+				<!-- <h3>Proximity</h3> -->
+				<div class="options">
+					<div class="option">
+						<p>multi-threading</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.width.multi_threading}
+							on:change={handleWidthMultiThreading}
+						/>
+					</div>
+				</div>
+			</div>
 			<div class="options-form">
 				<h3>Proximity</h3>
 				<div class="options">
@@ -235,27 +263,39 @@
 				<h3>Width</h3>
 				<div class="options">
 					<div class="option">
-						<p>multi-threading</p>
-						<input
-							type="checkbox"
-							checked={$OptionsStore.width.multi_threading}
-							on:change={handleWidthMultiThreading}
-						/>
-					</div>
-					<div class="option">
 						<p>pruning</p>
 						<input
 							type="checkbox"
 							checked={$OptionsStore.width.pruning}
 							on:change={handleWidthPruning}
-							disabled
+						/>
+						<input
+							type="number"
+							step={Config.options.width.pruning_percentage.step}
+							on:change={handleWidthPruningPercentage}
+							min={Config.options.width.pruning_percentage.min}
+							max={Config.options.width.pruning_percentage.max}
+							value={$OptionsStore.width.pruning_percentage}
+							disabled={!$OptionsStore.width.pruning}
+						/>
+						%
+					</div>
+					<div class="option">
+						<p>min</p>
+						<input
+							type="number"
+							on:change={handleWidthMin}
+							min={Config.options.width.min.min}
+							max={Config.options.width.min.max}
+							value={$OptionsStore.width.min}
+							disabled={!$OptionsStore.width.pruning}
 						/>
 					</div>
 					<div class="option">
 						<p>max</p>
 						<input
 							type="number"
-							step="10"
+							step={Config.options.width.max.step}
 							on:change={handleWidthMax}
 							min={Config.options.width.max.min}
 							max={Config.options.width.max.max}
@@ -273,18 +313,17 @@
 							type="checkbox"
 							checked={$OptionsStore.depth.pruning}
 							on:change={handleDepthPruning}
-							disabled
 						/>
-					</div>
-					<div class="option">
-						<p>max</p>
 						<input
 							type="number"
-							on:change={handleDepthMax}
-							min={Config.options.depth.max.min}
-							max={Config.options.depth.max.max}
-							value={$OptionsStore.depth.max}
+							step={Config.options.depth.pruning_percentage.step}
+							on:change={handleDepthPruningPercentage}
+							min={Config.options.depth.pruning_percentage.min}
+							max={Config.options.depth.pruning_percentage.max}
+							value={$OptionsStore.depth.pruning_percentage}
+							disabled={!$OptionsStore.depth.pruning}
 						/>
+						%
 					</div>
 					<div class="option">
 						<p>min</p>
@@ -295,6 +334,16 @@
 							max={Config.options.depth.min.max}
 							value={$OptionsStore.depth.min}
 							disabled={!$OptionsStore.depth.pruning}
+						/>
+					</div>
+					<div class="option">
+						<p>max</p>
+						<input
+							type="number"
+							on:change={handleDepthMax}
+							min={Config.options.depth.max.min}
+							max={Config.options.depth.max.max}
+							value={$OptionsStore.depth.max}
 						/>
 					</div>
 				</div>
