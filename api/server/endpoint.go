@@ -47,10 +47,16 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	heuristic_goban.Compute(childs)
 
-	best_child := childs[len(childs)-1]
-	for _, child := range childs {
-		if child.State.Beta > best_child.State.Beta {
-			best_child = child
+	var best_child models.Context
+
+	if len(childs) == 0 {
+		best_child = logic.Random(&context)
+	} else {
+		best_child = childs[len(childs)-1]
+		for _, child := range childs {
+			if child.State.Beta > best_child.State.Beta {
+				best_child = child
+			}
 		}
 	}
 
