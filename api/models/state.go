@@ -7,7 +7,7 @@ import (
 
 type State struct {
 	// Scores
-	HeuristicScore int
+	Beta int
 
 	LastMove Move
 	Depth    uint8
@@ -15,7 +15,7 @@ type State struct {
 
 // Init Inits the state
 func (s *State) Init() {
-	s.HeuristicScore = math.MinInt32
+	s.Beta = math.MinInt32
 }
 
 // Print prints state attributes
@@ -26,7 +26,7 @@ func (s *State) Print() {
 
 	// Prints scores
 	fmt.Println("--------------- [heuristic]")
-	fmt.Println("score:\t", s.HeuristicScore)
+	fmt.Println("score:\t", s.Beta)
 
 	// Prints last move
 	s.LastMove.Print()

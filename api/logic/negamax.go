@@ -16,6 +16,23 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 		child_channel := make(chan *models.Context, context.Options.WidthMax)
 		childs_to_wait := 0
 
+		depth_pruning := context.Options.DepthPruningPercentage > 0 && context.State.Depth > 1
+		width_pruning := context.Options.WidthPruningPercentage > 0
+
+		if depth_pruning || width_pruning {
+			local_beta := heuristics.Random(context)
+
+			if (depth_pruning && DepthPruning(local_beta, context)) || (width_pruning && WidthPruning(local_beta, context)) {
+				// If depth or width pruning is active and beta is too weak
+
+				if parent_channel != nil {
+					parent_channel <- nil
+				}
+
+				return
+			}
+		}
+
 		for y, line := range context.Goban {
 			// For each line
 			for x, cell := range line {
@@ -46,16 +63,27 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 	childs_judgment:
 		for i := 0; i < childs_to_wait; i++ {
 			child := <-child_channel
-			childs = append(childs, *child)
-			if child.State.HeuristicScore > best_child.State.HeuristicScore {
-				best_child = child
+
+			if child != nil {
+				childs = append(childs, *child)
+
+				if child.State.Beta > best_child.State.Beta {
+					best_child = child
+				}
 			}
 		}
 
-		context.State.HeuristicScore = -best_child.State.HeuristicScore
+		if len(childs) == 0 {
+			if parent_channel != nil {
+				parent_channel <- nil
+			}
 
+			return
+		}
+
+		context.State.Beta = -best_child.State.Beta
 	} else {
-		context.State.HeuristicScore = heuristics.Random(context)
+		context.State.Beta = heuristics.Random(context)
 
 		if context.State.Depth == 0 {
 			childs = append(childs, *context)

@@ -14,12 +14,12 @@ type Options struct {
 	// Depth
 	DepthMax               uint8
 	DepthMin               uint8
-	DepthPruningPercentage uint16
+	DepthPruningPercentage int
 
 	// Width
 	WidthMax               int
 	WidthMultiThreading    bool
-	WidthPruningPercentage uint16
+	WidthPruningPercentage int
 
 	// Proximity
 	ProximityRadius    uint8
