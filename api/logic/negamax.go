@@ -28,12 +28,10 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 						Y: uint8(y),
 					})
 
-					childs = append(childs, child)
-
 					if context.State.Depth == 0 && context.Options.WidthMultiThreading {
-						go Negamax(&childs[len(childs)-1], child_channel)
+						go Negamax(&child, child_channel)
 					} else {
-						Negamax(&childs[len(childs)-1], child_channel)
+						Negamax(&child, child_channel)
 					}
 
 					elapsed_time := time.Now().Sub(context.Start).Milliseconds()
@@ -48,9 +46,7 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 	childs_judgment:
 		for i := 0; i < childs_to_wait; i++ {
 			child := <-child_channel
-			if context.State.Depth == 0 {
-				childs = append(childs, *child)
-			}
+			childs = append(childs, *child)
 			if child.State.HeuristicScore > best_child.State.HeuristicScore {
 				best_child = child
 			}

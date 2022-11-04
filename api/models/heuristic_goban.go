@@ -16,7 +16,6 @@ func (hb *HeuristicGoban) Compute(contexts []Context) {
 	}
 
 	for _, context := range contexts {
-		fmt.Println("ca prend le child:", context.State.LastMove.Position.Y, context.State.LastMove.Position.X, context.State.HeuristicScore)
 		hb[context.State.LastMove.Position.Y][context.State.LastMove.Position.X] = context.State.HeuristicScore
 	}
 }
