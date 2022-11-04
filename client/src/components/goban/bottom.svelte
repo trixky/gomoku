@@ -271,6 +271,11 @@
 						/>
 						<input
 							type="number"
+							style={$OptionsStore.width.pruning_percentage >= 100
+								? 'color: crimson;'
+								: $OptionsStore.width.pruning_percentage >= 80
+								? 'color: orangered;'
+								: ''}
 							step={Config.options.width.pruning_percentage.step}
 							on:change={handleWidthPruningPercentage}
 							min={Config.options.width.pruning_percentage.min}
@@ -315,7 +320,13 @@
 							on:change={handleDepthPruning}
 						/>
 						<input
+							class="depth-pruning-input"
 							type="number"
+							style={$OptionsStore.depth.pruning_percentage >= 300
+								? 'color: crimson;'
+								: $OptionsStore.depth.pruning_percentage >= 280
+								? 'color: orangered;'
+								: ''}
 							step={Config.options.depth.pruning_percentage.step}
 							on:change={handleDepthPruningPercentage}
 							min={Config.options.depth.pruning_percentage.min}
