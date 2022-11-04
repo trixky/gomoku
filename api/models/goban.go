@@ -114,6 +114,40 @@ func (g *Goban) ToString() (str string) {
 	return
 }
 
+// Extra extracts the goban from the request data
+func Extract(requestGoban string) (goban Goban, err error) {
+	if len(requestGoban) != 361 {
+		// If the goban is not exactly the right length
+		return goban, ERR_RD_GOBAN_LENGTH
+	}
+
+	i := 0
+	for y := 0; y < 19; y++ {
+		for x := 0; x < 19; x++ {
+			switch requestGoban[i] {
+			case '0':
+				// If no player on the last position move
+				goban[y][x] = PLAYER_0
+				break
+			case '1':
+				// If the player 1 is on the last position move
+				goban[y][x] = PLAYER_1
+				break
+			case '2':
+				// If the player 2 is on the last position move
+				goban[y][x] = PLAYER_2
+				break
+			default:
+				// If an unknown character is on the last position move
+				return goban, ERR_RD_GOBAN_CHARACTER_ONLY_012
+			}
+			i++
+		}
+	}
+
+	return
+}
+
 // PrintPlayers prints the 2D goban representation with players in stdout
 func (g *Goban) PrintPlayers() {
 	fmt.Println("============================= [GOBAN players]")

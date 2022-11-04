@@ -16,6 +16,7 @@ func Start() {
 
 	// register the resolve handler to the mux
 	mux.HandleFunc("/next", next)
+	mux.HandleFunc("/check", check)
 
 	// Wrapp mux in the CORS middleware
 	wrapped_mux := AllowCORS(mux)

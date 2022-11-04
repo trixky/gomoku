@@ -20,7 +20,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	// Decode the data from JSON
 	decoder := json.NewDecoder(r.Body)
-	data := models.RequestData{}
+	data := models.RequestNextData{}
 
 	if err := decoder.Decode(&data); err != nil {
 		// If JSON unmarshalling failed
@@ -39,11 +39,12 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Goban.ComputeGlobalProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
 
-	context.Print()
+	// context.Print()
 
 	childs := logic.Negamax(&context, nil)
 
 	heuristic_goban := models.HeuristicGoban{}
+	heuristic_goban.Print()
 
 	heuristic_goban.Compute(childs)
 
@@ -64,7 +65,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	_json, err := best_child.ToJSON(elapsed_time, heuristic_goban)
 
-	best_child.Print()
+	// best_child.Print()
 
 	if err != nil {
 		// If the context computation failed
