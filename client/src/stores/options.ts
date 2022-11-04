@@ -12,7 +12,12 @@ function createOptionsStore() {
 		reset: () => set(generateOptions()),
 		// ----------------------- set ai
 		setAi: (ai: OptionsModel) => {
-			set(ai);
+			update((_ai) => {
+				ai.proximity.show = _ai.proximity.show;
+				ai.heuristics.show = _ai.heuristics.show;
+
+				return ai;
+			});
 		},
 		// ----------------------- set time out
 		setTimeOut: (time_out: string) =>
