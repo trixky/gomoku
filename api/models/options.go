@@ -33,6 +33,9 @@ type Options struct {
 	HeuristicPotentialCaptureWeight    int
 	HeuristicCaptureWeight             int
 	HeuristicRandomWeight              int
+
+	// Suspicion
+	SuspicionRadius int
 }
 
 // Print prints options attributes
@@ -69,4 +72,12 @@ func (o *Options) Print() {
 	fmt.Printf("potential capture:\t\t%2d/10\n", o.HeuristicPotentialCaptureWeight)
 	fmt.Printf("capture:\t\t\t%2d/10\n", o.HeuristicCaptureWeight)
 	fmt.Printf("random:\t\t\t%2d/10\n", o.HeuristicRandomWeight)
+
+	// Prints suspicion
+	fmt.Println("--------------- [suspicion]")
+	if o.SuspicionRadius > 0 {
+		fmt.Printf("radius:\t%2d\n", o.SuspicionRadius)
+	} else {
+		fmt.Println("radius:\tdisable")
+	}
 }

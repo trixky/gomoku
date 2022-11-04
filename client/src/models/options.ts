@@ -29,4 +29,8 @@ export default interface Options {
 		random: number;
 		show: boolean;
 	};
+	suspicion: {
+		active: boolean;
+		radius: number;
+	};
 }

@@ -32,6 +32,10 @@ export default function generateOptions(): OptionsModel {
 			capture: Config.options.heuristics.values.default,
 			random: Config.options.heuristics.values.default,
 			show: Config.options.heuristics.show.default
+		},
+		suspicion: {
+			active: Config.options.suspicion.active.default,
+			radius: Config.options.suspicion.radius.default
 		}
 	};
 }

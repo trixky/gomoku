@@ -42,6 +42,10 @@ export default {
 				capture: 10,
 				random: 2,
 				show: Config.options.heuristics.show.default
+			},
+			suspicion: {
+				active: Config.options.suspicion.active.default,
+				radius: Config.options.suspicion.radius.default
 			}
 		},
 		description:
@@ -79,6 +83,10 @@ export default {
 				capture: 3,
 				random: 3,
 				show: Config.options.heuristics.show.default
+			},
+			suspicion: {
+				active: true,
+				radius: 6
 			}
 		},
 		description:
@@ -116,6 +124,10 @@ export default {
 				capture: 10,
 				random: 1,
 				show: Config.options.heuristics.show.default
+			},
+			suspicion: {
+				active: false,
+				radius: Config.options.suspicion.radius.min
 			}
 		},
 		description:
@@ -153,6 +165,10 @@ export default {
 				capture: 8,
 				random: 2,
 				show: Config.options.heuristics.show.default
+			},
+			suspicion: {
+				active: true,
+				radius: 7
 			}
 		},
 		description:
@@ -190,6 +206,10 @@ export default {
 				capture: 10,
 				random: 3,
 				show: Config.options.heuristics.show.default
+			},
+			suspicion: {
+				active: false,
+				radius: Config.options.suspicion.radius.min
 			}
 		},
 		description:
