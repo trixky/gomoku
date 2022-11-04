@@ -223,6 +223,30 @@ function createOptionsStore() {
 
 				if (!isNaN(_random)) options.heuristics.random = _random;
 				return options;
+			}),
+		// ----------------------- set suspicion
+		activeSuspicion: () =>
+			update((options) => {
+				options.suspicion.active = true;
+				return options;
+			}),
+		disableSuspicion: () =>
+			update((options) => {
+				options.suspicion.active = false;
+				return options;
+			}),
+		setSuspicionRadius: (radius: string) =>
+			update((options) => {
+				const _radius = parseInt(radius);
+
+				if (
+					!isNaN(_radius) &&
+					_radius >= Config.options.suspicion.radius.min &&
+					_radius <= Config.options.suspicion.radius.max
+				)
+					options.suspicion.radius = _radius;
+
+				return options;
 			})
 	};
 }

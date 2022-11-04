@@ -11,6 +11,10 @@ var (
 	ERR_RD_LAST_MOVE_NO_PLAYER      = errors.New("cell of the last move need to be taken by a player")
 )
 
+type RequestSuspicionData struct {
+	Radius int `json:"radius"` // 0 = disable
+}
+
 type RequestDepthData struct {
 	Max               uint8 `json:"max"`
 	Min               uint8 `json:"min"`
@@ -45,6 +49,7 @@ type RequestOptionData struct {
 	Width      RequestWidthData      `json:"width"`
 	Proximity  RequestProximityData  `json:"proximity"`
 	Heuristics RequestHeuristicsData `json:"heuristics"`
+	Suspicion  RequestSuspicionData  `json:"suspicion"`
 }
 
 type RequestData struct {
@@ -113,6 +118,9 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	options.HeuristicPotentialCaptureWeight = rd.Options.Heuristics.PotentialCaptureWeight
 	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
+
+	// Suspicion
+	options.SuspicionRadius = rd.Options.Suspicion.Radius
 
 	return
 }

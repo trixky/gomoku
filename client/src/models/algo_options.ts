@@ -35,4 +35,7 @@ export interface AlgoOptions {
 		capture: number;
 		random: number;
 	};
+	suspicion: {
+		radius: number;
+	};
 }

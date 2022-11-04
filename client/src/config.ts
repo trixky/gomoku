@@ -104,6 +104,16 @@ export default {
 			show: {
 				default: false
 			}
+		},
+		suspicion: {
+			active: {
+				default: false
+			},
+			radius: {
+				min: 1,
+				max: 19,
+				default: 4
+			}
 		}
 	}
 };

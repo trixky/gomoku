@@ -37,6 +37,9 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			potential_capture: $Stores[0].heuristics.potential_capture,
 			capture: $Stores[0].heuristics.capture,
 			random: $Stores[0].heuristics.random
+		},
+		suspicion: {
+			radius: $Stores[0].suspicion.active ? $Stores[0].suspicion.radius : 0
 		}
 	};
 });

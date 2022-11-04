@@ -18,13 +18,11 @@
 		if (ai != 'custom') OptionsStore.setAi(AiStore[ai].options);
 		selected_ai = ai;
 	}
-
 	// ----------------------- handle time out
 	function handleTimeOut(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setTimeOut(e.target.value);
 	}
-
 	// ----------------------- handle proximity
 	function handleProximityVisibility(e: any) {
 		if (e.target.checked) {
@@ -34,7 +32,6 @@
 			OptionsStore.hideProximity();
 		}
 	}
-
 	function handleProximityShape(e: any) {
 		selected_ai = 'custom';
 		optionsStore.setProximityShape(e.target.value);
@@ -59,7 +56,6 @@
 		selected_ai = 'custom';
 		OptionsStore.setProximityReduction(e.target.checked);
 	}
-
 	// ----------------------- handle depth
 	function handleDepthMax(e: any) {
 		selected_ai = 'custom';
@@ -114,25 +110,34 @@
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
 	}
-
 	function handleHeuristicsAlignement(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsAlignement(e.target.value);
 	}
-
 	function handleHeuristicsPotentialCapture(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsPotentialCapture(e.target.value);
 	}
-
 	function handleHeuristicsCapture(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsCapture(e.target.value);
 	}
-
 	function handleHeuristicsRandom(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsRandom(e.target.value);
+	}
+	// ----------------------- handle heuristics
+	function handleSuspicionActivation(e: any) {
+		selected_ai = 'custom';
+		if (e.target.checked) {
+			OptionsStore.activeSuspicion();
+		} else {
+			OptionsStore.disableSuspicion();
+		}
+	}
+	function handleSuspicionRadius(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setSuspicionRadius(e.target.value);
 	}
 </script>
 
@@ -180,7 +185,6 @@
 		</div>
 		{#if advanced_mode}
 			<div class="options-form">
-				<!-- <h3>Proximity</h3> -->
 				<div class="options">
 					<div class="option">
 						<p>multi-threading</p>
@@ -365,7 +369,7 @@
 			</div>
 			<div class="options-form">
 				<h3>Heuristics</h3>
-				<div class="range-container">
+				<div class="options">
 					<div class="option">
 						<p>show</p>
 						<input
@@ -374,6 +378,26 @@
 							on:change={handleHeuristicsVisibility}
 						/>
 					</div>
+					<div class="option">
+						<p>suspicion radius</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.suspicion.active}
+							on:change={handleSuspicionActivation}
+						/>
+						<input
+							type="number"
+							on:change={handleSuspicionRadius}
+							min={Config.options.suspicion.radius.min}
+							max={Config.options.suspicion.radius.max}
+							value={$OptionsStore.suspicion.radius}
+							disabled={!$OptionsStore.suspicion.active}
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="options-form">
+				<div class="range-container">
 					<div class="option">
 						<p>potential alignement</p>
 						<input
@@ -456,7 +480,7 @@
 	}
 
 	.options-form {
-		@apply flex justify-between w-full mt-3;
+		@apply flex justify-end w-full mt-3;
 	}
 
 	.options {
@@ -464,7 +488,7 @@
 	}
 
 	.range-container {
-		@apply flex flex-col justify-end content-end align-bottom items-end;
+		@apply flex flex-col justify-end content-end items-end;
 	}
 
 	h3 {
@@ -506,7 +530,7 @@
 	}
 
 	input[type='range'] {
-		@apply w-48 my-0 mx-2 translate-y-[6px];
+		@apply w-48 m-0 ml-3 translate-y-[6px];
 	}
 
 	.range-value {
