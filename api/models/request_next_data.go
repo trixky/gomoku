@@ -11,30 +11,30 @@ var (
 	ERR_RD_LAST_MOVE_NO_PLAYER      = errors.New("cell of the last move need to be taken by a player")
 )
 
-type RequestSuspicionData struct {
+type RequestNextSuspicionData struct {
 	Radius int `json:"radius"` // 0 = disable
 }
 
-type RequestDepthData struct {
+type RequestNextDepthData struct {
 	Max               uint8 `json:"max"`
 	Min               uint8 `json:"min"`
 	PruningPercentage int   `json:"pruning_percentage"`
 }
 
-type RequestWidthData struct {
+type RequestNextWidthData struct {
 	Max               int  `json:"max"`
 	MultiThreading    bool `json:"multi_threading"`
 	PruningPercentage int  `json:"pruning_percentage"`
 }
 
-type RequestProximityData struct {
+type RequestNextProximityData struct {
 	Radius    uint8 `json:"radius"`
 	Threshold uint8 `json:"threshold"`
 	Shape     uint8 `json:"shape"`
 	Evolution bool  `json:"evolution"`
 }
 
-type RequestHeuristicsData struct {
+type RequestNextHeuristicsData struct {
 	PotentialAlignementWeight int `json:"potential_alignement"`
 	AlignementWeight          int `json:"alignement"`
 	PotentialCaptureWeight    int `json:"potential_capture"`
@@ -42,23 +42,23 @@ type RequestHeuristicsData struct {
 	RandomWeight              int `json:"random"`
 }
 
-type RequestOptionData struct {
+type RequestNextOptionData struct {
 	TimeOut    int64                 `json:"time_out"` // ms
 	Position   Position              `json:"position"`
-	Depth      RequestDepthData      `json:"depth"`
-	Width      RequestWidthData      `json:"width"`
-	Proximity  RequestProximityData  `json:"proximity"`
-	Heuristics RequestHeuristicsData `json:"heuristics"`
-	Suspicion  RequestSuspicionData  `json:"suspicion"`
+	Depth      RequestNextDepthData      `json:"depth"`
+	Width      RequestNextWidthData      `json:"width"`
+	Proximity  RequestNextProximityData  `json:"proximity"`
+	Heuristics RequestNextHeuristicsData `json:"heuristics"`
+	Suspicion  RequestNextSuspicionData  `json:"suspicion"`
 }
 
-type RequestData struct {
-	Options RequestOptionData `json:"options"`
+type RequestNextData struct {
+	Options RequestNextOptionData `json:"options"`
 	Goban   string            `json:"goban"`
 }
 
-// ExtractGoban extracts the goban from the request data
-func (rd *RequestData) ExtractGoban() (goban Goban, err error) {
+// ExtractGoban extracts the goban from the requestNext data
+func (rd *RequestNextData) ExtractGoban() (goban Goban, err error) {
 	if len(rd.Goban) != 361 {
 		// If the goban is not exactly the right length
 		return goban, ERR_RD_GOBAN_LENGTH
@@ -91,8 +91,8 @@ func (rd *RequestData) ExtractGoban() (goban Goban, err error) {
 	return
 }
 
-// ExtractOptions extracts the options from the request data
-func (rd *RequestData) ExtractOptions() (options Options, err error) {
+// ExtractOptions extracts the options from the requestNext data
+func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	// Constraints
 	options.TimeOut = rd.Options.TimeOut
 
@@ -125,8 +125,8 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	return
 }
 
-// ExtractState extracts the state from the request data
-func (rd *RequestData) ExtractState() (state State, err error) {
+// ExtractState extracts the state from the requestNext data
+func (rd *RequestNextData) ExtractState() (state State, err error) {
 	var player bool
 
 	// Find the player of the last move
@@ -161,8 +161,8 @@ func (rd *RequestData) ExtractState() (state State, err error) {
 	return
 }
 
-// ComputeContext compute a new context from the request data
-func (rd *RequestData) ComputeContext() (context Context, err error) {
+// ComputeContext compute a new context from the requestNext data
+func (rd *RequestNextData) ComputeContext() (context Context, err error) {
 	// Start the time
 	context.Start = time.Now()
 
