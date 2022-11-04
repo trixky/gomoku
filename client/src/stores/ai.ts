@@ -134,7 +134,7 @@ export default {
 			width: {
 				max: Config.options.width.max.default,
 				min: Config.options.width.min.default,
-				pruning: false,
+				pruning: true,
 				pruning_percentage: 60,
 				multi_threading: true
 			},

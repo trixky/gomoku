@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"sync"
 	"time"
 )
 
@@ -16,8 +17,25 @@ const (
 type Context struct {
 	Start   time.Time
 	Options *Options
+	Bests   []Best
 	State   State
 	Goban   Goban
+}
+
+// InitBests initializes the bests array used for pruning
+func (c *Context) InitBests() {
+	if c.Options.WidthPruningPercentage > 0 || (c.Options.DepthPruningPercentage > 0 && c.Options.DepthMax > 1) {
+		c.Bests = make([]Best, c.Options.DepthMax)
+
+		for i := uint8(0); i < c.Options.DepthMax; i++ {
+			c.Bests[i] = Best{
+				M:    sync.RWMutex{},
+				beta: math.MinInt,
+			}
+		}
+	} else {
+		c.Bests = nil
+	}
 }
 
 // Next copy and update a sub context from this parent
@@ -25,7 +43,7 @@ func (c *Context) Next(position Position) (context Context) {
 	context.Start = c.Start
 	context.Options = c.Options
 	context.State = c.State
-	context.State.HeuristicScore = math.MinInt32
+	context.State.Beta = math.MinInt
 
 	context.Goban = c.Goban
 
@@ -33,6 +51,8 @@ func (c *Context) Next(position Position) (context Context) {
 
 	context.State.LastMove.Player = !c.State.LastMove.Player // color
 	context.State.LastMove.Position = position
+
+	context.Bests = c.Bests
 
 	if c.State.LastMove.Player {
 		context.Goban[position.Y][position.X] = PLAYER_2

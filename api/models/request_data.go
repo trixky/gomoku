@@ -12,15 +12,15 @@ var (
 )
 
 type RequestDepthData struct {
-	Max               uint8  `json:"max"`
-	Min               uint8  `json:"min"`
-	PruningPercentage uint16 `json:"pruning_percentage"`
+	Max               uint8 `json:"max"`
+	Min               uint8 `json:"min"`
+	PruningPercentage int   `json:"pruning_percentage"`
 }
 
 type RequestWidthData struct {
-	Max               int    `json:"max"`
-	MultiThreading    bool   `json:"multi_threading"`
-	PruningPercentage uint16 `json:"pruning_percentage"`
+	Max               int  `json:"max"`
+	MultiThreading    bool `json:"multi_threading"`
+	PruningPercentage int  `json:"pruning_percentage"`
 }
 
 type RequestProximityData struct {
@@ -178,6 +178,8 @@ func (rd *RequestData) ComputeContext() (context Context, err error) {
 	} else {
 		context.State = state
 	}
+
+	context.InitBests()
 
 	return
 }

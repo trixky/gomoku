@@ -41,8 +41,6 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Print()
 
-	// channel := make(chan *models.Context, 1)
-
 	childs := logic.Negamax(&context, nil)
 
 	heuristic_goban := models.HeuristicGoban{}
@@ -51,11 +49,10 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	best_child := childs[len(childs)-1]
 	for _, child := range childs {
-		if child.State.HeuristicScore > best_child.State.HeuristicScore {
+		if child.State.Beta > best_child.State.Beta {
 			best_child = child
 		}
 	}
-	// best_child := <-channel
 
 	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 
