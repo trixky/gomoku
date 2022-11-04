@@ -12,15 +12,15 @@ var (
 )
 
 type RequestDepthData struct {
-	Max     uint8 `json:"max"`
-	Min     uint8 `json:"min"`
-	Pruning bool  `json:"pruning"`
+	Max               uint8  `json:"max"`
+	Min               uint8  `json:"min"`
+	PruningPercentage uint16 `json:"pruning_percentage"`
 }
 
 type RequestWidthData struct {
-	Max            int  `json:"max"`
-	MultiThreading bool `json:"multi_threading"`
-	Pruning        bool `json:"pruning"`
+	Max               int    `json:"max"`
+	MultiThreading    bool   `json:"multi_threading"`
+	PruningPercentage uint16 `json:"pruning_percentage"`
 }
 
 type RequestProximityData struct {
@@ -94,12 +94,12 @@ func (rd *RequestData) ExtractOptions() (options Options, err error) {
 	// Depth
 	options.DepthMax = rd.Options.Depth.Max
 	options.DepthMin = rd.Options.Depth.Min
-	options.DepthPruning = rd.Options.Depth.Pruning
+	options.DepthPruningPercentage = rd.Options.Depth.PruningPercentage
 
 	// Width
 	options.WidthMax = rd.Options.Width.Max
 	options.WidthMultiThreading = rd.Options.Width.MultiThreading
-	options.WidthPruning = rd.Options.Width.Pruning
+	options.WidthPruningPercentage = rd.Options.Width.PruningPercentage
 
 	// Proximity
 	options.ProximityRadius = rd.Options.Proximity.Radius
