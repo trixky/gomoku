@@ -46,6 +46,10 @@ export default {
 			suspicion: {
 				active: Config.options.suspicion.active.default,
 				radius: Config.options.suspicion.radius.default
+			},
+			analyzer: {
+				layered: Config.options.analyzer.layered.default,
+				percentage: Config.options.analyzer.percentage.default
 			}
 		},
 		description:
@@ -87,6 +91,10 @@ export default {
 			suspicion: {
 				active: true,
 				radius: 6
+			},
+			analyzer: {
+				layered: Config.options.analyzer.layered.default,
+				percentage: Config.options.analyzer.percentage.default
 			}
 		},
 		description:
@@ -128,6 +136,10 @@ export default {
 			suspicion: {
 				active: false,
 				radius: Config.options.suspicion.radius.min
+			},
+			analyzer: {
+				layered: Config.options.analyzer.layered.default,
+				percentage: Config.options.analyzer.percentage.default
 			}
 		},
 		description:
@@ -169,6 +181,10 @@ export default {
 			suspicion: {
 				active: true,
 				radius: 7
+			},
+			analyzer: {
+				layered: Config.options.analyzer.layered.default,
+				percentage: Config.options.analyzer.percentage.default
 			}
 		},
 		description:
@@ -210,6 +226,10 @@ export default {
 			suspicion: {
 				active: false,
 				radius: Config.options.suspicion.radius.min
+			},
+			analyzer: {
+				layered: Config.options.analyzer.layered.default,
+				percentage: Config.options.analyzer.percentage.default
 			}
 		},
 		description:

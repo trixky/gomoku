@@ -15,11 +15,12 @@ const (
 )
 
 type Context struct {
-	Start   time.Time
-	Options *Options
-	Bests   []Best
-	State   State
-	Goban   Goban
+	Start    time.Time
+	Options  *Options
+	Bests    []Best
+	State    State
+	Goban    Goban
+	Analyzer Analyzer
 }
 
 // InitBests initializes the bests array used for pruning
@@ -64,6 +65,8 @@ func (c *Context) Next(position Position) (context Context) {
 		context.Goban.ComputePieceProximity(&position, context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
 	}
 
+	context.Analyzer = c.Analyzer
+
 	return
 }
 
@@ -83,6 +86,8 @@ func (c *Context) Print() {
 	c.Goban.PrintProximity(&c.Options.ProximityThreshold)
 	// Prints options attributes
 	c.Options.Print()
+	// Prints analyzer
+	c.Analyzer.Print()
 
 	// Prints the footer separator
 	fmt.Println(" * * * * * * * * * * * * * * * * * * * *")

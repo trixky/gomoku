@@ -10,6 +10,7 @@
 	import LastMoveStore from '../../stores/last_move';
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
+	import AnalyzerStore from '../../stores/analyzer';
 	import type ResponseModel from '../../models/response';
 
 	function handleCellClick(x: number, y: number) {
@@ -23,6 +24,7 @@
 					.then((response) => {
 						const json_response: ResponseModel = JSON.parse(response);
 
+						AnalyzerStore.set(json_response.analyzer);
 						LastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
 						GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
 						GobanStore.heuristicFromString(json_response.heuristic_goban);
@@ -66,7 +68,7 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.goban-container {
-		@apply h-fit bg-white;
+		@apply h-fit w-fit m-auto bg-white;
 		border: 2px solid black;
 		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	}

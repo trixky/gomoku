@@ -6,10 +6,10 @@ import (
 	"github.com/trixky/gomoku/models"
 )
 
-func DepthPruning(beta int, context *models.Context) bool {
+func DepthPruning(local_beta int, context *models.Context) bool {
 	// return false
 	// Get the beta value of the previous layer
-	beta, first := context.Bests[context.State.Depth-1].Max(beta)
+	beta, first := context.Bests[context.State.Depth-1].Max(local_beta)
 
 	if !first {
 		// If it's not the first best comparaison of the current layer
@@ -17,7 +17,7 @@ func DepthPruning(beta int, context *models.Context) bool {
 		// Alpha is the negative beta of the previous layer
 		alpha := -beta
 
-		if beta*100 < alpha*100-(int(math.Abs(float64(alpha)))*(100-context.Options.DepthPruningPercentage)) {
+		if local_beta*100 < alpha*100-(int(math.Abs(float64(alpha)))*(100-context.Options.DepthPruningPercentage)) {
 			// If beta is too weak
 
 			return true
@@ -27,12 +27,12 @@ func DepthPruning(beta int, context *models.Context) bool {
 	return false
 }
 
-func WidthPruning(beta int, context *models.Context) bool {
+func WidthPruning(local_beta int, context *models.Context) bool {
 	// Get the beta value of the current layer
 
-	beta, first := context.Bests[context.State.Depth].Max(beta)
+	beta, first := context.Bests[context.State.Depth].Max(local_beta)
 
-	if !first && beta*100 < beta*100-(int(math.Abs(float64(beta)))*(100-context.Options.WidthPruningPercentage)) {
+	if !first && local_beta*100 < beta*100-(int(math.Abs(float64(beta)))*(100-context.Options.WidthPruningPercentage)) {
 		// If it's not the first best comparaison of the current layer
 		// and beta is too weak
 		return true

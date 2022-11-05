@@ -36,6 +36,10 @@ export default function generateOptions(): OptionsModel {
 		suspicion: {
 			active: Config.options.suspicion.active.default,
 			radius: Config.options.suspicion.radius.default
+		},
+		analyzer: {
+			layered: Config.options.analyzer.layered.default,
+			percentage: Config.options.analyzer.percentage.default
 		}
 	};
 }

@@ -1,3 +1,5 @@
+import type Analyzer from './analyzer';
+
 export default interface Response {
 	goban: string;
 	heuristic_goban: string;
@@ -8,4 +10,5 @@ export default interface Response {
 			y: number;
 		};
 	};
+	analyzer: Analyzer;
 }

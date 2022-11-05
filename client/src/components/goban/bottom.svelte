@@ -5,9 +5,12 @@
 	import { SHAPES } from '../../models/algo_options';
 	import optionsStore from '../../stores/options';
 	import AiStore from '../../stores/ai';
+	import LayersStore from '../../stores/layers';
 
 	let selected_ai = Config.options.ai.default;
 	let advanced_mode = false;
+	$: percentage_unit = $OptionsStore.analyzer.percentage ? ' %' : '';
+
 	$: shape_neighboor = $OptionsStore.proximity.shape == SHAPES.neighbour;
 
 	// ----------------------- handle ai
@@ -138,6 +141,21 @@
 	function handleSuspicionRadius(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setSuspicionRadius(e.target.value);
+	}
+	// ----------------------- handle analyzer
+	function handleAnalyzerLayered(e: any) {
+		if (e.target.checked) {
+			OptionsStore.activeAnalyzerLayered();
+		} else {
+			OptionsStore.disableAnalyzerLayered();
+		}
+	}
+	function handleAnalyzerPercentage(e: any) {
+		if (e.target.checked) {
+			OptionsStore.activeAnalyzerPercentage();
+		} else {
+			OptionsStore.disableAnalyzerPercentage();
+		}
 	}
 </script>
 
@@ -465,6 +483,63 @@
 					</div>
 				</div>
 			</div>
+			<div class="options-form">
+				<h3>Analyzer</h3>
+				<div class="options">
+					<div class="option">
+						<p>layered</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.analyzer.layered}
+							on:change={handleAnalyzerLayered}
+						/>
+					</div>
+					<div class="option">
+						<p>percentage</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.analyzer.percentage}
+							on:change={handleAnalyzerPercentage}
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="analyzer-grid">
+				<p />
+				<p class="label top">selected</p>
+				<p class="label top">depth<br />pruning</p>
+				<p class="label top">width<br />pruning</p>
+				<p class="label top">cutted by<br />max width</p>
+				<p class="label top">cutted by<br />time out</p>
+				<p class="label top">saved by<br />min depth</p>
+				<p class="label top">examined</p>
+				{#each $LayersStore as layer, index}
+					{#if index === $LayersStore.length - 1 || $OptionsStore.analyzer.layered}
+						<p class="label left">
+							{index === $LayersStore.length - 1 ? 'total' : `layer ${index}`}
+						</p>
+						<p class:colored={layer.selected}>
+							{layer.selected || '--'}{percentage_unit}
+						</p>
+						<p class:colored={layer.pruned_in_depth}>
+							{layer.pruned_in_depth || '--'}{percentage_unit}
+						</p>
+						<p class:colored={layer.pruned_in_width}>
+							{layer.pruned_in_width || '--'}{percentage_unit}
+						</p>
+						<p class:colored={layer.cutted_by_max_width}>
+							{layer.cutted_by_max_width || '--'}{percentage_unit}
+						</p>
+						<p class:colored={layer.cutted_by_time_out}>
+							{layer.cutted_by_time_out || '--'}{percentage_unit}
+						</p>
+						<p class:colored={layer.saved_by_min_depth}>
+							{layer.saved_by_min_depth || '--'}{percentage_unit}
+						</p>
+						<p class:colored={layer.examined}>{layer.examined}</p>
+					{/if}
+				{/each}
+			</div>
 		{/if}
 	</div>
 </div>
@@ -535,5 +610,34 @@
 
 	.range-value {
 		@apply w-10 text-right;
+	}
+
+	.analyzer-grid {
+		@apply grid mt-[14px];
+		grid-template-columns: repeat(8, 1fr);
+		grid-auto-rows: repeat(3, 1fr);
+	}
+
+	.analyzer-grid > p {
+		@apply text-right px-[7px] py-[2px] text-xs;
+		border-right: solid 1px black;
+		border-bottom: solid 1px black;
+	}
+
+	.analyzer-grid > p.colored {
+		@apply bg-yellow-300 bg-opacity-10;
+	}
+
+	.analyzer-grid > p.label {
+		@apply italic bg-neutral-100;
+	}
+
+	.analyzer-grid > p.label.left {
+		@apply text-center;
+		border-left: solid 1px black;
+	}
+
+	.analyzer-grid > p.label.top {
+		border-top: solid 1px black;
 	}
 </style>

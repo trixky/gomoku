@@ -33,4 +33,8 @@ export default interface Options {
 		active: boolean;
 		radius: number;
 	};
+	analyzer: {
+		layered: boolean;
+		percentage: boolean;
+	};
 }

@@ -114,6 +114,14 @@ export default {
 				max: 19,
 				default: 4
 			}
+		},
+		analyzer: {
+			layered: {
+				default: true
+			},
+			percentage: {
+				default: false
+			}
 		}
 	}
 };
