@@ -115,7 +115,7 @@ func (g *Goban) ToString() (str string) {
 }
 
 // Extra extracts the goban from the request data
-func Extract(requestGoban string) (goban Goban, err error) {
+func (g *Goban) Extract(requestGoban string) (goban Goban, err error) {
 	if len(requestGoban) != 361 {
 		// If the goban is not exactly the right length
 		return goban, ERR_RD_GOBAN_LENGTH

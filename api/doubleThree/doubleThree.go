@@ -1,6 +1,7 @@
 package doubleThree
 
 import (
+	"github.com/trixky/gomoku/models"
 	m "github.com/trixky/gomoku/models"
 )
 
@@ -85,7 +86,7 @@ func checkThree(goban Goban, pos m.Position, player uint8, mulX int, mulY int) b
 }
 
 // CheckDoubleThree returns boolean true if the position given would create a doubleThree, false otherwise
-func CheckDoubleThree(goban Goban, pos m.Position, player uint8) (bool, int, Goban) {
+func CheckDoubleThree(goban models.Goban, pos m.Position, player uint8) (bool, int, Goban) {
 	checkCapture, whoCaptured := isCapture(goban, int(pos.X), int(pos.Y), player)
 	if checkCapture {
 		for _, captured := range whoCaptured {
