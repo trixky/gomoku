@@ -41,7 +41,11 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	// context.Print()
 
-	childs := logic.Negamax(&context, nil)
+	child_channel := make(chan *models.Context, 1)
+
+	childs := logic.Negamax(&context, child_channel)
+
+	<-child_channel
 
 	heuristic_goban := models.HeuristicGoban{}
 	heuristic_goban.Print()
@@ -52,6 +56,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	if len(childs) == 0 {
 		best_child = logic.Random(&context)
+		fmt.Println("on va chercher un random")
 	} else {
 		best_child = childs[len(childs)-1]
 		for _, child := range childs {

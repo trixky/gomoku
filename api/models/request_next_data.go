@@ -97,8 +97,8 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.TimeOut = rd.Options.TimeOut
 
 	// Depth
-	options.DepthMax = rd.Options.Depth.Max
-	options.DepthMin = rd.Options.Depth.Min
+	options.DepthMax = rd.Options.Depth.Max + 1
+	options.DepthMin = rd.Options.Depth.Min + 1
 	options.DepthPruningPercentage = rd.Options.Depth.PruningPercentage
 
 	// Width
@@ -188,6 +188,8 @@ func (rd *RequestNextData) ComputeContext() (context Context, err error) {
 	}
 
 	context.InitBests()
+
+	context.Analyzer.Init(context.Options.DepthMax)
 
 	return
 }

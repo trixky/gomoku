@@ -15,6 +15,8 @@ function createOptionsStore() {
 			update((_ai) => {
 				ai.proximity.show = _ai.proximity.show;
 				ai.heuristics.show = _ai.heuristics.show;
+				ai.analyzer.layered = _ai.analyzer.layered;
+				ai.analyzer.percentage = _ai.analyzer.percentage;
 
 				return ai;
 			});
@@ -251,6 +253,27 @@ function createOptionsStore() {
 				)
 					options.suspicion.radius = _radius;
 
+				return options;
+			}),
+		// ----------------------- set analyzer
+		activeAnalyzerLayered: () =>
+			update((options) => {
+				options.analyzer.layered = true;
+				return options;
+			}),
+		disableAnalyzerLayered: () =>
+			update((options) => {
+				options.analyzer.layered = false;
+				return options;
+			}),
+		activeAnalyzerPercentage: () =>
+			update((options) => {
+				options.analyzer.percentage = true;
+				return options;
+			}),
+		disableAnalyzerPercentage: () =>
+			update((options) => {
+				options.analyzer.percentage = false;
 				return options;
 			})
 	};
