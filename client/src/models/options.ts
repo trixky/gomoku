@@ -8,7 +8,6 @@ export default interface Options {
 	};
 	width: {
 		max: number;
-		min: number;
 		multi_threading: boolean;
 		pruning: boolean;
 		pruning_percentage: number;

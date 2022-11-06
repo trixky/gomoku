@@ -22,7 +22,6 @@ export default {
 			},
 			width: {
 				max: Config.options.width.max.default,
-				min: Config.options.width.min.default,
 				pruning: false,
 				pruning_percentage: Config.options.width.pruning_percentage.default,
 				multi_threading: Config.options.width.multi_threading.default
@@ -112,7 +111,6 @@ export default {
 			},
 			width: {
 				max: Config.options.width.max.default,
-				min: Config.options.width.min.default,
 				pruning: false,
 				pruning_percentage: Config.options.width.pruning_percentage.default,
 				multi_threading: true
@@ -157,7 +155,6 @@ export default {
 			},
 			width: {
 				max: Config.options.width.max.default,
-				min: Config.options.width.min.default,
 				pruning: true,
 				pruning_percentage: 60,
 				multi_threading: true

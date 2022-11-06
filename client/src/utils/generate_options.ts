@@ -12,7 +12,6 @@ export default function generateOptions(): OptionsModel {
 		},
 		width: {
 			max: Config.options.width.max.default,
-			min: Config.options.width.min.default,
 			pruning: Config.options.width.pruning.default,
 			pruning_percentage: Config.options.depth.pruning_percentage.default,
 			multi_threading: Config.options.width.multi_threading.default

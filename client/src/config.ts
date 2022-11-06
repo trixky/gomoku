@@ -53,11 +53,6 @@ export default {
 				min: 1,
 				max: 361
 			},
-			min: {
-				default: 0,
-				min: 0,
-				max: 361
-			},
 			pruning: {
 				default: false
 			},

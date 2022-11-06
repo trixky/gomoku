@@ -98,10 +98,6 @@
 		selected_ai = 'custom';
 		OptionsStore.setWidthMax(e.target.value);
 	}
-	function handleWidthMin(e: any) {
-		selected_ai = 'custom';
-		OptionsStore.setWidthMin(e.target.value);
-	}
 	// ----------------------- handle heuristics
 	function handleHeuristicsVisibility(e: any) {
 		if (e.target.checked) {
@@ -264,6 +260,7 @@
 						<p>radius</p>
 						<input
 							type="number"
+							class="max-w-[56px]"
 							on:change={handleProximityRadius}
 							min={Config.options.proximity.radius.min}
 							max={Config.options.proximity.radius.max}
@@ -310,18 +307,7 @@
 							value={$OptionsStore.width.pruning_percentage}
 							disabled={!$OptionsStore.width.pruning}
 						/>
-						%
-					</div>
-					<div class="option">
-						<p>min</p>
-						<input
-							type="number"
-							on:change={handleWidthMin}
-							min={Config.options.width.min.min}
-							max={Config.options.width.min.max}
-							value={$OptionsStore.width.min}
-							disabled={!$OptionsStore.width.pruning}
-						/>
+						<span>%</span>
 					</div>
 					<div class="option">
 						<p>max</p>
@@ -340,6 +326,17 @@
 				<h3>Depth</h3>
 				<div class="options">
 					<div class="option">
+						<p>min</p>
+						<input
+							type="number"
+							on:change={handleDepthMin}
+							min={Config.options.depth.min.min}
+							max={Config.options.depth.min.max}
+							value={$OptionsStore.depth.min}
+							disabled={!$OptionsStore.depth.pruning}
+						/>
+					</div>
+					<div class="option">
 						<p>pruning</p>
 						<input
 							type="checkbox"
@@ -347,7 +344,6 @@
 							on:change={handleDepthPruning}
 						/>
 						<input
-							class="depth-pruning-input"
 							type="number"
 							style={$OptionsStore.depth.pruning
 								? $OptionsStore.depth.pruning_percentage >= 300
@@ -363,18 +359,7 @@
 							value={$OptionsStore.depth.pruning_percentage}
 							disabled={!$OptionsStore.depth.pruning}
 						/>
-						%
-					</div>
-					<div class="option">
-						<p>min</p>
-						<input
-							type="number"
-							on:change={handleDepthMin}
-							min={Config.options.depth.min.min}
-							max={Config.options.depth.min.max}
-							value={$OptionsStore.depth.min}
-							disabled={!$OptionsStore.depth.pruning}
-						/>
+						<span>%</span>
 					</div>
 					<div class="option">
 						<p>max</p>
