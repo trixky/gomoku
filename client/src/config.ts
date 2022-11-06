@@ -37,15 +37,15 @@ export default {
 				max: 10
 			},
 			pruning: {
-				default: false,
-				orange: 300,
-				red: 280
+				default: false
 			},
 			pruning_percentage: {
 				step: 10,
 				default: 0,
 				min: 0,
-				max: 1000
+				max: 1000,
+				orange: 300,
+				red: 280
 			}
 		},
 		width: {
@@ -56,15 +56,15 @@ export default {
 				max: 361
 			},
 			pruning: {
-				default: false,
-				orange: 100,
-				red: 80
+				default: false
 			},
 			pruning_percentage: {
 				step: 10,
 				default: 0,
 				min: 0,
-				max: 1000
+				max: 1000,
+				orange: 100,
+				red: 80
 			},
 			multi_threading: {
 				default: true
