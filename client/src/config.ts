@@ -37,7 +37,9 @@ export default {
 				max: 10
 			},
 			pruning: {
-				default: false
+				default: false,
+				orange: 300,
+				red: 280
 			},
 			pruning_percentage: {
 				step: 10,
@@ -54,7 +56,9 @@ export default {
 				max: 361
 			},
 			pruning: {
-				default: false
+				default: false,
+				orange: 100,
+				red: 80
 			},
 			pruning_percentage: {
 				step: 10,
