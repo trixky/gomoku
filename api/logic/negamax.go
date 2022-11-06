@@ -65,6 +65,8 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 			for x, cell := range line {
 				// For each cell
 				if cell >= context.Options.ProximityThreshold && cell < models.PLAYER_1 {
+					analyzed_child_layer.IncrementTotal()
+
 					if !cutted_by_max_width && !time_out {
 						// If the max width and time out are not reached
 

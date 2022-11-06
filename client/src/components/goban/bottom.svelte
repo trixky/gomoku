@@ -6,10 +6,13 @@
 	import optionsStore from '../../stores/options';
 	import AiStore from '../../stores/ai';
 	import LayersStore from '../../stores/layers';
+	import LayersPercentageStore from '../../stores/layers_percentage';
+	import LoadingStore from '../../stores/loading';
 
 	let selected_ai = Config.options.ai.default;
 	let advanced_mode = false;
-	$: percentage_unit = $OptionsStore.analyzer.percentage ? ' %' : '';
+
+	$: layers_percentage_unit = $OptionsStore.analyzer.percentage ? ' %' : '';
 
 	$: shape_neighboor = $OptionsStore.proximity.shape == SHAPES.neighbour;
 
@@ -504,7 +507,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="analyzer-grid">
+			<div class:loading={$LoadingStore} class="analyzer-grid">
 				<p />
 				<p class="label top">selected</p>
 				<p class="label top">depth<br />pruning</p>
@@ -512,31 +515,31 @@
 				<p class="label top">cutted by<br />max width</p>
 				<p class="label top">cutted by<br />time out</p>
 				<p class="label top">saved by<br />min depth</p>
-				<p class="label top">examined</p>
-				{#each $LayersStore as layer, index}
+				<p class="label top total">total</p>
+				{#each $OptionsStore.analyzer.percentage ? $LayersPercentageStore : $LayersStore as layer, index (index.toString() + layer.selected.toString())}
 					{#if index === $LayersStore.length - 1 || $OptionsStore.analyzer.layered}
-						<p class="label left">
+						<p class:total={index === $LayersStore.length - 1} class="label left">
 							{index === $LayersStore.length - 1 ? 'total' : `layer ${index}`}
 						</p>
 						<p class:colored={layer.selected}>
-							{layer.selected || '--'}{percentage_unit}
+							{layer.selected || '--'}{layers_percentage_unit}
 						</p>
 						<p class:colored={layer.pruned_in_depth}>
-							{layer.pruned_in_depth || '--'}{percentage_unit}
+							{layer.pruned_in_depth || '--'}{layers_percentage_unit}
 						</p>
 						<p class:colored={layer.pruned_in_width}>
-							{layer.pruned_in_width || '--'}{percentage_unit}
+							{layer.pruned_in_width || '--'}{layers_percentage_unit}
 						</p>
 						<p class:colored={layer.cutted_by_max_width}>
-							{layer.cutted_by_max_width || '--'}{percentage_unit}
+							{layer.cutted_by_max_width || '--'}{layers_percentage_unit}
 						</p>
 						<p class:colored={layer.cutted_by_time_out}>
-							{layer.cutted_by_time_out || '--'}{percentage_unit}
+							{layer.cutted_by_time_out || '--'}{layers_percentage_unit}
 						</p>
 						<p class:colored={layer.saved_by_min_depth}>
-							{layer.saved_by_min_depth || '--'}{percentage_unit}
+							{layer.saved_by_min_depth || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.examined}>{layer.examined}</p>
+						<p class:colored={layer.total}>{layer.total || '--'}</p>
 					{/if}
 				{/each}
 			</div>
@@ -613,9 +616,13 @@
 	}
 
 	.analyzer-grid {
-		@apply grid mt-[14px];
+		@apply grid mt-[14px] transition-all duration-300;
 		grid-template-columns: repeat(8, 1fr);
 		grid-auto-rows: repeat(3, 1fr);
+	}
+
+	.analyzer-grid.loading {
+		@apply opacity-40;
 	}
 
 	.analyzer-grid > p {
@@ -639,5 +646,9 @@
 
 	.analyzer-grid > p.label.top {
 		border-top: solid 1px black;
+	}
+
+	.analyzer-grid > p.label.total {
+		@apply bg-neutral-500 bg-opacity-20;
 	}
 </style>
