@@ -39,6 +39,15 @@
 			}
 		}
 	}
+
+	function handleKeyDown(e: any) {
+		if (e.keyCode === 88) {
+			// If 'x' is pressed
+
+			// Reset the goban
+			GobanStore.reset();
+		}
+	}
 </script>
 
 <!-- ========================= HTML -->
@@ -65,6 +74,8 @@
 		</div>
 	</div>
 </div>
+
+<svelte:window on:keydown={handleKeyDown} />
 
 <!-- ========================= CSS -->
 <style lang="postcss">
