@@ -9,6 +9,9 @@ type LayerInfo struct {
 	// Selected
 	MutexSelected *sync.Mutex `json:"-"`
 	Selected      uint        `json:"selected"`
+	// Total
+	MutexTotal *sync.Mutex `json:"-"`
+	Total      uint        `json:"total"`
 
 	// Time out
 	MutexCuttedByTimeOut *sync.Mutex `json:"-"`
@@ -35,6 +38,12 @@ func (l *LayerInfo) IncrementSelected() {
 	l.MutexSelected.Lock()
 	l.Selected++
 	l.MutexSelected.Unlock()
+}
+
+func (l *LayerInfo) IncrementTotal() {
+	l.MutexTotal.Lock()
+	l.Total++
+	l.MutexTotal.Unlock()
 }
 
 func (l *LayerInfo) IncrementCuttedByTimeOut() {
@@ -76,12 +85,15 @@ func (a *Analyzer) Init(depth uint8) {
 
 	for depth := range a.Layers {
 		a.Layers[depth].MutexSelected = &sync.Mutex{}
+		a.Layers[depth].MutexTotal = &sync.Mutex{}
 		a.Layers[depth].MutexCuttedByTimeOut = &sync.Mutex{}
 		a.Layers[depth].MutexPrunedInDepth = &sync.Mutex{}
 		a.Layers[depth].MutexPrunedInWidth = &sync.Mutex{}
 		a.Layers[depth].MutexCuttedByMaxWidth = &sync.Mutex{}
 		a.Layers[depth].MutexSavedByMinDepth = &sync.Mutex{}
 	}
+
+	a.Layers[0].IncrementTotal()
 }
 
 func (a *Analyzer) Print() {
@@ -93,6 +105,10 @@ func (a *Analyzer) Print() {
 		layer.MutexSelected.Lock()
 		fmt.Println("selected:\t\t\t", layer.Selected)
 		layer.MutexSelected.Unlock()
+
+		layer.MutexTotal.Lock()
+		fmt.Println("total:\t\t\t", layer.Total)
+		layer.MutexTotal.Unlock()
 
 		layer.MutexCuttedByTimeOut.Lock()
 		fmt.Println("cutted by time out:\t\t\t", layer.CuttedByTimeOut)
