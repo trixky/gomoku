@@ -8,7 +8,7 @@ import (
 )
 
 // Negamax ...
-func Negamax(context *models.Context, parent_channel chan *models.Context) (childs []models.Context) {
+func Negamax(context *models.Context, parent_channel chan<- *models.Context) (childs []models.Context) {
 	analyzed_layer := &context.Analyzer.Layers[context.State.Depth]
 	best_child := &models.Context{}
 	best_child.State.Init()
