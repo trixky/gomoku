@@ -11,6 +11,7 @@ type State struct {
 
 	LastMove Move
 	Depth    uint8
+	Saved    bool
 }
 
 // Init Inits the state
