@@ -338,7 +338,7 @@
 							type="number"
 							on:change={handleDepthMin}
 							min={Config.options.depth.min.min}
-							max={Config.options.depth.min.max}
+							max={$OptionsStore.depth.max}
 							value={$OptionsStore.depth.min}
 							disabled={!$OptionsStore.depth.pruning}
 						/>

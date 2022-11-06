@@ -110,6 +110,7 @@ function createOptionsStore() {
 
 				if (
 					!isNaN(_min) &&
+					_min <= options.depth.max &&
 					_min >= Config.options.depth.min.min &&
 					_min <= Config.options.depth.min.max
 				)
