@@ -506,25 +506,25 @@
 						<p class:total={index === $LayersStore.length - 1} class="label left">
 							{index === $LayersStore.length - 1 ? 'total' : `layer ${index}`}
 						</p>
-						<p class:colored={layer.selected}>
+						<p class:blue={layer.selected}>
 							{layer.selected || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.pruned_in_depth}>
+						<p class:orange={layer.pruned_in_depth}>
 							{layer.pruned_in_depth || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.pruned_in_width}>
+						<p class:orange={layer.pruned_in_width}>
 							{layer.pruned_in_width || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.cutted_by_max_width}>
+						<p class:red={layer.cutted_by_max_width}>
 							{layer.cutted_by_max_width || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.cutted_by_time_out}>
+						<p class:red={layer.cutted_by_time_out}>
 							{layer.cutted_by_time_out || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.saved_by_min_depth}>
+						<p class:green={layer.saved_by_min_depth}>
 							{layer.saved_by_min_depth || '--'}{layers_percentage_unit}
 						</p>
-						<p class:colored={layer.total}>{layer.total || '--'}</p>
+						<p class:yellow={layer.total}>{layer.total || '--'}</p>
 					{/if}
 				{/each}
 			</div>
@@ -616,7 +616,23 @@
 		border-bottom: solid 1px black;
 	}
 
-	.analyzer-grid > p.colored {
+	.analyzer-grid > .blue {
+		@apply bg-blue-300 bg-opacity-10;
+	}
+
+	.analyzer-grid > .orange {
+		@apply bg-orange-300 bg-opacity-10;
+	}
+
+	.analyzer-grid > .red {
+		@apply bg-red-300 bg-opacity-10;
+	}
+
+	.analyzer-grid > .green {
+		@apply bg-green-300 bg-opacity-10;
+	}
+
+	.analyzer-grid > .yellow {
 		@apply bg-yellow-300 bg-opacity-10;
 	}
 

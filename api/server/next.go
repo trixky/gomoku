@@ -39,7 +39,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 
 	context.Goban.ComputeGlobalProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
 
-	// context.Print()
+	context.Options.Print()
 
 	child_channel := make(chan *models.Context, 1)
 
@@ -69,8 +69,6 @@ func next(w http.ResponseWriter, r *http.Request) {
 	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 
 	_json, err := best_child.ToJSON(elapsed_time, heuristic_goban)
-
-	// best_child.Print()
 
 	if err != nil {
 		// If the context computation failed

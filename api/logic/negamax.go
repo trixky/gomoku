@@ -19,6 +19,8 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 	depth_pruning := context.Options.DepthPruningPercentage > 0 && context.State.Depth > 1
 	width_pruning := context.Options.WidthPruningPercentage > 0
 
+	min_depth_protection := context.State.Depth < context.Options.DepthMin
+
 	// ************************************** pruning
 	local_beta := heuristics.Random(context)
 
@@ -28,26 +30,39 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 		if depth_pruning && DepthPruning(local_beta, context) {
 			// If depth pruning is active and beta is too weak
 
-			analyzed_layer.IncrementPrunedInDepth()
-			// analyzed_parent_layer.IncrementPrunedInDepth()
+			if min_depth_protection {
+				if !context.State.Saved {
+					analyzed_layer.IncrementSavedByMinDepth()
+					context.State.Saved = true
+				}
+			} else {
+				analyzed_layer.IncrementPrunedInDepth()
 
-			if parent_channel != nil {
-				parent_channel <- nil
+				if parent_channel != nil {
+					parent_channel <- nil
+				}
+				return
 			}
 
-			return
 		}
 
 		if width_pruning && WidthPruning(local_beta, context) {
 			// If width pruning is active and beta is too weak
 
-			analyzed_layer.IncrementPrunedInWidth()
+			if min_depth_protection {
+				if !context.State.Saved {
+					analyzed_layer.IncrementSavedByMinDepth()
+					context.State.Saved = true
+				}
+			} else {
+				analyzed_layer.IncrementPrunedInWidth()
 
-			if parent_channel != nil {
-				parent_channel <- nil
+				if parent_channel != nil {
+					parent_channel <- nil
+				}
+				return
 			}
 
-			return
 		}
 	}
 
@@ -87,7 +102,14 @@ func Negamax(context *models.Context, parent_channel chan *models.Context) (chil
 
 						if childs_to_wait >= context.Options.WidthMax {
 							// If the max width is reached
-							cutted_by_max_width = true
+							if min_depth_protection {
+								if !context.State.Saved {
+									analyzed_layer.IncrementSavedByMinDepth()
+									context.State.Saved = true
+								}
+							} else {
+								cutted_by_max_width = true
+							}
 						} else if elapsed_time >= context.Options.TimeOut {
 							// Else if the time out is reached
 							time_out = true
