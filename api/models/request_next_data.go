@@ -43,8 +43,8 @@ type RequestNextHeuristicsData struct {
 }
 
 type RequestNextOptionData struct {
-	TimeOut    int64                 `json:"time_out"` // ms
-	Position   Position              `json:"position"`
+	TimeOut    int64                     `json:"time_out"` // ms
+	Position   Position                  `json:"position"`
 	Depth      RequestNextDepthData      `json:"depth"`
 	Width      RequestNextWidthData      `json:"width"`
 	Proximity  RequestNextProximityData  `json:"proximity"`
@@ -54,7 +54,7 @@ type RequestNextOptionData struct {
 
 type RequestNextData struct {
 	Options RequestNextOptionData `json:"options"`
-	Goban   string            `json:"goban"`
+	Goban   string                `json:"goban"`
 }
 
 // ExtractGoban extracts the goban from the requestNext data
@@ -121,6 +121,9 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 
 	// Suspicion
 	options.SuspicionRadius = rd.Options.Suspicion.Radius
+
+	// Pre computed options
+	options.PreCompute()
 
 	return
 }

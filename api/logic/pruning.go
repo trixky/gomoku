@@ -17,9 +17,8 @@ func DepthPruning(local_beta int, context *models.Context) bool {
 		// Alpha is the negative beta of the previous layer
 		alpha := -beta
 
-		if local_beta*100 < alpha*100-(int(math.Abs(float64(alpha)))*(100-context.Options.DepthPruningPercentage)) {
+		if local_beta*100 < alpha*100-(int(math.Abs(float64(alpha)))*(context.Options.PreComputedOptions.ReversedDepthPruningPercentage)) {
 			// If beta is too weak
-
 			return true
 		}
 	}
@@ -32,7 +31,7 @@ func WidthPruning(local_beta int, context *models.Context) bool {
 
 	beta, first := context.Bests[context.State.Depth].Max(local_beta)
 
-	if !first && local_beta*100 < beta*100-(int(math.Abs(float64(beta)))*(100-context.Options.WidthPruningPercentage)) {
+	if !first && local_beta*100 < beta*100-(int(math.Abs(float64(beta)))*(context.Options.PreComputedOptions.ReversedWidthPruningPercentage)) {
 		// If it's not the first best comparaison of the current layer
 		// and beta is too weak
 		return true
