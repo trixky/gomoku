@@ -301,9 +301,11 @@
 						<input
 							type="number"
 							style={$OptionsStore.width.pruning
-								? $OptionsStore.width.pruning_percentage >= Config.options.width.pruning.red
+								? $OptionsStore.width.pruning_percentage >=
+								  Config.options.width.pruning_percentage.red
 									? 'color: crimson;'
-									: $OptionsStore.width.pruning_percentage >= Config.options.width.pruning.orange
+									: $OptionsStore.width.pruning_percentage >=
+									  Config.options.width.pruning_percentage.orange
 									? 'color: orangered;'
 									: ''
 								: ''}
@@ -353,9 +355,11 @@
 						<input
 							type="number"
 							style={$OptionsStore.depth.pruning
-								? $OptionsStore.depth.pruning_percentage >= Config.options.depth.pruning.red
+								? $OptionsStore.depth.pruning_percentage >=
+								  Config.options.depth.pruning_percentage.red
 									? 'color: crimson;'
-									: $OptionsStore.depth.pruning_percentage >= Config.options.depth.pruning.orange
+									: $OptionsStore.depth.pruning_percentage >=
+									  Config.options.depth.pruning_percentage.orange
 									? 'color: orangered;'
 									: ''
 								: ''}
