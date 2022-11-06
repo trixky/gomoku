@@ -338,7 +338,7 @@
 							type="number"
 							on:change={handleDepthMin}
 							min={Config.options.depth.min.min}
-							max={$OptionsStore.depth.max}
+							max={Math.min(Config.options.depth.min.max, $OptionsStore.depth.max)}
 							value={$OptionsStore.depth.min}
 							disabled={!$OptionsStore.depth.pruning && !$OptionsStore.width.pruning}
 						/>
@@ -373,7 +373,7 @@
 						<input
 							type="number"
 							on:change={handleDepthMax}
-							min={$OptionsStore.depth.min}
+							min={Math.max(Config.options.depth.max.min, $OptionsStore.depth.min)}
 							max={Config.options.depth.max.max}
 							value={$OptionsStore.depth.max}
 						/>
