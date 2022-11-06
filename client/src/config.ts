@@ -43,7 +43,7 @@ export default {
 				step: 10,
 				default: 0,
 				min: 0,
-				max: 1000,
+				max: 400,
 				orange: 300,
 				red: 280
 			}
@@ -62,7 +62,7 @@ export default {
 				step: 10,
 				default: 0,
 				min: 0,
-				max: 1000,
+				max: 200,
 				orange: 100,
 				red: 80
 			},
