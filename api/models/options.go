@@ -7,6 +7,11 @@ const (
 	SHAPE_STAR
 )
 
+type PreComputedOptions struct {
+	ReversedDepthPruningPercentage int
+	ReversedWidthPruningPercentage int
+}
+
 type Options struct {
 	// Constraints
 	TimeOut int64 // ms
@@ -36,6 +41,14 @@ type Options struct {
 
 	// Suspicion
 	SuspicionRadius int
+
+	// Pre computed options
+	PreComputedOptions PreComputedOptions
+}
+
+func (o *Options) PreCompute() {
+	o.PreComputedOptions.ReversedDepthPruningPercentage = 100 - o.DepthPruningPercentage
+	o.PreComputedOptions.ReversedWidthPruningPercentage = 100 - o.WidthPruningPercentage
 }
 
 // Print prints options attributes
