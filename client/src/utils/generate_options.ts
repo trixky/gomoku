@@ -38,7 +38,8 @@ export default function generateOptions(): OptionsModel {
 		},
 		analyzer: {
 			layered: Config.options.analyzer.layered.default,
-			percentage: Config.options.analyzer.percentage.default
+			percentage: Config.options.analyzer.percentage.default,
+			rounded: Config.options.analyzer.rounded.default
 		}
 	};
 }

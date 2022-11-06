@@ -116,6 +116,9 @@ export default {
 			},
 			percentage: {
 				default: false
+			},
+			rounded: {
+				default: true
 			}
 		}
 	}

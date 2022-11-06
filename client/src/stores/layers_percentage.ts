@@ -1,9 +1,10 @@
 import LayersStore from './layers';
+import OptionsStore from './options';
 import type LayerModel from '../models/layer';
 import { derived } from 'svelte/store';
 
-export default derived(LayersStore, ($LayersStore): LayerModel[] => {
-	return $LayersStore.map((layer) => {
+export default derived([LayersStore, OptionsStore], ($Store): LayerModel[] => {
+	let layers_percentage = $Store[0].map((layer) => {
 		const percentage_layer = <LayerModel>{
 			cutted_by_max_width: layer.cutted_by_max_width,
 			cutted_by_time_out: layer.cutted_by_time_out,
@@ -57,4 +58,19 @@ export default derived(LayersStore, ($LayersStore): LayerModel[] => {
 
 		return percentage_layer;
 	});
+
+	if ($Store[1].analyzer.rounded) {
+		layers_percentage = layers_percentage.map((layer) => {
+			layer.cutted_by_max_width = parseInt(layer.cutted_by_max_width.toFixed());
+			layer.cutted_by_time_out = parseInt(layer.cutted_by_time_out.toFixed());
+			layer.pruned_in_depth = parseInt(layer.pruned_in_depth.toFixed());
+			layer.pruned_in_width = parseInt(layer.pruned_in_width.toFixed());
+			layer.saved_by_min_depth = parseInt(layer.saved_by_min_depth.toFixed());
+			layer.selected = parseInt(layer.selected.toFixed());
+
+			return layer;
+		});
+	}
+
+	return layers_percentage;
 });
