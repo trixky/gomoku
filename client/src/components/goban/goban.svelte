@@ -34,6 +34,7 @@
 					.catch(() => {
 						alert('an error occured from api');
 						LoadingStore.switch(false);
+						location.reload();
 					});
 			}
 		}
