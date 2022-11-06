@@ -35,5 +35,6 @@ export default interface Options {
 	analyzer: {
 		layered: boolean;
 		percentage: boolean;
+		rounded: boolean;
 	};
 }

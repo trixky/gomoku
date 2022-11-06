@@ -17,6 +17,7 @@ function createOptionsStore() {
 				ai.heuristics.show = _ai.heuristics.show;
 				ai.analyzer.layered = _ai.analyzer.layered;
 				ai.analyzer.percentage = _ai.analyzer.percentage;
+				ai.analyzer.rounded = _ai.analyzer.rounded;
 
 				return ai;
 			});
@@ -261,6 +262,16 @@ function createOptionsStore() {
 		disableAnalyzerPercentage: () =>
 			update((options) => {
 				options.analyzer.percentage = false;
+				return options;
+			}),
+		activeAnalyzerRounded: () =>
+			update((options) => {
+				options.analyzer.rounded = true;
+				return options;
+			}),
+		disableAnalyzerRounded: () =>
+			update((options) => {
+				options.analyzer.rounded = false;
 				return options;
 			})
 	};

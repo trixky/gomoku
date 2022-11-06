@@ -156,6 +156,13 @@
 			OptionsStore.disableAnalyzerPercentage();
 		}
 	}
+	function handleAnalyzerRounded(e: any) {
+		if (e.target.checked) {
+			OptionsStore.activeAnalyzerRounded();
+		} else {
+			OptionsStore.disableAnalyzerRounded();
+		}
+	}
 </script>
 
 <!-- ========================= HTML -->
@@ -488,6 +495,15 @@
 							type="checkbox"
 							checked={$OptionsStore.analyzer.percentage}
 							on:change={handleAnalyzerPercentage}
+						/>
+					</div>
+					<div class="option">
+						<p>rounded</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.analyzer.rounded}
+							on:change={handleAnalyzerRounded}
+							disabled={!$OptionsStore.analyzer.percentage}
 						/>
 					</div>
 				</div>
