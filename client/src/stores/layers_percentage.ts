@@ -61,12 +61,27 @@ export default derived([LayersStore, OptionsStore], ($Store): LayerModel[] => {
 
 	if ($Store[1].analyzer.rounded) {
 		layers_percentage = layers_percentage.map((layer) => {
-			layer.cutted_by_max_width = Math.ceil(layer.cutted_by_max_width);
-			layer.cutted_by_time_out = Math.ceil(layer.cutted_by_time_out);
-			layer.pruned_in_depth = Math.ceil(layer.pruned_in_depth);
-			layer.pruned_in_width = Math.ceil(layer.pruned_in_width);
-			layer.saved_by_min_depth = Math.ceil(layer.saved_by_min_depth);
-			layer.selected = Math.ceil(layer.selected);
+			layer.cutted_by_max_width =
+				layer.cutted_by_max_width < 1
+					? Math.ceil(layer.cutted_by_max_width)
+					: Math.round(layer.cutted_by_max_width);
+			layer.cutted_by_time_out =
+				layer.cutted_by_time_out < 1
+					? Math.ceil(layer.cutted_by_time_out)
+					: Math.round(layer.cutted_by_time_out);
+			layer.pruned_in_depth =
+				layer.pruned_in_depth < 1
+					? Math.ceil(layer.pruned_in_depth)
+					: Math.round(layer.pruned_in_depth);
+			layer.pruned_in_width =
+				layer.pruned_in_width < 1
+					? Math.ceil(layer.pruned_in_width)
+					: Math.round(layer.pruned_in_width);
+			layer.saved_by_min_depth =
+				layer.saved_by_min_depth < 1
+					? Math.ceil(layer.saved_by_min_depth)
+					: Math.round(layer.saved_by_min_depth);
+			layer.selected = layer.selected < 1 ? Math.ceil(layer.selected) : Math.round(layer.selected);
 
 			return layer;
 		});
