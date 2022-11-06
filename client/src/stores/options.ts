@@ -97,6 +97,7 @@ function createOptionsStore() {
 
 				if (
 					!isNaN(_max) &&
+					_max >= options.depth.min &&
 					_max >= Config.options.depth.max.min &&
 					_max <= Config.options.depth.max.max
 				)

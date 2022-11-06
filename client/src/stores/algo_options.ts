@@ -20,7 +20,6 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 		},
 		width: {
 			max: $Stores[0].width.max,
-			min: $Stores[0].width.min,
 			pruning_percentage: $Stores[0].width.pruning ? $Stores[0].width.pruning_percentage : 0,
 			multi_threading: $Stores[0].width.multi_threading
 		},

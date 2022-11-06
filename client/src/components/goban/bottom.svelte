@@ -340,7 +340,7 @@
 							min={Config.options.depth.min.min}
 							max={$OptionsStore.depth.max}
 							value={$OptionsStore.depth.min}
-							disabled={!$OptionsStore.depth.pruning}
+							disabled={!$OptionsStore.depth.pruning && !$OptionsStore.width.pruning}
 						/>
 					</div>
 					<div class="option">
@@ -373,7 +373,7 @@
 						<input
 							type="number"
 							on:change={handleDepthMax}
-							min={Config.options.depth.max.min}
+							min={$OptionsStore.depth.min}
 							max={Config.options.depth.max.max}
 							value={$OptionsStore.depth.max}
 						/>
