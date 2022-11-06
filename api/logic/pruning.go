@@ -6,18 +6,18 @@ import (
 	"github.com/trixky/gomoku/models"
 )
 
-func DepthPruning(local_beta int, context *models.Context) bool {
-	// return false
-	// Get the beta value of the previous layer
-	beta, first := context.Bests[context.State.Depth-1].Max(local_beta)
+func DepthPruning(context *models.Context) bool {
+	// Get the best beta value of the previous layer
+	best_beta, best_beta_percentage, first := context.Bests[context.State.Depth].MaxAndGetAll(context.State.Beta)
 
 	if !first {
 		// If it's not the first best comparaison of the current layer
 
 		// Alpha is the negative beta of the previous layer
-		alpha := -beta
+		best_alpha := -best_beta
+		best_alpha_percentage := -best_beta_percentage
 
-		if local_beta*100 < alpha*100-(int(math.Abs(float64(alpha)))*(context.Options.PreComputedOptions.ReversedDepthPruningPercentage)) {
+		if context.State.BetaPercentage < best_alpha_percentage-(int(math.Abs(float64(best_alpha)))*(context.Options.PreComputedOptions.ReversedDepthPruningPercentage)) {
 			// If beta is too weak
 			return true
 		}
@@ -26,12 +26,12 @@ func DepthPruning(local_beta int, context *models.Context) bool {
 	return false
 }
 
-func WidthPruning(local_beta int, context *models.Context) bool {
-	// Get the beta value of the current layer
+func WidthPruning(context *models.Context) bool {
+	// Get the best beta value of the current layer
 
-	beta, first := context.Bests[context.State.Depth].Max(local_beta)
+	best_beta, best_beta_percentage, first := context.Bests[context.State.Depth].MaxAndGetAll(context.State.Beta)
 
-	if !first && local_beta*100 < beta*100-(int(math.Abs(float64(beta)))*(context.Options.PreComputedOptions.ReversedWidthPruningPercentage)) {
+	if !first && context.State.BetaPercentage < best_beta_percentage-(int(math.Abs(float64(best_beta)))*(context.Options.PreComputedOptions.ReversedWidthPruningPercentage)) {
 		// If it's not the first best comparaison of the current layer
 		// and beta is too weak
 		return true

@@ -22,12 +22,12 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 	min_depth_protection := context.State.Depth < context.Options.DepthMin
 
 	// ************************************** pruning
-	local_beta := heuristics.Random(context)
+	context.State.SetBeta(heuristics.Random(context))
 
 	if depth_pruning || width_pruning {
 		// var analyzed_parent_layer *models.LayerInfo
 
-		if depth_pruning && DepthPruning(local_beta, context) {
+		if depth_pruning && DepthPruning(context) {
 			// If depth pruning is active and beta is too weak
 
 			if min_depth_protection {
@@ -46,7 +46,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 
 		}
 
-		if width_pruning && WidthPruning(local_beta, context) {
+		if width_pruning && WidthPruning(context) {
 			// If width pruning is active and beta is too weak
 
 			if min_depth_protection {
@@ -66,9 +66,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 		}
 	}
 
-	if context.State.Depth == context.Options.DepthMax-1 {
-		context.State.Beta = local_beta
-	} else {
+	if context.State.Depth != context.Options.DepthMax-1 {
 		analyzed_child_layer := &context.Analyzer.Layers[context.State.Depth+1]
 
 		cutted_by_max_width := false
@@ -148,7 +146,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 			return
 		}
 
-		context.State.Beta = -best_child.State.Beta
+		context.State.SetBeta(-best_child.State.Beta)
 	}
 
 	if parent_channel != nil {
