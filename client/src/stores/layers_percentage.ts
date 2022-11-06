@@ -61,12 +61,12 @@ export default derived([LayersStore, OptionsStore], ($Store): LayerModel[] => {
 
 	if ($Store[1].analyzer.rounded) {
 		layers_percentage = layers_percentage.map((layer) => {
-			layer.cutted_by_max_width = parseInt(layer.cutted_by_max_width.toFixed());
-			layer.cutted_by_time_out = parseInt(layer.cutted_by_time_out.toFixed());
-			layer.pruned_in_depth = parseInt(layer.pruned_in_depth.toFixed());
-			layer.pruned_in_width = parseInt(layer.pruned_in_width.toFixed());
-			layer.saved_by_min_depth = parseInt(layer.saved_by_min_depth.toFixed());
-			layer.selected = parseInt(layer.selected.toFixed());
+			layer.cutted_by_max_width = Math.ceil(layer.cutted_by_max_width);
+			layer.cutted_by_time_out = Math.ceil(layer.cutted_by_time_out);
+			layer.pruned_in_depth = Math.ceil(layer.pruned_in_depth);
+			layer.pruned_in_width = Math.ceil(layer.pruned_in_width);
+			layer.saved_by_min_depth = Math.ceil(layer.saved_by_min_depth);
+			layer.selected = Math.ceil(layer.selected);
 
 			return layer;
 		});
