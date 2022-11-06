@@ -7,7 +7,8 @@ import (
 
 type State struct {
 	// Scores
-	Beta int
+	Beta           int
+	BetaPercentage int
 
 	LastMove Move
 	Depth    uint8
@@ -16,7 +17,14 @@ type State struct {
 
 // Init Inits the state
 func (s *State) Init() {
-	s.Beta = math.MinInt32
+	s.Beta = math.MinInt
+	s.BetaPercentage = math.MinInt
+}
+
+// SetBeta sets beta and pre-compute his percentage
+func (s *State) SetBeta(beta int) {
+	s.Beta = beta
+	s.BetaPercentage = beta * 100
 }
 
 // Print prints state attributes
