@@ -17,7 +17,6 @@ export interface AlgoOptions {
 	};
 	width: {
 		max: number;
-		min: number;
 		pruning_percentage: number;
 		multi_threading: boolean;
 	};

@@ -171,19 +171,6 @@ function createOptionsStore() {
 
 				return options;
 			}),
-		setWidthMin: (min: string) =>
-			update((options) => {
-				const _min = parseInt(min);
-
-				if (
-					!isNaN(_min) &&
-					_min >= Config.options.width.min.min &&
-					_min <= Config.options.width.min.max
-				)
-					options.width.min = _min;
-
-				return options;
-			}),
 		// ----------------------- set heuristics
 		showHeuristics: () =>
 			update((options) => {
