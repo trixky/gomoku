@@ -28,7 +28,7 @@ export default {
 		depth: {
 			max: {
 				default: 2,
-				min: 0,
+				min: 1,
 				max: 10
 			},
 			min: {
