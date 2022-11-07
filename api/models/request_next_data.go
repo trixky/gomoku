@@ -194,5 +194,7 @@ func (rd *RequestNextData) ComputeContext() (context Context, err error) {
 
 	context.Analyzer.Init(context.Options.DepthMax)
 
+	context.Parent = nil
+
 	return
 }
