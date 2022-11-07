@@ -21,6 +21,7 @@ type Context struct {
 	State    State
 	Goban    Goban
 	Analyzer Analyzer
+	Parent   *Context
 }
 
 // InitBests initializes the bests array used for pruning
@@ -66,6 +67,8 @@ func (c *Context) Next(position Position) (context Context) {
 	}
 
 	context.Analyzer = c.Analyzer
+
+	context.Parent = c
 
 	return
 }
