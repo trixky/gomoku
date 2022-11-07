@@ -12,6 +12,9 @@
 	import TimeStore from '../../stores/time';
 	import AnalyzerStore from '../../stores/analyzer';
 	import type ResponseModel from '../../models/response';
+	import RulesStore from '../../stores/rules';
+
+	let rules = false;
 
 	function handleCellClick(x: number, y: number) {
 		if (!$LoadingStore) {
@@ -48,11 +51,28 @@
 			GobanStore.reset();
 		}
 	}
+
+	function handleMouseEnterRules() {
+		rules = true;
+	}
+
+	function handleMouseLeaveRules() {
+		rules = false;
+	}
 </script>
 
 <!-- ========================= HTML -->
-<div class="goban-container">
-	<div class="goban">
+<div class:rules class="goban-container">
+	<div class:rules class="rules-container">
+		<ul>
+			{#each RulesStore as rule}
+				<li>
+					<p>{@html rule}</p>
+				</li>
+			{/each}
+		</ul>
+	</div>
+	<div class:rules class="goban">
 		<div class="piece-container">
 			{#each $GobanStore.cells as cells, y}
 				{#each cells as cell, x}
@@ -73,6 +93,9 @@
 			{/each}
 		</div>
 	</div>
+	<button class="rules" on:mouseenter={handleMouseEnterRules} on:mouseleave={handleMouseLeaveRules}
+		>rules<img src="/info-icon.svg" alt="information icon" /></button
+	>
 </div>
 
 <svelte:window on:keydown={handleKeyDown} />
@@ -80,13 +103,22 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.goban-container {
-		@apply h-fit w-fit m-auto bg-white;
+		@apply relative h-fit w-fit m-auto mt-2 bg-white transition-all duration-300;
 		border: 2px solid black;
 		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	}
 
+	.goban-container.rules {
+		border: 2px solid rgba(0, 0, 0, 0.03);
+		box-shadow: rgba(0, 0, 0, 0.02) 0px 5px 15px;
+	}
+
 	.goban {
-		@apply relative m-6;
+		@apply relative m-6 transition-all duration-300;
+	}
+
+	.goban.rules {
+		@apply opacity-[3%];
 	}
 
 	.cell-container {
@@ -105,5 +137,25 @@
 	.cell {
 		@apply w-[26px] h-[26px] max-w-[26px] max-h-[26px];
 		border: 0.5px solid black;
+	}
+
+	button.rules {
+		@apply absolute inline -bottom-[39px] right-0 transition-all duration-300 opacity-60 hover:opacity-100;
+	}
+
+	button.rules > img {
+		@apply inline w-[14px] h-[14px] ml-1;
+	}
+
+	.rules-container {
+		@apply absolute top-0 left-0 p-8 opacity-0 transition-all duration-300;
+	}
+
+	.rules-container.rules {
+		@apply opacity-100;
+	}
+
+	.rules-container > ul > li {
+		@apply mb-3;
 	}
 </style>
