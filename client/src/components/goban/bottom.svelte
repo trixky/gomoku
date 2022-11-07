@@ -555,7 +555,7 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.bottom-container {
-		@apply flex justify-center mt-6 mb-10;
+		@apply flex justify-center mt-9 mb-10;
 	}
 
 	.options-containers {
@@ -595,7 +595,7 @@
 	}
 
 	input {
-		@apply mx-1;
+		@apply ml-1;
 	}
 
 	input[type='checkbox'] {
@@ -608,7 +608,7 @@
 	}
 
 	select {
-		@apply bg-white rounded-sm mx-1;
+		@apply bg-white rounded-sm ml-1;
 		border: solid 1px black;
 	}
 
