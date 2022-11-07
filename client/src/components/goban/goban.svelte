@@ -4,6 +4,7 @@
 	import GobanStore from '../../stores/goban';
 	import StringGobanStore from '../../stores/string_goban';
 	import AlgoOptionsStore from '../../stores/algo_options';
+	import PlayersInfoStore from '../../stores/players_info';
 	import ProximityGobanStore from '../../stores/proximity_goban';
 	import Cell from './cell.svelte';
 	import PostNext from '../../api/post.next';
@@ -23,7 +24,7 @@
 				TimeStore.reset();
 				LastMoveStore.push(x, y);
 				GobanStore.addPiece($LastMoveStore.player, x, y);
-				PostNext($StringGobanStore, $AlgoOptionsStore)
+				PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
 					.then((response) => {
 						const json_response: ResponseModel = JSON.parse(response);
 
