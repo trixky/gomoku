@@ -1,6 +1,6 @@
 <!-- ========================= HTML -->
 <header>
-	<h1>Gomoku</h1>
+	<a href="https://github.com/trixky/gomoku" target="_blank" rel="noreferrer"><h1>Gomoku</h1></a>
 </header>
 
 <!-- ========================= CSS -->
