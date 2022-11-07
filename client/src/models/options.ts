@@ -32,6 +32,12 @@ export default interface Options {
 		active: boolean;
 		radius: number;
 	};
+	inheritance: {
+		active: boolean;
+		alignement: boolean;
+		start: number;
+		end: number;
+	};
 	analyzer: {
 		layered: boolean;
 		percentage: boolean;

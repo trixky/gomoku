@@ -114,6 +114,24 @@ export default {
 				default: 4
 			}
 		},
+		inheritance: {
+			active: {
+				default: false
+			},
+			alignement: {
+				default: true
+			},
+			start: {
+				default: 1,
+				min: 1,
+				max: 10
+			},
+			end: {
+				default: 2,
+				min: 1,
+				max: 10
+			}
+		},
 		analyzer: {
 			layered: {
 				default: true

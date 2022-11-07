@@ -107,7 +107,6 @@
 			OptionsStore.hideHeuristics();
 		}
 	}
-
 	function handleHeuristicsPotentialAlignement(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
@@ -128,7 +127,24 @@
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsRandom(e.target.value);
 	}
-	// ----------------------- handle heuristics
+	// ----------------------- handle inheritance
+	function handleInheritanceActive(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setInheritanceActive(e.target.checked);
+	}
+	function handleInheritanceAlignement(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setInheritanceAlignement(e.target.checked);
+	}
+	function handleInheritanceStart(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setInheritanceStart(e.target.value);
+	}
+	function handleInheritanceEnd(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setInheritanceEnd(e.target.value);
+	}
+	// ----------------------- handle suspicion
 	function handleSuspicionActivation(e: any) {
 		selected_ai = 'custom';
 		if (e.target.checked) {
@@ -404,11 +420,55 @@
 						/>
 						<input
 							type="number"
+							class="short"
 							on:change={handleSuspicionRadius}
 							min={Config.options.suspicion.radius.min}
 							max={Config.options.suspicion.radius.max}
 							value={$OptionsStore.suspicion.radius}
 							disabled={!$OptionsStore.suspicion.active}
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="options-form">
+				<div class="options">
+					<div class="option">
+						<p>inheritance</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.inheritance.active}
+							on:change={handleInheritanceActive}
+						/>
+					</div>
+					<div class="option">
+						<p>layers</p>
+						<input
+							type="number"
+							class="short"
+							on:change={handleInheritanceStart}
+							min={Config.options.inheritance.start.min}
+							max={Math.min(Config.options.inheritance.start.max, $OptionsStore.inheritance.end)}
+							value={$OptionsStore.inheritance.start}
+							disabled={!$OptionsStore.inheritance.active}
+						/>
+						<span>&nbsp;&nbsp;to</span>
+						<input
+							type="number"
+							class="short"
+							on:change={handleInheritanceEnd}
+							min={Math.max(Config.options.inheritance.end.min, $OptionsStore.inheritance.start)}
+							max={Math.min(Config.options.inheritance.end.max, $OptionsStore.depth.max)}
+							value={$OptionsStore.inheritance.end}
+							disabled={!$OptionsStore.inheritance.active}
+						/>
+					</div>
+					<div class="option">
+						<p>alignement</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.inheritance.alignement}
+							on:change={handleInheritanceAlignement}
+							disabled={!$OptionsStore.inheritance.active}
 						/>
 					</div>
 				</div>
@@ -614,6 +674,10 @@
 
 	input[type='range'] {
 		@apply w-48 m-0 ml-3 translate-y-[6px];
+	}
+
+	input.short {
+		@apply w-[40px];
 	}
 
 	.range-value {
