@@ -16,8 +16,6 @@ function postNext(
 			players_info
 		};
 
-		console.log(players_info);
-
 		fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(data)

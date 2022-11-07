@@ -40,6 +40,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 	context.Goban.ComputeGlobalProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
 
 	context.Options.Print()
+	context.State.Print()
 
 	child_channel := make(chan *models.Context, 1)
 
