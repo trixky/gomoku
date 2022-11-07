@@ -47,6 +47,9 @@ func (c *Context) Next(position Position) (context Context) {
 	context.State = c.State
 	context.State.Beta = math.MinInt
 
+	context.State.PlayersInfo.Player_1 = c.State.PlayersInfo.Player_1
+	context.State.PlayersInfo.Player_2 = c.State.PlayersInfo.Player_2
+
 	context.Goban = c.Goban
 
 	context.State.Depth++

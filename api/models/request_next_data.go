@@ -60,9 +60,19 @@ type RequestNextOptionData struct {
 	Inheritance RequestNextInheritanceData `json:"inheritance"`
 }
 
+type RequestNextPlayerInfoData struct {
+	Captures uint8 `json:"captures"`
+}
+
+type RequestNextPlayersInfoData struct {
+	Player_1 RequestNextPlayerInfoData `json:"player_1"`
+	Player_2 RequestNextPlayerInfoData `json:"player_2"`
+}
+
 type RequestNextData struct {
-	Options RequestNextOptionData `json:"options"`
-	Goban   string                `json:"goban"`
+	Options     RequestNextOptionData      `json:"options"`
+	PlayersInfo RequestNextPlayersInfoData `json:"players_info"`
+	Goban       string                     `json:"goban"`
 }
 
 // ExtractGoban extracts the goban from the requestNext data
@@ -174,6 +184,8 @@ func (rd *RequestNextData) ExtractState() (state State, err error) {
 			Y: rd.Options.Position.Y,
 		},
 	}
+
+	state.PlayersInfo = rd.PlayersInfo
 
 	return
 }
