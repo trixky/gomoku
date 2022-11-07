@@ -11,6 +11,13 @@ var (
 	ERR_RD_LAST_MOVE_NO_PLAYER      = errors.New("cell of the last move need to be taken by a player")
 )
 
+type RequestNextInheritanceData struct {
+	Active     bool  `json:"active"`
+	Alignement bool  `json:"alignement"`
+	Start      uint8 `json:"start"`
+	End        uint8 `json:"end"`
+}
+
 type RequestNextSuspicionData struct {
 	Radius int `json:"radius"` // 0 = disable
 }
@@ -43,13 +50,14 @@ type RequestNextHeuristicsData struct {
 }
 
 type RequestNextOptionData struct {
-	TimeOut    int64                     `json:"time_out"` // ms
-	Position   Position                  `json:"position"`
-	Depth      RequestNextDepthData      `json:"depth"`
-	Width      RequestNextWidthData      `json:"width"`
-	Proximity  RequestNextProximityData  `json:"proximity"`
-	Heuristics RequestNextHeuristicsData `json:"heuristics"`
-	Suspicion  RequestNextSuspicionData  `json:"suspicion"`
+	TimeOut     int64                      `json:"time_out"` // ms
+	Position    Position                   `json:"position"`
+	Depth       RequestNextDepthData       `json:"depth"`
+	Width       RequestNextWidthData       `json:"width"`
+	Proximity   RequestNextProximityData   `json:"proximity"`
+	Heuristics  RequestNextHeuristicsData  `json:"heuristics"`
+	Suspicion   RequestNextSuspicionData   `json:"suspicion"`
+	Inheritance RequestNextInheritanceData `json:"inheritance"`
 }
 
 type RequestNextData struct {
@@ -118,6 +126,12 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.HeuristicPotentialCaptureWeight = rd.Options.Heuristics.PotentialCaptureWeight
 	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
+
+	// Inheritance
+	options.InheritanceActive = rd.Options.Inheritance.Active
+	options.InheritanceAlignement = rd.Options.Inheritance.Alignement
+	options.InheritanceStart = rd.Options.Inheritance.Start
+	options.InheritanceEnd = rd.Options.Inheritance.End
 
 	// Suspicion
 	options.SuspicionRadius = rd.Options.Suspicion.Radius

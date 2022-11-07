@@ -39,6 +39,12 @@ type Options struct {
 	HeuristicCaptureWeight             int
 	HeuristicRandomWeight              int
 
+	// Inheritance
+	InheritanceActive     bool
+	InheritanceAlignement bool
+	InheritanceStart      uint8
+	InheritanceEnd        uint8
+
 	// Suspicion
 	SuspicionRadius int
 
@@ -85,6 +91,13 @@ func (o *Options) Print() {
 	fmt.Printf("potential capture:\t\t%2d/10\n", o.HeuristicPotentialCaptureWeight)
 	fmt.Printf("capture:\t\t\t%2d/10\n", o.HeuristicCaptureWeight)
 	fmt.Printf("random:\t\t\t%2d/10\n", o.HeuristicRandomWeight)
+
+	// Prints inheritance
+	fmt.Println("--------------- [inheritance]")
+	fmt.Printf("active:\t %t\n", o.InheritanceActive)
+	fmt.Printf("alignement:\t %t\n", o.InheritanceAlignement)
+	fmt.Printf("start:\t%2d\n", o.InheritanceStart)
+	fmt.Printf("end:\t%2d\n", o.InheritanceEnd)
 
 	// Prints suspicion
 	fmt.Println("--------------- [suspicion]")
