@@ -13,7 +13,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 	best_child := &models.Context{}
 	best_child.State.Init()
 
-	child_channel := make(chan *models.Context, context.Options.WidthMax)
+	child_channel := make(chan *models.Context, 361)
 	childs_to_wait := 0
 
 	depth_pruning := context.Options.DepthPruningPercentage > 0 && context.State.Depth > 1
