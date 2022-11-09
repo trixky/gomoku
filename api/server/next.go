@@ -37,27 +37,37 @@ func next(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	context.Goban.ComputeGlobalProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
+	context.Goban.ComputeGlobalProximity(context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape, context.Options.SuspicionRadius, context.State.LastMove)
+
+	childs := []models.Context{}
+	var child_channel chan *models.Context
+	heuristic_goban := models.HeuristicGoban{}
+	var best_child models.Context
+
+	context.Goban.PrintProximity(&context.Options.ProximityThreshold)
+
+	blocked := context.Goban.IsBlocked(context.Options.ProximityThreshold)
+
+	if blocked {
+		goto choose
+	}
 
 	context.Options.Print()
 	context.State.Print()
 
-	child_channel := make(chan *models.Context, 1)
+	child_channel = make(chan *models.Context, 1)
 
-	childs := logic.Negamax(&context, child_channel)
+	childs = logic.Negamax(&context, child_channel)
 
 	<-child_channel
 
-	heuristic_goban := models.HeuristicGoban{}
 	heuristic_goban.Print()
 
 	heuristic_goban.Compute(childs)
 
-	var best_child models.Context
-
+choose:
 	if len(childs) == 0 {
-		best_child = logic.Random(&context)
-		fmt.Println("on va chercher un random")
+		best_child = logic.Random(&context, !blocked)
 	} else {
 		best_child = childs[len(childs)-1]
 		for _, child := range childs {
