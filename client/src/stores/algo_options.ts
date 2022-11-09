@@ -37,12 +37,6 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			capture: $Stores[0].heuristics.capture,
 			random: $Stores[0].heuristics.random
 		},
-		inheritance: {
-			active: $Stores[0].inheritance.active,
-			alignement: $Stores[0].inheritance.alignement,
-			start: $Stores[0].inheritance.start,
-			end: $Stores[0].inheritance.end
-		},
 		suspicion: {
 			radius: $Stores[0].suspicion.active ? $Stores[0].suspicion.radius : 0
 		}

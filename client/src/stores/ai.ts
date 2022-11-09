@@ -46,12 +46,6 @@ export default {
 				active: Config.options.suspicion.active.default,
 				radius: Config.options.suspicion.radius.default
 			},
-			inheritance: {
-				active: Config.options.inheritance.active.default,
-				alignement: Config.options.inheritance.alignement.default,
-				start: Config.options.inheritance.start.default,
-				end: Config.options.inheritance.end.default
-			},
 			analyzer: {
 				layered: Config.options.analyzer.layered.default,
 				percentage: Config.options.analyzer.percentage.default,
@@ -98,12 +92,6 @@ export default {
 				active: true,
 				radius: 6
 			},
-			inheritance: {
-				active: Config.options.inheritance.active.default,
-				alignement: Config.options.inheritance.alignement.default,
-				start: Config.options.inheritance.start.default,
-				end: Config.options.inheritance.end.default
-			},
 			analyzer: {
 				layered: Config.options.analyzer.layered.default,
 				percentage: Config.options.analyzer.percentage.default,
@@ -148,12 +136,6 @@ export default {
 			suspicion: {
 				active: false,
 				radius: Config.options.suspicion.radius.min
-			},
-			inheritance: {
-				active: Config.options.inheritance.active.default,
-				alignement: Config.options.inheritance.alignement.default,
-				start: Config.options.inheritance.start.default,
-				end: Config.options.inheritance.end.default
 			},
 			analyzer: {
 				layered: Config.options.analyzer.layered.default,
@@ -200,12 +182,6 @@ export default {
 				active: true,
 				radius: 7
 			},
-			inheritance: {
-				active: Config.options.inheritance.active.default,
-				alignement: Config.options.inheritance.alignement.default,
-				start: Config.options.inheritance.start.default,
-				end: Config.options.inheritance.end.default
-			},
 			analyzer: {
 				layered: Config.options.analyzer.layered.default,
 				percentage: Config.options.analyzer.percentage.default,
@@ -251,12 +227,6 @@ export default {
 			suspicion: {
 				active: false,
 				radius: Config.options.suspicion.radius.min
-			},
-			inheritance: {
-				active: Config.options.inheritance.active.default,
-				alignement: Config.options.inheritance.alignement.default,
-				start: Config.options.inheritance.start.default,
-				end: Config.options.inheritance.end.default
 			},
 			analyzer: {
 				layered: Config.options.analyzer.layered.default,
