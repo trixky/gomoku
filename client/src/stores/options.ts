@@ -221,46 +221,6 @@ function createOptionsStore() {
 				if (!isNaN(_random)) options.heuristics.random = _random;
 				return options;
 			}),
-		// ----------------------- set inheritance
-		setInheritanceActive: (active: boolean) =>
-			update((options) => {
-				options.inheritance.active = active;
-				return options;
-			}),
-		setInheritanceAlignement: (alignement: boolean) =>
-			update((options) => {
-				options.inheritance.alignement = alignement;
-				return options;
-			}),
-		setInheritanceStart: (start: string) =>
-			update((options) => {
-				const _start = parseInt(start);
-
-				if (
-					!isNaN(_start) &&
-					_start <= options.inheritance.end &&
-					_start >= Config.options.inheritance.start.min &&
-					_start <= Config.options.inheritance.start.max
-				)
-					options.inheritance.start = _start;
-
-				return options;
-			}),
-		setInheritanceEnd: (end: string) =>
-			update((options) => {
-				const _end = parseInt(end);
-
-				if (
-					!isNaN(_end) &&
-					_end >= options.inheritance.start &&
-					_end >= Config.options.inheritance.end.min &&
-					_end <= Config.options.inheritance.end.max
-				)
-					options.inheritance.end = _end;
-
-				return options;
-			}),
-
 		// ----------------------- set suspicion
 		activeSuspicion: () =>
 			update((options) => {

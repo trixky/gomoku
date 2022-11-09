@@ -36,11 +36,6 @@ export default function generateOptions(): OptionsModel {
 			active: Config.options.suspicion.active.default,
 			radius: Config.options.suspicion.radius.default
 		},
-		inheritance: {
-			active: Config.options.inheritance.active.default,
-			start: Config.options.inheritance.start.default,
-			end: Config.options.inheritance.end.default
-		},
 		analyzer: {
 			layered: Config.options.analyzer.layered.default,
 			percentage: Config.options.analyzer.percentage.default,

@@ -27,12 +27,6 @@ export interface AlgoOptions {
 		evolution: boolean;
 		reduction: boolean;
 	};
-	inheritance: {
-		active: boolean;
-		alignement: boolean;
-		start: number;
-		end: number;
-	};
 	heuristics: {
 		potential_alignement: number;
 		alignement: number;
