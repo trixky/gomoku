@@ -12,7 +12,7 @@ var (
 )
 
 type RequestNextSuspicionData struct {
-	Radius int `json:"radius"` // 0 = disable
+	Radius uint8 `json:"radius"` // 0 = disable
 }
 
 type RequestNextDepthData struct {
