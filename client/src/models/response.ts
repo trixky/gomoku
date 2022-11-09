@@ -1,4 +1,5 @@
 import type Analyzer from './analyzer';
+import type { PlayersInfo as PlayersInfoModel } from './players_info';
 
 export default interface Response {
 	goban: string;
@@ -11,4 +12,5 @@ export default interface Response {
 		};
 	};
 	analyzer: Analyzer;
+	players_info: PlayersInfoModel;
 }
