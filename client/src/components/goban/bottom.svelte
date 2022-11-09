@@ -250,6 +250,30 @@
 				</div>
 			</div>
 			<div class="options-form">
+				<div class="options">
+					<div class="option">
+						<p>suspicion</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.suspicion.active}
+							on:change={handleSuspicionActivation}
+						/>
+					</div>
+					<div class="option">
+						<p>radius</p>
+						<input
+							type="number"
+							class="short"
+							on:change={handleSuspicionRadius}
+							min={Config.options.suspicion.radius.min}
+							max={Config.options.suspicion.radius.max}
+							value={$OptionsStore.suspicion.radius}
+							disabled={!$OptionsStore.suspicion.active}
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="options-form">
 				<h3>Shape</h3>
 				<div class="options">
 					<div class="option">
@@ -266,7 +290,7 @@
 						<p>radius</p>
 						<input
 							type="number"
-							class="max-w-[56px]"
+							class="short"
 							on:change={handleProximityRadius}
 							min={Config.options.proximity.radius.min}
 							max={Config.options.proximity.radius.max}
@@ -392,23 +416,6 @@
 							type="checkbox"
 							checked={$OptionsStore.heuristics.show}
 							on:change={handleHeuristicsVisibility}
-						/>
-					</div>
-					<div class="option">
-						<p>suspicion radius</p>
-						<input
-							type="checkbox"
-							checked={$OptionsStore.suspicion.active}
-							on:change={handleSuspicionActivation}
-						/>
-						<input
-							type="number"
-							class="short"
-							on:change={handleSuspicionRadius}
-							min={Config.options.suspicion.radius.min}
-							max={Config.options.suspicion.radius.max}
-							value={$OptionsStore.suspicion.radius}
-							disabled={!$OptionsStore.suspicion.active}
 						/>
 					</div>
 				</div>
@@ -617,7 +624,7 @@
 	}
 
 	input.short {
-		@apply w-[40px];
+		@apply w-[56px];
 	}
 
 	.range-value {
