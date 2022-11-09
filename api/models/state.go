@@ -13,7 +13,7 @@ type State struct {
 	LastMove    Move
 	Depth       uint8
 	Saved       bool
-	PlayersInfo RequestNextPlayersInfoData
+	PlayersInfo PlayersInfo
 }
 
 // Init Inits the state
@@ -42,8 +42,5 @@ func (s *State) Print() {
 	s.LastMove.Print()
 
 	// Prints players infos
-	fmt.Println("--------------- [players 1]")
-	fmt.Printf("captures:\t%2d\n", s.PlayersInfo.Player_1.Captures)
-	fmt.Println("--------------- [players 2]")
-	fmt.Printf("captures:\t%2d\n", s.PlayersInfo.Player_2.Captures)
+	s.PlayersInfo.Print()
 }

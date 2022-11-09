@@ -7,9 +7,10 @@ type ResponseNextOptionData struct {
 
 type ResponseNextData struct {
 	Options        ResponseNextOptionData `json:"options"`
-	Goban          string             `json:"goban"`
-	HeuristicGoban string             `json:"heuristic_goban"`
-	Analyzer       Analyzer           `json:"analyzer"`
+	Goban          string                 `json:"goban"`
+	HeuristicGoban string                 `json:"heuristic_goban"`
+	Analyzer       Analyzer               `json:"analyzer"`
+	PlayersInfo    PlayersInfo            `json:"players_info"`
 }
 
 func (r *ResponseNextData) computeResponseNext(context *Context, time int64, heuristic_goban HeuristicGoban) {
@@ -24,4 +25,5 @@ func (r *ResponseNextData) computeResponseNext(context *Context, time int64, heu
 	r.Goban = context.Goban.ToString()
 	r.HeuristicGoban = heuristic_goban.ToString()
 	r.Analyzer = context.Analyzer
+	r.PlayersInfo = context.State.PlayersInfo
 }

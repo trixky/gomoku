@@ -10,6 +10,9 @@ function postNext(
 	return new Promise<string>((resolve, reject) => {
 		const url = `http://${Config.environment.api.origin}:${Config.environment.api.port}/next`;
 
+		console.log('on envoi: playerinfo:');
+		console.log(players_info);
+
 		const data = {
 			options,
 			goban,

@@ -28,6 +28,7 @@
 					.then((response) => {
 						const json_response: ResponseModel = JSON.parse(response);
 
+						PlayersInfoStore.set(json_response.players_info);
 						AnalyzerStore.set(json_response.analyzer);
 						LastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
 						GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);

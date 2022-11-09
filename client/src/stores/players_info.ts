@@ -5,11 +5,15 @@ function initPlayersInfo(): PlayersInfoModel {
 	return <PlayersInfoModel>{
 		player_1: {
 			pieces: 0,
-			captures: 0
+			captures: 0,
+			alignement: false,
+			win: false
 		},
 		player_2: {
 			pieces: 0,
-			captures: 0
+			captures: 0,
+			alignement: false,
+			win: false
 		}
 	};
 }
@@ -22,14 +26,25 @@ function createPlayersInfoStore() {
 		reset: () => {
 			set(initPlayersInfo());
 		},
+		set,
 		setCaptures: (player: boolean, nbr: number) =>
 			update((players_info) => {
 				players_info[player ? 'player_1' : 'player_2'].captures = nbr;
 				return players_info;
 			}),
+		setAlignement: (player: boolean, alignement: boolean) =>
+			update((players_info) => {
+				players_info[player ? 'player_1' : 'player_2'].alignement = alignement;
+				return players_info;
+			}),
 		setPieces: (player: boolean, nbr: number) =>
 			update((players_info) => {
 				players_info[player ? 'player_1' : 'player_2'].pieces = nbr;
+				return players_info;
+			}),
+		setWin: (player: boolean, win: boolean) =>
+			update((players_info) => {
+				players_info[player ? 'player_1' : 'player_2'].win = win;
 				return players_info;
 			})
 	};

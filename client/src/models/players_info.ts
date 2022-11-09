@@ -1,6 +1,8 @@
 export interface PlayerInfo {
 	pieces: number;
 	captures: number;
+	alignement: boolean;
+	win: boolean;
 }
 
 export interface PlayersInfo {
