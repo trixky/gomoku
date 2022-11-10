@@ -4,6 +4,7 @@
 	import LastMoveStore from '../../stores/last_move';
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
+	import GobanStore from '../../stores/goban';
 
 	const fade_parameters = { duration: 250 };
 
@@ -18,6 +19,10 @@
 		pieces_nbr: 0,
 		captures: 0
 	};
+
+	function handleReset() {
+		GobanStore.reset();
+	}
 </script>
 
 <!-- ========================= HTML -->
@@ -32,6 +37,9 @@
 		<div class="player-infos left">
 			<p>pieces: {player_1.pieces_nbr}</p>
 			<p>captures: {player_1.captures}</p>
+			<button class="reset" on:click={handleReset}
+				>reset <img src="/reset-icon.svg" alt="reset icon" /></button
+			>
 		</div>
 	</div>
 	<div class="player-container right">
@@ -87,6 +95,14 @@
 
 	.player-infos > p {
 		@apply flex;
+	}
+
+	.reset {
+		@apply ml-9 rounded-sm transition-all duration-300 opacity-60 hover:opacity-100;
+	}
+
+	.reset > img {
+		@apply inline w-[14px] h-[14px] ml-1;
 	}
 
 	h2 > span {
