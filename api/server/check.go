@@ -18,10 +18,11 @@ type RequestCheckData struct {
 }
 
 type ResponseCheckData struct {
-	DoubleThree bool   `json:"DoubleThree"`
-	NbCaptured  int    `json:"NbCaptured"`
-	Goban       string `json:"goban"`
-	Win         bool   `json:"win"`
+	DoubleThree bool              `json:"DoubleThree"`
+	NbCaptured  int               `json:"NbCaptured"`
+	Goban       string            `json:"goban"`
+	Win         bool              `json:"win"`
+	Plays       []models.Position `json:"Plays"`
 }
 
 func check(w http.ResponseWriter, r *http.Request) {
@@ -54,15 +55,23 @@ func check(w http.ResponseWriter, r *http.Request) {
 
 	response := ResponseCheckData{}
 
-	dt.IsWin(&context)
+	isWin, plays := dt.IsWin(&context)
 	response.DoubleThree = doubleThree
 	response.NbCaptured = nb
 	response.Goban = goban.ToString()
 	response.Win = false
-	if (context.State.LastMove.Player == false &&
-		context.State.PlayersInfo.Player_1.Win == true) ||
-		context.State.PlayersInfo.Player_2.Win == true {
+	
+	if isWin {
+		if context.State.LastMove.Player == false {
+			context.State.PlayersInfo.Player_1.Win = true
+		} else {
+			context.State.PlayersInfo.Player_2.Win = true
+		}
 		response.Win = true
+	}
+
+	if len(plays) > 0 {
+		response.Plays = plays
 	}
 
 	marshalled, err := json.Marshal(response)
