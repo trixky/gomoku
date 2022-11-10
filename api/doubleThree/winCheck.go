@@ -19,103 +19,126 @@ func isCapturesWin(context *m.Context) bool {
 	return false
 }
 
-func canPosBeCapturedHor(goban m.Goban, pos m.Position, player uint8, opp uint8) bool {
+func canPosBeCapturedHor(goban m.Goban, pos m.Position, player uint8, opp uint8) (bool, []m.Position) {
+	var mustPlays []m.Position
 	if coordPlayer(goban, int(pos.X)-2, int(pos.Y), opp) && coordPlayer(goban, int(pos.X)-1, int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordUnoccupied(goban, int(pos.X)+1, int(pos.Y)) {
-		return true // xoOe
+		mustPlays = append(mustPlays, m.Position{X: pos.X + 1, Y: pos.Y})
 	}
 	if coordUnoccupied(goban, int(pos.X)-2, int(pos.Y)) && coordPlayer(goban, int(pos.X)-1, int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordPlayer(goban, int(pos.X)+1, int(pos.Y), opp) {
-		return true // eoOx
+		mustPlays = append(mustPlays, m.Position{X: pos.X - 2, Y: pos.Y})
 	}
 	if coordPlayer(goban, int(pos.X)-1, int(pos.Y), opp) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X)+1, int(pos.Y), player) && coordUnoccupied(goban, int(pos.X)+2, int(pos.Y)) {
-		return true // xOoe
+		mustPlays = append(mustPlays, m.Position{X: pos.X + 2, Y: pos.Y})
 	}
 	if coordUnoccupied(goban, int(pos.X)-1, int(pos.Y)) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X)+1, int(pos.Y), player) && coordPlayer(goban, int(pos.X)+2, int(pos.Y), opp) {
-		return true // eOox
+		mustPlays = append(mustPlays, m.Position{X: pos.X - 1, Y: pos.Y})
 	}
-	return false
+	if len(mustPlays) > 0 {
+		return true, mustPlays
+	}
+	return false, nil
 }
 
-func canPosBeCapturedVert(goban m.Goban, pos m.Position, player uint8, opp uint8) bool {
+func canPosBeCapturedVert(goban m.Goban, pos m.Position, player uint8, opp uint8) (bool, []m.Position) {
+	var mustPlays []m.Position
 	if coordPlayer(goban, int(pos.X), int(pos.Y)-2, opp) && coordPlayer(goban, int(pos.X), int(pos.Y)-1, player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordUnoccupied(goban, int(pos.X), int(pos.Y)+1) {
-		return true // xoOe
+		mustPlays = append(mustPlays, m.Position{X: pos.X, Y: pos.Y + 1})
 	}
 	if coordUnoccupied(goban, int(pos.X), int(pos.Y)-2) && coordPlayer(goban, int(pos.X), int(pos.Y)-1, player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordPlayer(goban, int(pos.X), int(pos.Y)+1, opp) {
-		return true // eoOx
+		mustPlays = append(mustPlays, m.Position{X: pos.X, Y: pos.Y - 2})
 	}
 	if coordPlayer(goban, int(pos.X), int(pos.Y)-1, opp) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y)+1, player) && coordUnoccupied(goban, int(pos.X), int(pos.Y)+2) {
-		return true // xOoe
+		mustPlays = append(mustPlays, m.Position{X: pos.X, Y: pos.Y + 2})
 	}
 	if coordUnoccupied(goban, int(pos.X), int(pos.Y)-1) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y)+1, player) && coordPlayer(goban, int(pos.X), int(pos.Y)+2, opp) {
-		return true // eOox
+		mustPlays = append(mustPlays, m.Position{X: pos.X, Y: pos.Y - 1})
 	}
-	return false
+	if len(mustPlays) > 0 {
+		return true, mustPlays
+	}
+	return false, nil
 }
 
-func canPosBeCapturedLeftDiag(goban m.Goban, pos m.Position, player uint8, opp uint8) bool {
+func canPosBeCapturedLeftDiag(goban m.Goban, pos m.Position, player uint8, opp uint8) (bool, []m.Position) {
+	var mustPlays []m.Position
 	if coordPlayer(goban, int(pos.X)-2, int(pos.Y)-2, opp) && coordPlayer(goban, int(pos.X)-1, int(pos.Y)-1, player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordUnoccupied(goban, int(pos.X)+1, int(pos.Y)+1) {
-		return true // xoOe
+		mustPlays = append(mustPlays, m.Position{X: pos.X + 1, Y: pos.Y + 1})
 	}
 	if coordUnoccupied(goban, int(pos.X)-2, int(pos.Y)-2) && coordPlayer(goban, int(pos.X)-1, int(pos.Y)-1, player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordPlayer(goban, int(pos.X)+1, int(pos.Y)+1, opp) {
-		return true // eoOx
+		mustPlays = append(mustPlays, m.Position{X: pos.X - 2, Y: pos.Y - 2})
 	}
 	if coordPlayer(goban, int(pos.X)-1, int(pos.Y)-1, opp) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X)+1, int(pos.Y)+1, player) && coordUnoccupied(goban, int(pos.X)+2, int(pos.Y)+2) {
-		return true // xOoe
+		mustPlays = append(mustPlays, m.Position{X: pos.X + 2, Y: pos.Y + 2})
 	}
 	if coordUnoccupied(goban, int(pos.X)-1, int(pos.Y)-1) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X)+1, int(pos.Y)+1, player) && coordPlayer(goban, int(pos.X)+2, int(pos.Y)+2, opp) {
-		return true // eOox
+		mustPlays = append(mustPlays, m.Position{X: pos.X - 1, Y: pos.Y - 1})
 	}
-	return false
+	if len(mustPlays) > 0 {
+		return true, mustPlays
+	}
+	return false, nil
 }
 
-func canPosBeCapturedRightDiag(goban m.Goban, pos m.Position, player uint8, opp uint8) bool {
+func canPosBeCapturedRightDiag(goban m.Goban, pos m.Position, player uint8, opp uint8) (bool, []m.Position) {
+	var mustPlays []m.Position
+
 	if coordPlayer(goban, int(pos.X)-2, int(pos.Y)+2, opp) && coordPlayer(goban, int(pos.X)-1, int(pos.Y)+1, player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordUnoccupied(goban, int(pos.X)+1, int(pos.Y)-1) {
-		return true // xoOe
+		mustPlays = append(mustPlays, m.Position{X: pos.X + 1, Y: pos.Y - 1})
 	}
 	if coordUnoccupied(goban, int(pos.X)-2, int(pos.Y)+2) && coordPlayer(goban, int(pos.X)-1, int(pos.Y)+1, player) &&
 		coordPlayer(goban, int(pos.X), int(pos.Y), player) && coordPlayer(goban, int(pos.X)+1, int(pos.Y)-1, opp) {
-		return true // eoOx
+		mustPlays = append(mustPlays, m.Position{X: pos.X - 2, Y: pos.Y + 2})
 	}
 	if coordPlayer(goban, int(pos.X)-1, int(pos.Y)+1, opp) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X)+1, int(pos.Y)-1, player) && coordUnoccupied(goban, int(pos.X)+2, int(pos.Y)-2) {
-		return true // xOoe
+		mustPlays = append(mustPlays, m.Position{X: pos.X + 2, Y: pos.Y - 2})
 	}
 	if coordUnoccupied(goban, int(pos.X)-1, int(pos.Y)+1) && coordPlayer(goban, int(pos.X), int(pos.Y), player) &&
 		coordPlayer(goban, int(pos.X)+1, int(pos.Y)-1, player) && coordPlayer(goban, int(pos.X)+2, int(pos.Y)-2, opp) {
-		return true // eOox
+		mustPlays = append(mustPlays, m.Position{X: pos.X - 1, Y: pos.Y + 1})
 	}
-	return false
+	if len(mustPlays) > 0 {
+		return true, mustPlays
+	}
+	return false, nil
 }
 
-func canPositionBeCaptured(goban m.Goban, pos m.Position, player uint8, opp uint8) bool {
-	if canPosBeCapturedHor(goban, pos, player, opp) {
-		return true
+func canPositionBeCaptured(goban m.Goban, pos m.Position, player uint8, opp uint8) (bool, []m.Position) {
+	var mustPlays []m.Position
+
+	hor, horPlays := canPosBeCapturedHor(goban, pos, player, opp)
+	if hor {
+		mustPlays = append(mustPlays, horPlays...)
 	}
-	if canPosBeCapturedVert(goban, pos, player, opp) {
-		return true
+	vert, vertPlays := canPosBeCapturedVert(goban, pos, player, opp)
+	if vert {
+		mustPlays = append(mustPlays, vertPlays...)
 	}
-	if canPosBeCapturedLeftDiag(goban, pos, player, opp) {
-		return true
+	ld, ldPlays := canPosBeCapturedLeftDiag(goban, pos, player, opp)
+	if ld {
+		mustPlays = append(mustPlays, ldPlays...)
 	}
-	if canPosBeCapturedRightDiag(goban, pos, player, opp) {
-		return true
+	rd, rdPlays := canPosBeCapturedRightDiag(goban, pos, player, opp)
+	if rd {
+		mustPlays = append(mustPlays, rdPlays...)
 	}
-	return false
+	return hor || vert || ld || rd, mustPlays
 }
 
-func CanAlignementBecaptured(goban m.Goban, alignement []m.Position, playerBool bool) bool {
+func CanAlignementBecaptured(goban m.Goban, alignement []m.Position, playerBool bool) (bool, []m.Position) {
 	var player uint8 = 254
 	var opp uint8 = 255
 	if playerBool {
@@ -123,12 +146,14 @@ func CanAlignementBecaptured(goban m.Goban, alignement []m.Position, playerBool 
 		opp = 254
 	}
 
+	var rtnBool bool = false
+	var mustPlays []m.Position
 	for _, pos := range alignement {
-		if canPositionBeCaptured(goban, pos, player, opp) {
-			return true
-		}
+		canBeCaptured, curPlays := canPositionBeCaptured(goban, pos, player, opp)
+		rtnBool = canBeCaptured || rtnBool
+		mustPlays = append(mustPlays, curPlays...)
 	}
-	return false
+	return rtnBool, mustPlays
 }
 
 func getFiveAlignements(goban m.Goban, pos m.Position, playerBool bool) [][]m.Position {
@@ -229,24 +254,27 @@ func getFiveAlignements(goban m.Goban, pos m.Position, playerBool bool) [][]m.Po
 	return alignements
 }
 
-func IsWin(context *m.Context) bool {
+func IsWin(context *m.Context) (bool, []m.Position) {
 	// check win by captures
 	if isCapturesWin(context) {
-		return true
+		return true, nil
 	}
 
 	// check win by alignement
 	alignements := getFiveAlignements(context.Goban, context.State.LastMove.Position, context.State.LastMove.Player) // get five alignements, type is the direction
 
+	mustPlays := []m.Position{}
 	for _, alignement := range alignements {
-		if CanAlignementBecaptured(context.Goban, alignement, context.State.LastMove.Player) == false {
+		canBeCaptured, whereMustPlay := CanAlignementBecaptured(context.Goban, alignement, context.State.LastMove.Player)
+		if canBeCaptured == false {
 			if context.State.LastMove.Player == false {
 				context.State.PlayersInfo.Player_1.Win = true
 			} else {
 				context.State.PlayersInfo.Player_2.Win = true
 			}
-			return true
+			return true, nil
 		}
+		mustPlays = append(mustPlays, whereMustPlay...)
 	}
-	return false
+	return false, mustPlays
 }
