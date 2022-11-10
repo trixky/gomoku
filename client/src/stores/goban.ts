@@ -31,6 +31,30 @@ function createBoardStore() {
 				return board;
 			});
 		},
+		removePiece: (x: number, y: number) => {
+			update((board) => {
+				board.cells[y][x] = <CellModel>{
+					player: 0
+				};
+
+				return board;
+			});
+		},
+		playersFromString: (str: string) => {
+			const cells = str.split('').map((cell) => <0 | 1 | 2>parseInt(cell));
+
+			update((board) => {
+				let i = 0;
+
+				for (let y = 0; y < 19; y++)
+					for (let x = 0; x < 19; x++) {
+						board.cells[y][x].player = cells[i];
+						i++;
+					}
+
+				return board;
+			});
+		},
 		heuristicFromString: (str: string) => {
 			const cells = str.split(',').map((cell) => parseInt(cell));
 

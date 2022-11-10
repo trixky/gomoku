@@ -1,7 +1,7 @@
 import type Analyzer from './analyzer';
 import type { PlayersInfo as PlayersInfoModel } from './players_info';
 
-export default interface Response {
+export default interface NextResponse {
 	goban: string;
 	heuristic_goban: string;
 	options: {
