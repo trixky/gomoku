@@ -18,8 +18,8 @@ type RequestCheckData struct {
 }
 
 type ResponseCheckData struct {
-	doubleThree bool   `json:"doubleThree"`
-	nbCaptured  int    `json:"nbCaptured"`
+	DoubleThree bool   `json:"DoubleThree"`
+	NbCaptured  int    `json:"NbCaptured"`
 	Goban       string `json:"goban"`
 }
 
@@ -51,8 +51,8 @@ func check(w http.ResponseWriter, r *http.Request) {
 
 	response := ResponseCheckData{}
 
-	response.doubleThree = doubleThree
-	response.nbCaptured = nb
+	response.DoubleThree = doubleThree
+	response.NbCaptured = nb
 	response.Goban = goban.ToString()
 
 	marshalled, err := json.Marshal(response)
