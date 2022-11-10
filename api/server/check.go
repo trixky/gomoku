@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	dt "github.com/trixky/gomoku/doubleThree"
-	m "github.com/trixky/gomoku/models"
+	"github.com/trixky/gomoku/models"
 )
 
 type RequestCheckData struct {
@@ -32,7 +32,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 
 	// Decode the data from JSON
 	decoder := json.NewDecoder(r.Body)
-	data := RequestCheckData{}
+	data := models.RequestNextData{}
 
 	if err := decoder.Decode(&data); err != nil {
 		// If JSON unmarshalling failed
@@ -41,13 +41,15 @@ func check(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Compute a new context from the data
-	dataGoban := &m.Goban{}
-	dataGoban.Extract(data.Goban)
-	dataBool := false
-	if data.Player == 255 {
-		dataBool = true
+	context, err := data.ComputeContext()
+
+	if err != nil {
+		// If the context computation failed
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-	doubleThree, nb, goban := dt.CheckDoubleThree(*dataGoban, m.Position{X: uint8(data.X), Y: uint8(data.Y)}, dataBool)
+
+	doubleThree, nb, goban := dt.CheckDoubleThree(context.Goban, context.State.LastMove.Position, context.State.LastMove.Player)
 
 	response := ResponseCheckData{}
 
