@@ -8,6 +8,8 @@
 	import LayersStore from '../../stores/layers';
 	import LayersPercentageStore from '../../stores/layers_percentage';
 	import LoadingStore from '../../stores/loading';
+	import { vsStore as VsStore } from '../../stores/vs';
+	import { Modes as OpponentsModes } from '../../stores/vs';
 
 	let selected_ai = Config.options.ai.default;
 	let advanced_mode = false;
@@ -149,6 +151,10 @@
 			OptionsStore.disableAnalyzerRounded();
 		}
 	}
+	// ----------------------- handle vs
+	function handleVs(e: any) {
+		VsStore.set(e.target.value);
+	}
 </script>
 
 <!-- ========================= HTML -->
@@ -173,7 +179,12 @@
 					/>
 				</div>
 				<div class="option">
-					<p>AI</p>
+					<p>vs&nbsp;</p>
+					<select value={$VsStore} on:change={handleVs}>
+						{#each OpponentsModes as opponent}
+							<option value={opponent}>{opponent}</option>
+						{/each}
+					</select>
 					<select value={selected_ai} on:change={handleAi}>
 						{#each Object.entries(AiStore) as ai}
 							<option value={ai[0]}>
