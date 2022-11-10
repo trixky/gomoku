@@ -1,7 +1,6 @@
 package doubleThree
 
 import (
-	"github.com/trixky/gomoku/models"
 	m "github.com/trixky/gomoku/models"
 )
 
@@ -20,7 +19,7 @@ func posArrayTranslation(pos m.Position, mulX int, mulY int, direction int) []m.
 }
 
 // checkEndThree returns boolean dep. if the position given would create a three w/ position in one of the ends
-func checkEndThree(goban Goban, minus []m.Position, plus []m.Position, player uint8) bool {
+func checkEndThree(goban m.Goban, minus []m.Position, plus []m.Position, player uint8) bool {
 	if coordUnoccupiedPos(goban, plus[0]) {
 		if coordPlayerPos(goban, minus[0], player) {
 			if coordPlayerPos(goban, minus[1], player) && coordUnoccupiedPos(goban, minus[2]) {
@@ -54,7 +53,7 @@ func checkEndThree(goban Goban, minus []m.Position, plus []m.Position, player ui
 }
 
 // checMiddleThree returns boolean dep. if the position given would create a three w/ position in the middle
-func checkMidddleThree(goban Goban, minus []m.Position, plus []m.Position, player uint8) bool {
+func checkMidddleThree(goban m.Goban, minus []m.Position, plus []m.Position, player uint8) bool {
 	if coordPlayerPos(goban, plus[0], player) && coordUnoccupiedPos(goban, plus[1]) {
 		if coordPlayerPos(goban, minus[0], player) && coordUnoccupiedPos(goban, minus[1]) {
 			return true // 01X10
@@ -72,7 +71,7 @@ func checkMidddleThree(goban Goban, minus []m.Position, plus []m.Position, playe
 }
 
 // checkThree returns boolean dep. if the position given would create a free three w/ given direction
-func checkThree(goban Goban, pos m.Position, player uint8, mulX int, mulY int) bool {
+func checkThree(goban m.Goban, pos m.Position, player uint8, mulX int, mulY int) bool {
 	minus := posArrayTranslation(pos, mulX, mulY, -1)
 	plus := posArrayTranslation(pos, mulX, mulY, 1)
 
@@ -86,13 +85,17 @@ func checkThree(goban Goban, pos m.Position, player uint8, mulX int, mulY int) b
 }
 
 // CheckDoubleThree returns boolean true if the position given would create a doubleThree, false otherwise
-func CheckDoubleThree(goban models.Goban, pos m.Position, player uint8) (bool, int, Goban) {
+func CheckDoubleThree(goban m.Goban, pos m.Position, playerBool bool) (bool, int, m.Goban) {
+	var player uint8 = 254
+	if playerBool {
+		player = 255
+	}
 	checkCapture, whoCaptured := isCapture(goban, int(pos.X), int(pos.Y), player)
 	if checkCapture {
 		for _, captured := range whoCaptured {
-			goban[captured.X][captured.Y] = 0
+			goban[captured.Y][captured.X] = 0
 		}
-		goban[pos.X][pos.Y] = player
+		goban[pos.Y][pos.X] = player
 		return false, len(whoCaptured), goban
 	}
 
@@ -104,8 +107,8 @@ func CheckDoubleThree(goban models.Goban, pos m.Position, player uint8) (bool, i
 	if (hor && (vert || lDiag || rDiag)) ||
 		(vert && (lDiag || rDiag)) ||
 		(lDiag && rDiag) { // check at least two true
-		return true, 0, Goban{}
+		return true, 0, m.Goban{}
 	}
-	goban[pos.X][pos.Y] = player
+	goban[pos.Y][pos.X] = player
 	return false, 0, goban
 }

@@ -1,6 +1,7 @@
 package doubleThree
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -103,14 +104,14 @@ func TestCoordPlayer(t *testing.T) {
 			truth:  false,
 		}, {
 			goban:  [19][19]byte{{254, 0, 0, 0, 0, 0, 0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 255}},
-			x:      0,
-			y:      18,
+			x:      18,
+			y:      0,
 			player: 254,
 			truth:  false,
 		}, {
 			goban:  [19][19]byte{{254, 0, 0, 0, 0, 0, 0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 255}},
-			x:      0,
-			y:      18,
+			x:      18,
+			y:      0,
 			player: 255,
 			truth:  true,
 		}, {
@@ -170,18 +171,18 @@ func TestCoordUnoccupied(t *testing.T) {
 			truth: false,
 		}, {
 			goban: [19][19]byte{{254, 0, 0, 0, 0, 0, 0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 255}},
-			x:     0,
-			y:     18,
+			x:     18,
+			y:     0,
 			truth: false,
 		}, {
 			goban: [19][19]byte{{254, 0, 0, 0, 0, 0, 0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 255}},
-			x:     0,
-			y:     1,
+			x:     1,
+			y:     0,
 			truth: true,
 		}, {
 			goban: [19][19]byte{{254, 0, 0, 0, 0, 0, 0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 255}},
-			x:     0,
-			y:     3,
+			x:     3,
+			y:     0,
 			truth: true,
 		}, {
 			goban: [19][19]byte{{254, 0, 0, 0, 0, 0, 0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 255}},
@@ -191,10 +192,10 @@ func TestCoordUnoccupied(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		testingTruth := coordUnoccupied(test.goban, test.x, test.y)
 		if testingTruth != test.truth {
-			t.Fatalf("doubleThree: coordUtils: coordUnoccupied: wrong truth")
+			t.Fatalf("doubleThree: coordUtils: coordUnoccupied: "+ fmt.Sprint(i) + ": wrong truth")
 		}
 	}
 }

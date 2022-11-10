@@ -11,7 +11,7 @@ func TestCheckDoubleThree(t *testing.T) {
 	tests := []struct {
 		goban      [19][19]byte
 		pos        m.Position
-		player     uint8
+		player     bool
 		truth      bool
 		nbCaptured int
 		truthGoban [19][19]byte
@@ -22,7 +22,7 @@ func TestCheckDoubleThree(t *testing.T) {
 				{254, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				{0, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
 			pos:        m.Position{X: 0, Y: 0},
-			player:     254,
+			player:     false,
 			truth:      false,
 			nbCaptured: 4,
 			truthGoban: [19][19]byte{{254, 0, 0, 254, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

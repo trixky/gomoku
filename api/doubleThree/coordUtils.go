@@ -21,9 +21,9 @@ func coordOnGobanPos(pos m.Position) bool {
 }
 
 // coordPlayer evaluates if the value of the coordinates on the goban has player number
-func coordPlayer(goban Goban, x int, y int, player uint8) bool {
+func coordPlayer(goban m.Goban, x int, y int, player uint8) bool {
 	if coordOnGoban(x, y) == true {
-		if goban[x][y] == byte(player) {
+		if goban[y][x] == byte(player) {
 			return true
 		}
 	}
@@ -31,9 +31,9 @@ func coordPlayer(goban Goban, x int, y int, player uint8) bool {
 }
 
 // coordPlayer evaluates if the value of the coordinates on the goban has player number
-func coordPlayerPos(goban Goban, pos m.Position, player uint8) bool {
+func coordPlayerPos(goban m.Goban, pos m.Position, player uint8) bool {
 	if coordOnGobanPos(pos) == true {
-		if goban[pos.X][pos.Y] == byte(player) {
+		if goban[pos.Y][pos.X] == byte(player) {
 			return true
 		}
 	}
@@ -41,9 +41,9 @@ func coordPlayerPos(goban Goban, pos m.Position, player uint8) bool {
 }
 
 // coordUnoccupied test if the value of the coordinates on the goban is zero (empty)
-func coordUnoccupied(goban Goban, x int, y int) bool {
+func coordUnoccupied(goban m.Goban, x int, y int) bool {
 	if coordOnGoban(x, y) == true {
-		if goban[x][y] == 0 {
+		if goban[y][x] == 0 {
 			return true
 		}
 	}
@@ -51,9 +51,9 @@ func coordUnoccupied(goban Goban, x int, y int) bool {
 }
 
 // coordUnoccupied test if the value of the coordinates on the goban is zero (empty)
-func coordUnoccupiedPos(goban Goban, pos m.Position) bool {
+func coordUnoccupiedPos(goban m.Goban, pos m.Position) bool {
 	if coordOnGobanPos(pos) == true {
-		if goban[pos.X][pos.Y] == 0 {
+		if goban[pos.Y][pos.X] == 0 {
 			return true
 		}
 	}
