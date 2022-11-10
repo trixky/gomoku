@@ -10,15 +10,11 @@ function postCheck(
 	return new Promise<string>((resolve, reject) => {
 		const url = `http://${Config.environment.api.origin}:${Config.environment.api.port}/check`;
 
-		console.log('ce qui va partir pour le check:');
-
 		const data = {
 			options,
 			goban,
 			players_info
 		};
-
-		console.log(data);
 
 		fetch(url, {
 			method: 'POST',

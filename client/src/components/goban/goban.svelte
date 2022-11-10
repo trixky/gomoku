@@ -13,22 +13,58 @@
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
 	import AnalyzerStore from '../../stores/analyzer';
-	import type ResponseModel from '../../models/response';
+	import type NextResponseModel from '../../models/next_response';
+	import type CheckResponseModel from '../../models/check_response';
+
 	import RulesStore from '../../stores/rules';
 
 	let rules = false;
 
-	function handleCellClick(x: number, y: number) {
+	async function handleCellClick(x: number, y: number) {
 		if (!$LoadingStore) {
 			if ($GobanStore.cells[y][x].player === 0) {
 				LoadingStore.switch(true);
 
-				PostCheck($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
-					.then((response: any) => {
-						const json_response: ResponseModel = JSON.parse(response);
+				const current_last_move = $LastMoveStore;
 
-						console.log('la reponse du check est:');
+				LastMoveStore.push(x, y);
+				GobanStore.addPiece($LastMoveStore.player, x, y);
+
+				PostCheck($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
+					.then((response) => {
+						const json_response: CheckResponseModel = JSON.parse(response);
+
 						console.log(json_response);
+
+						if (!json_response.DoubleThree) {
+							TimeStore.reset();
+
+							GobanStore.playersFromString(json_response.goban);
+
+							PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
+								.then((response) => {
+									const json_response: NextResponseModel = JSON.parse(response);
+
+									PlayersInfoStore.set(json_response.players_info);
+									AnalyzerStore.set(json_response.analyzer);
+									LastMoveStore.push(
+										json_response.options.position.x,
+										json_response.options.position.y
+									);
+									GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
+									GobanStore.heuristicFromString(json_response.heuristic_goban);
+									TimeStore.set(json_response.options.time);
+								})
+								.catch(() => {
+									alert('an error occured from api [next]');
+									location.reload();
+								});
+						} else {
+							alert("you can't play here");
+							GobanStore.removePiece(x, y);
+							LastMoveStore.push(current_last_move.x, current_last_move.y);
+						}
+						LoadingStore.switch(false);
 					})
 					.catch(() => {
 						alert('an error occured from api [check]');
@@ -36,26 +72,7 @@
 						location.reload();
 					});
 
-				TimeStore.reset();
-				LastMoveStore.push(x, y);
-				GobanStore.addPiece($LastMoveStore.player, x, y);
-				PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
-					.then((response) => {
-						const json_response: ResponseModel = JSON.parse(response);
-
-						PlayersInfoStore.set(json_response.players_info);
-						AnalyzerStore.set(json_response.analyzer);
-						LastMoveStore.push(json_response.options.position.x, json_response.options.position.y);
-						GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
-						GobanStore.heuristicFromString(json_response.heuristic_goban);
-						TimeStore.set(json_response.options.time);
-						LoadingStore.switch(false);
-					})
-					.catch(() => {
-						alert('an error occured from api [next]');
-						LoadingStore.switch(false);
-						location.reload();
-					});
+				// GobanStore.addPiece($LastMoveStore.player, x, y);
 			}
 		}
 	}
