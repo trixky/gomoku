@@ -35,11 +35,9 @@ type RequestNextProximityData struct {
 }
 
 type RequestNextHeuristicsData struct {
-	PotentialAlignementWeight int `json:"potential_alignement"`
-	AlignementWeight          int `json:"alignement"`
-	PotentialCaptureWeight    int `json:"potential_capture"`
-	CaptureWeight             int `json:"capture"`
-	RandomWeight              int `json:"random"`
+	AlignementWeight int `json:"alignement"`
+	CaptureWeight    int `json:"capture"`
+	RandomWeight     int `json:"random"`
 }
 
 type RequestNextOptionData struct {
@@ -113,9 +111,7 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.ProximityEvolution = rd.Options.Proximity.Evolution
 
 	// Heuristics
-	options.HeuristicPotentialAlignementWeight = rd.Options.Heuristics.PotentialAlignementWeight
 	options.HeuristicAlignementWeight = rd.Options.Heuristics.AlignementWeight
-	options.HeuristicPotentialCaptureWeight = rd.Options.Heuristics.PotentialCaptureWeight
 	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
 

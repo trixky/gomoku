@@ -33,11 +33,9 @@ type Options struct {
 	ProximityEvolution bool
 
 	// Heuristics
-	HeuristicPotentialAlignementWeight int
-	HeuristicAlignementWeight          int
-	HeuristicPotentialCaptureWeight    int
-	HeuristicCaptureWeight             int
-	HeuristicRandomWeight              int
+	HeuristicAlignementWeight int
+	HeuristicCaptureWeight    int
+	HeuristicRandomWeight     int
 
 	// Suspicion
 	SuspicionRadius uint8
@@ -80,9 +78,7 @@ func (o *Options) Print() {
 
 	// Prints heuristics
 	fmt.Println("--------------- [heuristics]")
-	fmt.Printf("potential alignement:\t%2d/10\n", o.HeuristicPotentialAlignementWeight)
 	fmt.Printf("alignement:\t\t\t%2d/10\n", o.HeuristicAlignementWeight)
-	fmt.Printf("potential capture:\t\t%2d/10\n", o.HeuristicPotentialCaptureWeight)
 	fmt.Printf("capture:\t\t\t%2d/10\n", o.HeuristicCaptureWeight)
 	fmt.Printf("random:\t\t\t%2d/10\n", o.HeuristicRandomWeight)
 

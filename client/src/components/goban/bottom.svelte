@@ -107,17 +107,9 @@
 			OptionsStore.hideHeuristics();
 		}
 	}
-	function handleHeuristicsPotentialAlignement(e: any) {
-		selected_ai = 'custom';
-		OptionsStore.setHeuristicsPotentialAlignement(e.target.value);
-	}
 	function handleHeuristicsAlignement(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsAlignement(e.target.value);
-	}
-	function handleHeuristicsPotentialCapture(e: any) {
-		selected_ai = 'custom';
-		OptionsStore.setHeuristicsPotentialCapture(e.target.value);
 	}
 	function handleHeuristicsCapture(e: any) {
 		selected_ai = 'custom';
@@ -420,21 +412,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="options-form">
+			<div class="options-form range">
 				<div class="range-container">
-					<div class="option">
-						<p>potential alignement</p>
-						<input
-							type="range"
-							min={Config.options.heuristics.values.min}
-							max={Config.options.heuristics.values.max}
-							on:input={handleHeuristicsPotentialAlignement}
-							value={$OptionsStore.heuristics.potential_alignement}
-						/>
-						<p class="range-value">
-							{$OptionsStore.heuristics.potential_alignement}/{Config.options.heuristics.values.max}
-						</p>
-					</div>
 					<div class="option">
 						<p>alignement</p>
 						<input
@@ -446,19 +425,6 @@
 						/>
 						<p class="range-value">
 							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.values.max}
-						</p>
-					</div>
-					<div class="option">
-						<p>potential capture</p>
-						<input
-							type="range"
-							min={Config.options.heuristics.values.min}
-							max={Config.options.heuristics.values.max}
-							on:input={handleHeuristicsPotentialCapture}
-							value={$OptionsStore.heuristics.potential_capture}
-						/>
-						<p class="range-value">
-							{$OptionsStore.heuristics.potential_capture}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
 					<div class="option">
@@ -571,6 +537,10 @@
 
 	.options-form {
 		@apply flex justify-end w-full mt-3;
+	}
+
+	.options-form.range {
+		@apply mt-0;
 	}
 
 	.options {
