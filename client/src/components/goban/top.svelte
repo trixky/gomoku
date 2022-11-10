@@ -5,6 +5,8 @@
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
 	import GobanStore from '../../stores/goban';
+	import OptionsStore from '../../stores/options';
+	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 
 	const fade_parameters = { duration: 250 };
 
@@ -50,13 +52,15 @@
 			{/if}
 		</h2>
 		<div class="player-infos right">
-			<p>
-				time:&nbsp;<span class="min-w-[74px] text-right"
-					>{#if $LoadingStore}<span in:fade={fade_parameters} class="blink">loading</span>{:else}
-						<span in:fade={fade_parameters}>{$TimeStore} ms</span>
-					{/if}</span
-				>
-			</p>
+			{#if $VsStore === OpponentsModes[0] || $OptionsStore.heuristics.show}
+				<p transition:fade={fade_parameters}>
+					time:&nbsp;<span class="min-w-[74px] text-right"
+						>{#if $LoadingStore}<span in:fade={fade_parameters} class="blink">loading</span>{:else}
+							<span in:fade={fade_parameters}>{$TimeStore} ms</span>
+						{/if}</span
+					>
+				</p>
+			{/if}
 			<p>pieces: {player_2.pieces_nbr}</p>
 			<p>captures: {player_2.captures}</p>
 		</div>

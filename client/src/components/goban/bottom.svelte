@@ -8,8 +8,7 @@
 	import LayersStore from '../../stores/layers';
 	import LayersPercentageStore from '../../stores/layers_percentage';
 	import LoadingStore from '../../stores/loading';
-	import { vsStore as VsStore } from '../../stores/vs';
-	import { Modes as OpponentsModes } from '../../stores/vs';
+	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 
 	let selected_ai = Config.options.ai.default;
 	let advanced_mode = false;
