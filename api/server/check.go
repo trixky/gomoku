@@ -5,6 +5,7 @@ import (
 
 	"encoding/json"
 	"net/http"
+
 	dt "github.com/trixky/gomoku/doubleThree"
 	m "github.com/trixky/gomoku/models"
 )
@@ -64,5 +65,4 @@ func check(w http.ResponseWriter, r *http.Request) {
 	marshalledStr := string(marshalled)
 
 	fmt.Fprintf(w, marshalledStr)
-	fmt.Fprintf(w, "in progress")
 }
