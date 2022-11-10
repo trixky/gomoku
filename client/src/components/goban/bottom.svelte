@@ -57,11 +57,6 @@
 		selected_ai = 'custom';
 		OptionsStore.setProximityEvolution(e.target.checked);
 	}
-
-	function handleProximityReduction(e: any) {
-		selected_ai = 'custom';
-		OptionsStore.setProximityReduction(e.target.checked);
-	}
 	// ----------------------- handle depth
 	function handleDepthMax(e: any) {
 		selected_ai = 'custom';
@@ -220,15 +215,6 @@
 							type="checkbox"
 							checked={$OptionsStore.proximity.show}
 							on:change={handleProximityVisibility}
-						/>
-					</div>
-					<div class="option">
-						<p>reduction</p>
-						<input
-							type="checkbox"
-							checked={$OptionsStore.proximity.reduction}
-							on:change={handleProximityReduction}
-							disabled
 						/>
 					</div>
 					<div class="option">

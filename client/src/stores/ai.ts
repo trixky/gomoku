@@ -31,8 +31,7 @@ export default {
 				threshold: 1,
 				show: Config.options.proximity.show.default,
 				evolution: true,
-				shape: SHAPES.neighbour,
-				reduction: Config.options.proximity.reduction.default
+				shape: SHAPES.neighbour
 			},
 			heuristics: {
 				alignement: 0,
@@ -75,8 +74,7 @@ export default {
 				threshold: 1,
 				show: Config.options.proximity.show.default,
 				evolution: true,
-				shape: SHAPES.neighbour,
-				reduction: Config.options.proximity.reduction.default
+				shape: SHAPES.neighbour
 			},
 			heuristics: {
 				alignement: 3,
@@ -118,8 +116,7 @@ export default {
 				threshold: 3,
 				show: Config.options.proximity.show.default,
 				evolution: true,
-				shape: SHAPES.star,
-				reduction: true
+				shape: SHAPES.star
 			},
 			heuristics: {
 				alignement: 2,
@@ -161,8 +158,7 @@ export default {
 				threshold: 2,
 				show: Config.options.proximity.show.default,
 				evolution: true,
-				shape: SHAPES.star,
-				reduction: true
+				shape: SHAPES.star
 			},
 			heuristics: {
 				alignement: 2,
@@ -205,8 +201,7 @@ export default {
 				threshold: 2,
 				show: Config.options.proximity.show.default,
 				evolution: true,
-				shape: SHAPES.star,
-				reduction: true
+				shape: SHAPES.star
 			},
 			heuristics: {
 				alignement: 2,

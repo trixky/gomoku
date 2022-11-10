@@ -21,8 +21,7 @@ export default function generateOptions(): OptionsModel {
 			threshold: Config.options.proximity.threshold.default,
 			show: Config.options.proximity.show.default,
 			evolution: Config.options.proximity.evolution.default,
-			shape: Config.options.proximity.shape.default,
-			reduction: Config.options.proximity.reduction.default
+			shape: Config.options.proximity.shape.default
 		},
 		heuristics: {
 			alignement: Config.options.heuristics.values.default,

@@ -27,8 +27,7 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			radius: shape_neighboor ? 1 : $Stores[0].proximity.radius,
 			threshold: shape_neighboor ? 1 : $Stores[0].proximity.threshold,
 			shape: shape_neighboor ? SHAPES.square : $Stores[0].proximity.shape,
-			evolution: $Stores[0].proximity.evolution,
-			reduction: $Stores[0].proximity.reduction
+			evolution: $Stores[0].proximity.evolution
 		},
 		heuristics: {
 			alignement: $Stores[0].heuristics.alignement,

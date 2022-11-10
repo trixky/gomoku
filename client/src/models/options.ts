@@ -18,7 +18,6 @@ export default interface Options {
 		shape: number;
 		show: boolean;
 		evolution: boolean;
-		reduction: boolean;
 	};
 	heuristics: {
 		alignement: number;
