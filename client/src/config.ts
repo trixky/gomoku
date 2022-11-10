@@ -89,9 +89,6 @@ export default {
 			},
 			evolution: {
 				default: true
-			},
-			reduction: {
-				default: false
 			}
 		},
 		heuristics: {

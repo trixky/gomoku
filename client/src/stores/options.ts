@@ -85,11 +85,6 @@ function createOptionsStore() {
 				options.proximity.evolution = evolution;
 				return options;
 			}),
-		setProximityReduction: (reduction: boolean) =>
-			update((options) => {
-				options.proximity.reduction = reduction;
-				return options;
-			}),
 		// ----------------------- set depth
 		setDepthMax: (max: string) =>
 			update((options) => {

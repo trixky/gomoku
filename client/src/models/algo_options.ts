@@ -25,7 +25,6 @@ export interface AlgoOptions {
 		threshold: number;
 		shape: number;
 		evolution: boolean;
-		reduction: boolean;
 	};
 	heuristics: {
 		alignement: number;
