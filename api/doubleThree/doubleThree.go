@@ -40,11 +40,11 @@ func checkEndThree(goban m.Goban, minus []m.Position, plus []m.Position, player 
 			if coordPlayerPos(goban, plus[1], player) && coordUnoccupiedPos(goban, plus[2]) {
 				return true // 0X110
 			}
-			if coordUnoccupiedPos(goban, plus[1]) && coordPlayerPos(goban, plus[2], player) && coordUnoccupiedPos(goban, plus[4]) {
+			if coordUnoccupiedPos(goban, plus[1]) && coordPlayerPos(goban, plus[2], player) && coordUnoccupiedPos(goban, plus[3]) {
 				return true // 0X1010
 			}
 		}
-		if coordUnoccupiedPos(goban, plus[0]) && coordPlayerPos(goban, plus[1], player) && coordPlayerPos(goban, plus[2], player) && coordUnoccupiedPos(goban, plus[4]) {
+		if coordUnoccupiedPos(goban, plus[0]) && coordPlayerPos(goban, plus[1], player) && coordPlayerPos(goban, plus[2], player) && coordUnoccupiedPos(goban, plus[3]) {
 			return true // 0X0110
 		}
 	}
