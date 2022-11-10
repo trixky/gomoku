@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/trixky/gomoku/doubleThree"
 	"github.com/trixky/gomoku/logic"
 	"github.com/trixky/gomoku/models"
 )
@@ -78,6 +79,8 @@ choose:
 	}
 
 	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
+
+	doubleThree.IsWin(&best_child)
 
 	_json, err := best_child.ToJSON(elapsed_time, heuristic_goban)
 
