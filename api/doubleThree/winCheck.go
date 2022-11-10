@@ -1,6 +1,8 @@
 package doubleThree
 
-import m "github.com/trixky/gomoku/models"
+import (
+	m "github.com/trixky/gomoku/models"
+)
 
 func isCapturesWin(context *m.Context) bool {
 	if context.State.LastMove.Player == false {

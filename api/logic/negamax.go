@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/trixky/gomoku/doubleThree"
@@ -88,19 +89,21 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 							X: uint8(x),
 							Y: uint8(y),
 						})
-						isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(context.Goban,
+						isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(child.Goban,
 							models.Position{X: uint8(x), Y: uint8(y)},
-							context.State.LastMove.Player)
+							child.State.LastMove.Player)
 
 						if isDoubleThree {
 							continue
 						}
 						if lenCaptured > 0 {
-							context.Goban = newGoban
-							if context.State.LastMove.Player == false {
-								context.State.PlayersInfo.Player_1.Captures += uint8(lenCaptured)
+							child.Goban = newGoban
+							if child.State.LastMove.Player == false {
+								fmt.Println("P1: +" + fmt.Sprint(lenCaptured))
+								child.State.PlayersInfo.Player_1.Captures += uint8(lenCaptured)
 							} else {
-								context.State.PlayersInfo.Player_2.Captures += uint8(lenCaptured)
+								fmt.Println("P2: +" + fmt.Sprint(lenCaptured))
+								child.State.PlayersInfo.Player_2.Captures += uint8(lenCaptured)
 							}
 						}
 
