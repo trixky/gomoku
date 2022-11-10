@@ -5,6 +5,8 @@ import (
 
 	"encoding/json"
 	"net/http"
+	dt "github.com/trixky/gomoku/doubleThree"
+	m "github.com/trixky/gomoku/models"
 )
 
 type RequestCheckData struct {
@@ -38,23 +40,29 @@ func check(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Compute a new context from the data
-	// doubleThree, nb, goban := dt.CheckDoubleThree(m.Goban{}.Extract(data.Goban), m.Position{X: data.X, Y: data.Y}, data.Player)
+	dataGoban := &m.Goban{}
+	dataGoban.Extract(data.Goban)
+	dataBool := false
+	if data.Player == 255 {
+		dataBool = true
+	}
+	doubleThree, nb, goban := dt.CheckDoubleThree(*dataGoban, m.Position{X: uint8(data.X), Y: uint8(data.Y)}, dataBool)
 
-	// response := ResponseCheckData{}
+	response := ResponseCheckData{}
 
-	// response.doubleThree = doubleThree
-	// response.nbCaptured = nb
-	// response.Goban = goban.ToString()
+	response.doubleThree = doubleThree
+	response.nbCaptured = nb
+	response.Goban = goban.ToString()
 
-	// marshalled, err := json.Marshal(response)
+	marshalled, err := json.Marshal(response)
 
-	// if err != nil {
-	// 	// If the context computation failed
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 	return
-	// }
-	// marshalledStr := string(marshalled)
+	if err != nil {
+		// If the context computation failed
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	marshalledStr := string(marshalled)
 
-	// fmt.Fprintf(w, marshalledStr)
+	fmt.Fprintf(w, marshalledStr)
 	fmt.Fprintf(w, "in progress")
 }

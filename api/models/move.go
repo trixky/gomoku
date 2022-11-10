@@ -21,5 +21,5 @@ func (m *Move) Print() {
 
 	// Prints position
 	fmt.Println("x:\t\t", m.Position.X)
-	fmt.Println("y:\t\t", m.Position.X)
+	fmt.Println("y:\t\t", m.Position.Y)
 }

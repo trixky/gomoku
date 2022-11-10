@@ -3,6 +3,7 @@ package logic
 import (
 	"time"
 
+	"github.com/trixky/gomoku/doubleThree"
 	"github.com/trixky/gomoku/heuristics"
 	"github.com/trixky/gomoku/models"
 )
@@ -87,6 +88,21 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 							X: uint8(x),
 							Y: uint8(y),
 						})
+						isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(context.Goban,
+							models.Position{X: uint8(x), Y: uint8(y)},
+							context.State.LastMove.Player)
+
+						if isDoubleThree {
+							continue
+						}
+						if lenCaptured > 0 {
+							context.Goban = newGoban
+							if context.State.LastMove.Player == false {
+								context.State.PlayersInfo.Player_1.Captures += uint8(lenCaptured)
+							} else {
+								context.State.PlayersInfo.Player_2.Captures += uint8(lenCaptured)
+							}
+						}
 
 						if context.State.Depth == 0 && context.Options.WidthMultiThreading {
 							go Negamax(&child, child_channel)
