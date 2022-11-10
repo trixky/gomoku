@@ -8,6 +8,7 @@
 	import ProximityGobanStore from '../../stores/proximity_goban';
 	import Cell from './cell.svelte';
 	import PostNext from '../../api/post.next';
+	import PostCheck from '../../api/post.check';
 	import LastMoveStore from '../../stores/last_move';
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
@@ -21,6 +22,20 @@
 		if (!$LoadingStore) {
 			if ($GobanStore.cells[y][x].player === 0) {
 				LoadingStore.switch(true);
+
+				PostCheck($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
+					.then((response: any) => {
+						const json_response: ResponseModel = JSON.parse(response);
+
+						console.log('la reponse du check est:');
+						console.log(json_response);
+					})
+					.catch(() => {
+						alert('an error occured from api [check]');
+						LoadingStore.switch(false);
+						location.reload();
+					});
+
 				TimeStore.reset();
 				LastMoveStore.push(x, y);
 				GobanStore.addPiece($LastMoveStore.player, x, y);
@@ -37,7 +52,7 @@
 						LoadingStore.switch(false);
 					})
 					.catch(() => {
-						alert('an error occured from api');
+						alert('an error occured from api [next]');
 						LoadingStore.switch(false);
 						location.reload();
 					});
