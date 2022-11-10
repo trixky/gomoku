@@ -185,26 +185,11 @@ function createOptionsStore() {
 				options.heuristics.show = false;
 				return options;
 			}),
-		setHeuristicsPotentialAlignement: (potential_alignement: string) =>
-			update((options) => {
-				const _potential_alignement = parseInt(potential_alignement);
-
-				if (!isNaN(_potential_alignement))
-					options.heuristics.potential_alignement = _potential_alignement;
-				return options;
-			}),
 		setHeuristicsAlignement: (alignement: string) =>
 			update((options) => {
 				const _alignement = parseInt(alignement);
 
 				if (!isNaN(_alignement)) options.heuristics.alignement = _alignement;
-				return options;
-			}),
-		setHeuristicsPotentialCapture: (potential_capture: string) =>
-			update((options) => {
-				const _potential_capture = parseInt(potential_capture);
-
-				if (!isNaN(_potential_capture)) options.heuristics.potential_capture = _potential_capture;
 				return options;
 			}),
 		setHeuristicsCapture: (capture: string) =>

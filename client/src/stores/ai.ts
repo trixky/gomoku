@@ -35,9 +35,7 @@ export default {
 				reduction: Config.options.proximity.reduction.default
 			},
 			heuristics: {
-				potential_alignement: 0,
 				alignement: 0,
-				potential_capture: 5,
 				capture: 10,
 				random: 2,
 				show: Config.options.heuristics.show.default
@@ -81,9 +79,7 @@ export default {
 				reduction: Config.options.proximity.reduction.default
 			},
 			heuristics: {
-				potential_alignement: 2,
 				alignement: 3,
-				potential_capture: 2,
 				capture: 3,
 				random: 3,
 				show: Config.options.heuristics.show.default
@@ -126,9 +122,7 @@ export default {
 				reduction: true
 			},
 			heuristics: {
-				potential_alignement: 1,
 				alignement: 2,
-				potential_capture: 4,
 				capture: 10,
 				random: 1,
 				show: Config.options.heuristics.show.default
@@ -171,9 +165,7 @@ export default {
 				reduction: true
 			},
 			heuristics: {
-				potential_alignement: 1,
 				alignement: 2,
-				potential_capture: 4,
 				capture: 8,
 				random: 2,
 				show: Config.options.heuristics.show.default
@@ -217,9 +209,7 @@ export default {
 				reduction: true
 			},
 			heuristics: {
-				potential_alignement: 1,
 				alignement: 2,
-				potential_capture: 5,
 				capture: 10,
 				random: 3,
 				show: Config.options.heuristics.show.default

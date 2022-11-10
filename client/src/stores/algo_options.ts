@@ -31,9 +31,7 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			reduction: $Stores[0].proximity.reduction
 		},
 		heuristics: {
-			potential_alignement: $Stores[0].heuristics.potential_alignement,
 			alignement: $Stores[0].heuristics.alignement,
-			potential_capture: $Stores[0].heuristics.potential_capture,
 			capture: $Stores[0].heuristics.capture,
 			random: $Stores[0].heuristics.random
 		},
