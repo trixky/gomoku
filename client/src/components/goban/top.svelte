@@ -14,6 +14,8 @@
 
 	export let mode_ia: boolean;
 
+	$: show_time = $VsStore === OpponentsModes[0] || $OptionsStore.heuristics.show;
+
 	function handleReset() {
 		GobanStore.reset();
 	}
@@ -44,8 +46,8 @@
 			{/if}
 		</h2>
 		<div class="player-infos right">
-			{#if $VsStore === OpponentsModes[0] || $OptionsStore.heuristics.show}
-				<p transition:fade={fade_parameters}>
+			{#if show_time}
+				<p transition:fade={fade_parameters} class="time">
 					time:&nbsp;<span class="min-w-[74px] text-right"
 						>{#if $LoadingStore}<span in:fade={fade_parameters} class="blink">loading</span>{:else}
 							<span in:fade={fade_parameters}>{$TimeStore} ms</span>
@@ -85,7 +87,7 @@
 		@apply mr-2;
 	}
 
-	.player-container.right > .player-infos > p {
+	.player-container.right > .player-infos > p:not(.time) {
 		@apply ml-2;
 	}
 
@@ -101,7 +103,7 @@
 	}
 
 	.reset {
-		@apply ml-5 rounded-sm transition-all duration-300 opacity-60 hover:opacity-100;
+		@apply ml-[10px] rounded-sm transition-all duration-300 opacity-60 hover:opacity-100;
 	}
 
 	.reset > img {
