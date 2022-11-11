@@ -7,6 +7,7 @@
 	import GobanStore from '../../stores/goban';
 	import OptionsStore from '../../stores/options';
 	import PlayersInfosStore from '../../stores/players_info';
+	import PieceNumberStore from '../../stores/piece_number';
 	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 
 	const fade_parameters = { duration: 250 };
@@ -28,8 +29,8 @@
 			{/if}
 		</h2>
 		<div class="player-infos left">
-			<p>pieces: X</p>
-			<p>captures: {$PlayersInfosStore.player_1.captures}</p>
+			<p class="pieces">pieces: {$PieceNumberStore.player_1}</p>
+			<p class="captures">captures: {$PlayersInfosStore.player_1.captures}</p>
 			<button class="reset" on:click={handleReset}
 				>reset <img src="/reset-icon.svg" alt="reset icon" /></button
 			>
@@ -52,8 +53,8 @@
 					>
 				</p>
 			{/if}
-			<p>pieces: X</p>
-			<p>captures: {$PlayersInfosStore.player_2.captures}</p>
+			<p class="pieces">pieces: {$PieceNumberStore.player_2}</p>
+			<p class="captures">captures: {$PlayersInfosStore.player_2.captures}</p>
 		</div>
 	</div>
 </div>
@@ -92,8 +93,15 @@
 		@apply flex;
 	}
 
+	.pieces {
+		@apply w-[70px];
+	}
+	.captures {
+		@apply w-[73px];
+	}
+
 	.reset {
-		@apply ml-9 rounded-sm transition-all duration-300 opacity-60 hover:opacity-100;
+		@apply ml-5 rounded-sm transition-all duration-300 opacity-60 hover:opacity-100;
 	}
 
 	.reset > img {
