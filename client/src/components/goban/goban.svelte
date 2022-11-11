@@ -13,9 +13,9 @@
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
 	import AnalyzerStore from '../../stores/analyzer';
+	import PlayersInfosStore from '../../stores/players_info';
 	import type NextResponseModel from '../../models/next_response';
 	import type CheckResponseModel from '../../models/check_response';
-
 	import RulesStore from '../../stores/rules';
 
 	let rules = false;
@@ -83,8 +83,7 @@
 	function handleKeyDown(e: any) {
 		if (e.keyCode === 88) {
 			// If 'x' is pressed
-
-			// Reset the goban
+			PlayersInfosStore.reset();
 			GobanStore.reset();
 		}
 	}
