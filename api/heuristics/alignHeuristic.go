@@ -12,7 +12,7 @@ func Alignement(context *models.Context) int {
 	}
 
 	var alignedFive, alignedFour, alignedThree, alignedTwo [2]int // 0 is player, 1 is opponent
-	var midNoBlockFour, midNoBlockThree, midNoBlockTwo [2]int
+	// var midNoBlockFour, midNoBlockThree, midNoBlockTwo [2]int
 	var restOfFour, restOfThree, restOfTwo [2]int
 	var possibleCaptures [2]int
 
@@ -134,7 +134,6 @@ func Alignement(context *models.Context) int {
 	// 	context.Options.HeuristicAlignementWeight*(midNoBlockThree[0]-midNoBlockThree[1]) +
 	// 	context.Options.HeuristicAlignementWeight*(midNoBlockTwo[0]-midNoBlockTwo[1])
 
-	
 	capturesP1 := context.State.PlayersInfo.Player_1.Captures
 	capturesP2 := context.State.PlayersInfo.Player_2.Captures
 	if player == 255 {
@@ -153,7 +152,7 @@ func Alignement(context *models.Context) int {
 	} else {
 		score += context.Options.HeuristicCaptureWeight * 1000 * (int(capturesP1) - int(capturesP2))
 	}
-	score += context.Options.HeuristicCaptureWeight * ((int(capturesP1) * possibleCaptures[0]) - (int(capturesP2) * possibleCaptures[1]))
+	score += context.Options.HeuristicCaptureWeight * 2000 * (possibleCaptures[0] - possibleCaptures[1])
 
 	return score
 }
