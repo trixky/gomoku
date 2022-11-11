@@ -26,10 +26,22 @@ function createPlayersInfoStore() {
 		reset: () => {
 			set(initPlayersInfo());
 		},
-		set,
+		add: (players_info: PlayersInfoModel) => {
+			update((_players_info) => {
+				_players_info.player_1.captures += players_info.player_1.captures;
+				_players_info.player_2.captures += players_info.player_2.captures;
+
+				return players_info;
+			});
+		},
 		setCaptures: (player: boolean, nbr: number) =>
 			update((players_info) => {
 				players_info[player ? 'player_1' : 'player_2'].captures = nbr;
+				return players_info;
+			}),
+		addCaptures: (player: boolean, nbr: number) =>
+			update((players_info) => {
+				players_info[player ? 'player_1' : 'player_2'].captures += nbr;
 				return players_info;
 			}),
 		setAlignement: (player: boolean, alignement: boolean) =>
