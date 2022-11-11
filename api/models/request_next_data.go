@@ -111,8 +111,8 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.ProximityEvolution = rd.Options.Proximity.Evolution
 
 	// Heuristics
-	options.HeuristicAlignementWeight = rd.Options.Heuristics.AlignementWeight
-	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
+	options.HeuristicAlignementWeight = 1000 *rd.Options.Heuristics.AlignementWeight
+	options.HeuristicCaptureWeight = 1000 * rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
 
 	// Suspicion

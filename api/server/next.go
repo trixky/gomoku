@@ -77,6 +77,8 @@ choose:
 		}
 	}
 
+	best_child.Print()
+
 	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 
 	_json, err := best_child.ToJSON(elapsed_time, heuristic_goban)
