@@ -12,7 +12,7 @@ var (
 )
 
 type RequestNextSuspicionData struct {
-	Radius uint8 `json:"radius"` // 0 = disable
+	Radius int `json:"radius"` // 0 = disable
 }
 
 type RequestNextDepthData struct {
@@ -111,7 +111,7 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.ProximityEvolution = rd.Options.Proximity.Evolution
 
 	// Heuristics
-	options.HeuristicAlignementWeight = 1000 *rd.Options.Heuristics.AlignementWeight
+	options.HeuristicAlignementWeight = 1000 * rd.Options.Heuristics.AlignementWeight
 	options.HeuristicCaptureWeight = 1000 * rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
 
