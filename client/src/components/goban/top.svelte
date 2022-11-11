@@ -17,6 +17,7 @@
 	$: show_time = $VsStore === OpponentsModes[0] || $OptionsStore.heuristics.show;
 
 	function handleReset() {
+		PlayersInfosStore.reset();
 		GobanStore.reset();
 	}
 </script>
