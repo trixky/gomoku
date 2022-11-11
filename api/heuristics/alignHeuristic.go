@@ -1,8 +1,6 @@
 package heuristics
 
 import (
-	"fmt"
-
 	"github.com/trixky/gomoku/models"
 )
 
@@ -24,10 +22,8 @@ func Alignement(context *models.Context) int {
 				nbAligned, canPlay, blocked, emptyMiddle := alignHeuristic(context.Goban, x, y, context.Goban[y][x])
 				if nbAligned >= 5 {
 					if context.Goban[y][x] == player {
-						fmt.Printf("aligned five for player %d %d\n", x, y)
 						alignedFive[0]++
 					} else {
-						fmt.Printf("aligned five for opponent %d %d\n", x, y)
 						alignedFive[1]++
 					}
 					continue
@@ -37,10 +33,8 @@ func Alignement(context *models.Context) int {
 						// free
 						if nbAligned == 4 {
 							if context.Goban[y][x] == player {
-								fmt.Printf("aligned four for player %d %d\n", x, y)
 								alignedFour[0]++
 							} else {
-								fmt.Printf("aligned four for opponent %d %d\n", x, y)
 								alignedFour[1]++
 							}
 						} else if nbAligned == 3 {
