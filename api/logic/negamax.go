@@ -40,7 +40,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 				analyzed_layer.IncrementPrunedInDepth()
 
 				if parent_channel != nil {
-					parent_channel <- nil
+					parent_channel <- context
 				}
 				return
 			}
@@ -59,7 +59,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 				analyzed_layer.IncrementPrunedInWidth()
 
 				if parent_channel != nil {
-					parent_channel <- nil
+					parent_channel <- context
 				}
 				return
 			}
@@ -156,7 +156,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 
 		if len(childs) == 0 {
 			if parent_channel != nil {
-				parent_channel <- nil
+				parent_channel <- context
 			}
 
 			return
