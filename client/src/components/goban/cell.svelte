@@ -4,6 +4,7 @@
 	import Piece from './piece.svelte';
 	import OptionsStore from '../../stores/options';
 	import HeuristicStatsStore from '../../stores/heuristic_stats';
+	import { SHAPES } from '../../models/algo_options';
 
 	export let x: number;
 	export let y: number;
@@ -13,6 +14,10 @@
 	export let heuristic: number;
 
 	$: piece = cell.player != 0;
+
+	$: pink =
+		$OptionsStore.proximity.threshold === proximity ||
+		$OptionsStore.proximity.shape === SHAPES.neighbour;
 
 	$: heuristic_ratio =
 		(heuristic - $HeuristicStatsStore.min) / ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
@@ -27,9 +32,7 @@
 		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}&#013;heuristic: {heuristic}"
 	class="piece-emplacement"
 	style={$OptionsStore.proximity.show
-		? `background-color: rgba(${
-				$OptionsStore.proximity.threshold === proximity ? 255 : 0
-		  }, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
+		? `background-color: rgba(${pink ? 255 : 0}, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
 		: $OptionsStore.heuristics.show
 		? `background-color: rgba(${120 - heuristic_ratio * 120}, 255, 0, ${heuristic_opacity})`
 		: ''}
