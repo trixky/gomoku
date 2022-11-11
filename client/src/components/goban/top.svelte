@@ -6,21 +6,12 @@
 	import TimeStore from '../../stores/time';
 	import GobanStore from '../../stores/goban';
 	import OptionsStore from '../../stores/options';
+	import PlayersInfosStore from '../../stores/players_info';
 	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 
 	const fade_parameters = { duration: 250 };
 
 	export let mode_ia: boolean;
-
-	let player_1 = {
-		pieces_nbr: 0,
-		captures: 0
-	};
-
-	let player_2 = {
-		pieces_nbr: 0,
-		captures: 0
-	};
 
 	function handleReset() {
 		GobanStore.reset();
@@ -37,8 +28,8 @@
 			{/if}
 		</h2>
 		<div class="player-infos left">
-			<p>pieces: {player_1.pieces_nbr}</p>
-			<p>captures: {player_1.captures}</p>
+			<p>pieces: X</p>
+			<p>captures: {$PlayersInfosStore.player_1.captures}</p>
 			<button class="reset" on:click={handleReset}
 				>reset <img src="/reset-icon.svg" alt="reset icon" /></button
 			>
@@ -61,8 +52,8 @@
 					>
 				</p>
 			{/if}
-			<p>pieces: {player_2.pieces_nbr}</p>
-			<p>captures: {player_2.captures}</p>
+			<p>pieces: X</p>
+			<p>captures: {$PlayersInfosStore.player_2.captures}</p>
 		</div>
 	</div>
 </div>

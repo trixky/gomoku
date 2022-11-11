@@ -34,9 +34,11 @@
 					.then((response) => {
 						const json_response: CheckResponseModel = JSON.parse(response);
 
-						console.log(json_response);
-
 						if (!json_response.DoubleThree) {
+							PlayersInfoStore.addCaptures(
+								!Boolean($LastMoveStore.player - 1),
+								json_response.NbCaptured
+							);
 							TimeStore.reset();
 
 							GobanStore.playersFromString(json_response.goban);
@@ -45,7 +47,8 @@
 								.then((response) => {
 									const json_response: NextResponseModel = JSON.parse(response);
 
-									PlayersInfoStore.set(json_response.players_info);
+									GobanStore.playersFromString(json_response.goban);
+									PlayersInfoStore.add(json_response.players_info);
 									AnalyzerStore.set(json_response.analyzer);
 									LastMoveStore.push(
 										json_response.options.position.x,
