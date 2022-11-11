@@ -44,7 +44,7 @@ func next(w http.ResponseWriter, r *http.Request) {
 	heuristic_goban := models.HeuristicGoban{}
 	var best_child models.Context
 
-	context.Goban.PrintProximity(&context.Options.ProximityThreshold)
+	// context.Goban.PrintProximity(&context.Options.ProximityThreshold)
 
 	blocked := context.Goban.IsBlocked(context.Options.ProximityThreshold)
 
@@ -52,8 +52,8 @@ func next(w http.ResponseWriter, r *http.Request) {
 		goto choose
 	}
 
-	context.Options.Print()
-	context.State.Print()
+	// context.Options.Print()
+	// context.State.Print()
 
 	child_channel = make(chan *models.Context, 1)
 
@@ -77,7 +77,7 @@ choose:
 		}
 	}
 
-	best_child.Print()
+	// best_child.Print()
 
 	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 

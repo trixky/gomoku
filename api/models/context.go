@@ -59,7 +59,7 @@ func (c *Context) Next(position Position) (context Context) {
 
 	context.Bests = c.Bests
 
-	if c.State.LastMove.Player {
+	if context.State.LastMove.Player {
 		context.Goban[position.Y][position.X] = PLAYER_2
 	} else {
 		context.Goban[position.Y][position.X] = PLAYER_1
