@@ -65,3 +65,4 @@ func TestMaxIndexOfFour(t *testing.T) {
 		}
 	}
 }
+

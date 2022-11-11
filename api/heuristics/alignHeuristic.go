@@ -5,13 +5,12 @@ import (
 )
 
 // All computes all heuristics of a given context
-func Alignment(context *models.Context) int {
-	var player uint8 = 254
-	if context.State.LastMove.Player {
-		player = 255
+func Alignement(context *models.Context) int {
+	var player uint8 = 255
+	if context.State.LastMove.Player == false {
+		player = 254
 	}
 
-	var stones [2]int
 	var alignedFive, alignedFour, alignedThree, alignedTwo [2]int // 0 is player, 1 is opponent
 	var midNoBlockFour, midNoBlockThree, midNoBlockTwo [2]int
 	var restOfFour, restOfThree, restOfTwo [2]int
@@ -20,12 +19,7 @@ func Alignment(context *models.Context) int {
 	for y := 0; y < 19; y++ {
 		for x := 0; x < 19; x++ {
 			if context.Goban[y][x] != 0 {
-				if context.Goban[y][x] == player {
-					stones[0]++
-				} else {
-					stones[1]++
-				}
-				nbAligned, canPlay, blocked, emptyMiddle := alignHeuristic(context, x, y, player)
+				nbAligned, canPlay, blocked, emptyMiddle := alignHeuristic(context.Goban, x, y, context.Goban[y][x])
 				if nbAligned == 5 {
 					if context.Goban[y][x] == player {
 						alignedFive[0]++
@@ -49,7 +43,7 @@ func Alignment(context *models.Context) int {
 							} else {
 								alignedThree[1]++
 							}
-						} else if nbAligned == 4 {
+						} else if nbAligned == 2 {
 							if context.Goban[y][x] == player {
 								alignedTwo[0]++
 							} else {
@@ -70,7 +64,7 @@ func Alignment(context *models.Context) int {
 							} else {
 								midNoBlockThree[1]++
 							}
-						} else if nbAligned == 4 {
+						} else if nbAligned == 2 {
 							if context.Goban[y][x] == player {
 								midNoBlockTwo[0]++
 							} else {
@@ -91,7 +85,7 @@ func Alignment(context *models.Context) int {
 							} else {
 								restOfThree[1]++
 							}
-						} else if nbAligned == 4 {
+						} else if nbAligned == 2 {
 							if context.Goban[y][x] == player {
 								restOfTwo[0]++
 								possibleCaptures[1]++
@@ -114,7 +108,7 @@ func Alignment(context *models.Context) int {
 							} else {
 								restOfThree[1]++
 							}
-						} else if nbAligned == 4 {
+						} else if nbAligned == 2 {
 							if context.Goban[y][x] == player {
 								restOfTwo[0]++
 							} else {
@@ -138,16 +132,14 @@ func Alignment(context *models.Context) int {
 		context.Options.HeuristicAlignementWeight/16*(midNoBlockThree[0]-midNoBlockThree[1]) +
 		context.Options.HeuristicAlignementWeight/160*(midNoBlockTwo[0]-midNoBlockTwo[1])
 
-	score += 50 * (stones[0] - stones[1])
-
-	// capturesPlayer := context.State.ScoreP1
-	// capturesOpp := context.State.ScoreP2
-	// if player == 255 {
-	// 	capturesPlayer = context.State.ScoreP2
-	// 	capturesOpp = context.State.ScoreP1
-	// }
-	// score += 1000 * (int(capturesPlayer) - int(capturesOpp))
-	score += 2000 * (possibleCaptures[0] - possibleCaptures[1])
+	capturesP1 := context.State.PlayersInfo.Player_1.Captures
+	capturesP2 := context.State.PlayersInfo.Player_2.Captures
+	if player == 255 {
+		capturesP1 = context.State.PlayersInfo.Player_2.Captures
+		capturesP2 = context.State.PlayersInfo.Player_1.Captures
+	}
+	score += context.Options.HeuristicCaptureWeight * (int(capturesP1) - int(capturesP2))
+	score += context.Options.HeuristicCaptureWeight * (possibleCaptures[0] - possibleCaptures[1])
 
 	return score
 }
