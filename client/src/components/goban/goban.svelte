@@ -54,6 +54,7 @@
 									GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
 									GobanStore.heuristicFromString(json_response.heuristic_goban);
 									TimeStore.set(json_response.options.time);
+									LoadingStore.switch(false);
 								})
 								.catch(() => {
 									alert('an error occured from api [next]');
@@ -63,12 +64,11 @@
 							alert("you can't play here");
 							GobanStore.removePiece(x, y);
 							LastMoveStore.push(current_last_move.x, current_last_move.y);
+							LoadingStore.switch(false);
 						}
-						LoadingStore.switch(false);
 					})
 					.catch(() => {
 						alert('an error occured from api [check]');
-						LoadingStore.switch(false);
 						location.reload();
 					});
 
