@@ -17,7 +17,7 @@ const (
 )
 
 // ComputeGlobalProximity computes the global proximity
-func (g *Goban) ComputeGlobalProximity(threshold uint8, radius uint8, shape byte, suspicious_radius uint8, last_move Move) {
+func (g *Goban) ComputeGlobalProximity(threshold uint8, radius uint8, shape byte, suspicious_radius int, last_move Move) {
 	position := Position{}
 
 	for x := uint8(0); x < 19; x++ {
@@ -25,7 +25,7 @@ func (g *Goban) ComputeGlobalProximity(threshold uint8, radius uint8, shape byte
 		for y := uint8(0); y < 19; y++ {
 			// For each cell
 
-			if suspicious_radius == 0 || (x >= last_move.Position.X-suspicious_radius && x <= last_move.Position.X+suspicious_radius && y >= last_move.Position.Y-suspicious_radius && y <= last_move.Position.Y+suspicious_radius) {
+			if suspicious_radius == 0 || (int(x) >= int(last_move.Position.X)-suspicious_radius && int(x) <= int(last_move.Position.X)+suspicious_radius && int(y) >= int(last_move.Position.Y)-suspicious_radius && int(y) <= int(last_move.Position.Y)+suspicious_radius) {
 				// If the suspicious radius in disable or respected
 				if g[y][x] >= PLAYER_1 {
 					// If the cell is taken by a player

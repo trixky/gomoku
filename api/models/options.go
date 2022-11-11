@@ -38,7 +38,7 @@ type Options struct {
 	HeuristicRandomWeight     int
 
 	// Suspicion
-	SuspicionRadius uint8
+	SuspicionRadius int
 
 	// Pre computed options
 	PreComputedOptions PreComputedOptions
