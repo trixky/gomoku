@@ -20,7 +20,7 @@ func Alignement(context *models.Context) int {
 		for x := 0; x < 19; x++ {
 			if context.Goban[y][x] >= models.PLAYER_1 {
 				nbAligned, canPlay, blocked, emptyMiddle := alignHeuristic(context.Goban, x, y, context.Goban[y][x])
-				if nbAligned >= 5 {
+				if nbAligned == 5 {
 					if context.Goban[y][x] == player {
 						alignedFive[0]++
 					} else {
@@ -54,21 +54,21 @@ func Alignement(context *models.Context) int {
 						// not strictly aligned and unblocked
 						if nbAligned == 4 {
 							if context.Goban[y][x] == player {
-								midNoBlockFour[0]++
+								restOfFour[0]++
 							} else {
-								midNoBlockFour[1]++
+								restOfFour[1]++
 							}
 						} else if nbAligned == 3 {
 							if context.Goban[y][x] == player {
-								midNoBlockThree[0]++
+								restOfThree[0]++
 							} else {
-								midNoBlockThree[1]++
+								restOfThree[1]++
 							}
 						} else if nbAligned == 2 {
 							if context.Goban[y][x] == player {
-								midNoBlockTwo[0]++
+								restOfTwo[0]++
 							} else {
-								midNoBlockTwo[1]++
+								restOfTwo[1]++
 							}
 						}
 					} else if emptyMiddle == false && blocked == true {
@@ -121,25 +121,39 @@ func Alignement(context *models.Context) int {
 		}
 	}
 
-	var score int = context.Options.HeuristicAlignementWeight*(alignedFive[0]-alignedFive[1]) +
-		context.Options.HeuristicAlignementWeight/2*(alignedFour[0]-alignedFour[1]) +
-		context.Options.HeuristicAlignementWeight/10*(restOfFour[0]-restOfFour[1]) +
-		context.Options.HeuristicAlignementWeight/10*(alignedThree[0]-alignedThree[1]) +
-		context.Options.HeuristicAlignementWeight/30*(restOfThree[0]-restOfThree[1]) +
-		context.Options.HeuristicAlignementWeight/100*(alignedTwo[0]-alignedTwo[1])
+	var score int = context.Options.HeuristicAlignementWeight*10000*(alignedFive[0]-alignedFive[1]) +
+		context.Options.HeuristicAlignementWeight*5000*(alignedFour[0]-alignedFour[1]) +
+		context.Options.HeuristicAlignementWeight*2000*(alignedThree[0]-alignedThree[1]) +
+		context.Options.HeuristicAlignementWeight*1000*(alignedTwo[0]-alignedTwo[1]) +
 
-	score += context.Options.HeuristicAlignementWeight/8*(midNoBlockFour[0]-midNoBlockFour[1]) +
-		context.Options.HeuristicAlignementWeight/16*(midNoBlockThree[0]-midNoBlockThree[1]) +
-		context.Options.HeuristicAlignementWeight/160*(midNoBlockTwo[0]-midNoBlockTwo[1])
+		context.Options.HeuristicAlignementWeight*2000*(restOfFour[0]-restOfFour[1]) +
+		context.Options.HeuristicAlignementWeight*1000*(restOfThree[0]-restOfThree[1]) +
+		context.Options.HeuristicAlignementWeight*500*(restOfTwo[0]-restOfTwo[1])
 
+	// score += context.Options.HeuristicAlignementWeight*(midNoBlockFour[0]-midNoBlockFour[1]) +
+	// 	context.Options.HeuristicAlignementWeight*(midNoBlockThree[0]-midNoBlockThree[1]) +
+	// 	context.Options.HeuristicAlignementWeight*(midNoBlockTwo[0]-midNoBlockTwo[1])
+
+	
 	capturesP1 := context.State.PlayersInfo.Player_1.Captures
 	capturesP2 := context.State.PlayersInfo.Player_2.Captures
 	if player == 255 {
 		capturesP1 = context.State.PlayersInfo.Player_2.Captures
 		capturesP2 = context.State.PlayersInfo.Player_1.Captures
 	}
-	score += context.Options.HeuristicCaptureWeight * (int(capturesP1) - int(capturesP2))
-	score += context.Options.HeuristicCaptureWeight * (possibleCaptures[0] - possibleCaptures[1])
+
+	if capturesP1 >= 10 {
+		score += context.Options.HeuristicCaptureWeight * 20000
+	} else if capturesP2 >= 10 {
+		score -= context.Options.HeuristicCaptureWeight * 20000
+	} else if capturesP1 == 8 {
+		score += context.Options.HeuristicCaptureWeight * 5000
+	} else if capturesP2 == 8 {
+		score -= context.Options.HeuristicCaptureWeight * 5000
+	} else {
+		score += context.Options.HeuristicCaptureWeight * 1000 * (int(capturesP1) - int(capturesP2))
+	}
+	score += context.Options.HeuristicCaptureWeight * ((int(capturesP1) * possibleCaptures[0]) - (int(capturesP2) * possibleCaptures[1]))
 
 	return score
 }
