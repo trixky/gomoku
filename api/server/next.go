@@ -77,7 +77,7 @@ choose:
 		}
 	}
 
-	// best_child.Print()
+	best_child.Print()
 
 	elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 
