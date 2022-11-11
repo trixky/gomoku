@@ -85,10 +85,13 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 					if !cutted_by_max_width && !time_out {
 						// If the max width and time out are not reached
 
+						fmt.Println("right before next")
 						child := context.Next(models.Position{
 							X: uint8(x),
 							Y: uint8(y),
 						})
+						child.Goban.PrintRaw()
+						fmt.Println("right after next\n\n")
 						isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(child.Goban,
 							models.Position{X: uint8(x), Y: uint8(y)},
 							child.State.LastMove.Player)
@@ -99,13 +102,13 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 						if lenCaptured > 0 {
 							child.Goban = newGoban
 							if child.State.LastMove.Player == false {
-								fmt.Println("P1: +" + fmt.Sprint(lenCaptured))
 								child.State.PlayersInfo.Player_1.Captures += uint8(lenCaptured)
 							} else {
-								fmt.Println("P2: +" + fmt.Sprint(lenCaptured))
 								child.State.PlayersInfo.Player_2.Captures += uint8(lenCaptured)
 							}
 						}
+						child.Goban.PrintRaw()
+						fmt.Println("right doubleThree check\n\n")
 
 						if context.State.Depth == 0 && context.Options.WidthMultiThreading {
 							go Negamax(&child, child_channel)

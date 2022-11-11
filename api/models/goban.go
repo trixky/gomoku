@@ -198,6 +198,32 @@ func (g *Goban) PrintPlayers() {
 	}
 }
 
+// PrintRaw prints the 2D goban representation with players in stdout
+func (g *Goban) PrintRaw() {
+	fmt.Println("============================= [GOBAN players]")
+
+	for _, line := range g {
+		// For each line
+		for _, cell := range line {
+			// For each cell
+			switch cell {
+			case PLAYER_1:
+				// If the player 1 is on the last position move
+				fmt.Printf(colorRed+"%3d "+colorReset, cell)
+				break
+			case PLAYER_2:
+				// If the player 2 is on the last position move
+				fmt.Printf(colorRed+"%3d "+colorReset, cell)
+				break
+			default:
+				fmt.Printf("%3d ", cell)
+				break
+			}
+		}
+		fmt.Println()
+	}
+}
+
 // PrintProximity prints the 2D goban representation with proximity in stdout
 func (g *Goban) PrintProximity(threshold *uint8) {
 	fmt.Println("============================= [GOBAN proximity]")
