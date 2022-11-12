@@ -4,6 +4,7 @@
 	import GobanStore from '../../stores/goban';
 	import StringGobanStore from '../../stores/string_goban';
 	import AlgoOptionsStore from '../../stores/algo_options';
+	import { vsStore as VsStore, Modes } from '../../stores/vs';
 	import PlayersInfoStore from '../../stores/players_info';
 	import ProximityGobanStore from '../../stores/proximity_goban';
 	import Cell from './cell.svelte';
@@ -152,30 +153,34 @@
 							// checkWinByCaptures();
 							// checkWinByAlignement();
 
-							PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
-								.then((response) => {
-									const json_response: NextResponseModel = JSON.parse(response);
+							if ($VsStore === Modes[0])
+								PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
+									.then((response) => {
+										const json_response: NextResponseModel = JSON.parse(response);
 
-									GobanStore.playersFromString(json_response.goban);
-									PlayersInfoStore.add(json_response.players_info);
-									AnalyzerStore.set(json_response.analyzer);
-									LastMoveStore.push(
-										json_response.options.position.x,
-										json_response.options.position.y
-									);
-									GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
-									GobanStore.heuristicFromString(json_response.heuristic_goban);
-									TimeStore.set(json_response.options.time);
+										GobanStore.playersFromString(json_response.goban);
+										PlayersInfoStore.add(json_response.players_info);
+										AnalyzerStore.set(json_response.analyzer);
+										LastMoveStore.push(
+											json_response.options.position.x,
+											json_response.options.position.y
+										);
+										GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
+										GobanStore.heuristicFromString(json_response.heuristic_goban);
+										TimeStore.set(json_response.options.time);
 
-									// checkWinByCaptures();
-									// checkWinByAlignement();
+										// checkWinByCaptures();
+										// checkWinByAlignement();
 
-									LoadingStore.switch(false);
-								})
-								.catch(() => {
-									alert('an error occured from api [next]');
-									location.reload();
-								});
+										LoadingStore.switch(false);
+									})
+									.catch(() => {
+										alert('an error occured from api [next]');
+										location.reload();
+									});
+							else {
+								LoadingStore.switch(false);
+							}
 						} else {
 							alert("you can't play here");
 							GobanStore.removePiece(x, y);
