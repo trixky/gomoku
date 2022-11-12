@@ -20,6 +20,114 @@
 
 	let rules = false;
 
+	function checkWinByCaptures(): boolean {
+		if ($PlayersInfoStore.player_2.captures >= 10) {
+			alert('player 2 win by captures!');
+			return true;
+		} else if ($PlayersInfoStore.player_1.captures >= 10) {
+			alert('player 1 win by captures!');
+			return true;
+		}
+
+		return false;
+	}
+
+	interface checkWinByAlignementModel {
+		1: {
+			win: boolean;
+			loophole: boolean;
+		};
+		2: {
+			win: boolean;
+			loophole: boolean;
+		};
+	}
+
+	function checkWinByAlignement(): checkWinByAlignementModel {
+		const response = <checkWinByAlignementModel>{
+			1: {
+				win: false,
+				loophole: false
+			},
+			2: {
+				win: false,
+				loophole: false
+			}
+		};
+
+		let current_player: 0 | 1 | 2 = 1;
+		let opponent_player: 0 | 1 | 2 = 2;
+		let horizontal_loophole = false,
+			vertical_loophole = false,
+			diagonal_loophole = false,
+			reversed_diagonal_loophole = false;
+		let horizontal_alignement = 0,
+			vertical_alignement = 0,
+			diagonal_alignement = 0,
+			reversed_diagonal_alignement = 0;
+
+		function reset() {
+			horizontal_loophole = false;
+			vertical_loophole = false;
+			diagonal_loophole = false;
+			horizontal_alignement = 1;
+			vertical_alignement = 1;
+			diagonal_alignement = 1;
+			reversed_diagonal_alignement = 0;
+		}
+
+		for (let y = 0; y < 19; y++)
+			for (let x = 0; x < 19; x++) {
+				current_player = $GobanStore.cells[y][x].player;
+
+				opponent_player = <0 | 1 | 2>((current_player % 2) + 1);
+				reset();
+
+				if (current_player != 0) {
+					if (response[current_player].win && response[current_player].loophole) continue;
+					for (let i = 1; i < 5; i++) {
+						const xpi = x + i;
+						const xmi = x - i;
+						const ypi = y + i;
+
+						if (x < 15 && $GobanStore.cells[y][xpi].player === current_player) {
+							horizontal_alignement++;
+						}
+						if (y < 15 && $GobanStore.cells[ypi][x].player === current_player) {
+							vertical_alignement++;
+						}
+						if (x < 15 && y < 15 && $GobanStore.cells[ypi][xpi].player === current_player) {
+							diagonal_alignement++;
+						}
+						if (x > 3 && y < 15 && $GobanStore.cells[ypi][xmi].player === current_player) {
+							reversed_diagonal_alignement++;
+						}
+					}
+
+					if (horizontal_alignement === 5) {
+						response[current_player].win = true;
+						response[current_player].loophole =
+							response[current_player].loophole || horizontal_loophole;
+					} else if (vertical_alignement === 5) {
+						response[current_player].win = true;
+						response[current_player].loophole =
+							response[current_player].loophole || vertical_loophole;
+					} else if (diagonal_alignement === 5) {
+						response[current_player].win = true;
+						response[current_player].loophole =
+							response[current_player].loophole || diagonal_loophole;
+					} else if (reversed_diagonal_alignement === 5) {
+						response[current_player].win = true;
+						response[current_player].loophole =
+							response[current_player].loophole || reversed_diagonal_loophole;
+					}
+				}
+			}
+
+		if (response[1].win || response[2].win) console.log(response);
+		return response;
+	}
+
 	async function handleCellClick(x: number, y: number) {
 		if (!$LoadingStore) {
 			if ($GobanStore.cells[y][x].player === 0) {
@@ -33,15 +141,16 @@
 				PostCheck($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
 					.then((response) => {
 						const json_response: CheckResponseModel = JSON.parse(response);
+						const concerned_player = !Boolean($LastMoveStore.player - 1);
 
 						if (!json_response.DoubleThree) {
-							PlayersInfoStore.addCaptures(
-								!Boolean($LastMoveStore.player - 1),
-								json_response.NbCaptured
-							);
-							TimeStore.reset();
+							PlayersInfoStore.addCaptures(concerned_player, json_response.NbCaptured);
 
+							TimeStore.reset();
 							GobanStore.playersFromString(json_response.goban);
+
+							// checkWinByCaptures();
+							// checkWinByAlignement();
 
 							PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
 								.then((response) => {
@@ -57,6 +166,10 @@
 									GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
 									GobanStore.heuristicFromString(json_response.heuristic_goban);
 									TimeStore.set(json_response.options.time);
+
+									// checkWinByCaptures();
+									// checkWinByAlignement();
+
 									LoadingStore.switch(false);
 								})
 								.catch(() => {
@@ -74,8 +187,6 @@
 						alert('an error occured from api [check]');
 						location.reload();
 					});
-
-				// GobanStore.addPiece($LastMoveStore.player, x, y);
 			}
 		}
 	}
