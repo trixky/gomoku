@@ -108,6 +108,18 @@
 										location.reload();
 									});
 							else {
+								PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
+									.then((response) => {
+										const json_response: NextResponseModel = JSON.parse(response);
+
+										AnalyzerStore.set(json_response.analyzer);
+										GobanStore.heuristicFromString(json_response.heuristic_goban);
+										TimeStore.set(json_response.options.time);
+									})
+									.catch(() => {
+										alert('an error occured from api [next]');
+										location.reload();
+									});
 								LoadingStore.switch(false);
 							}
 						} else {
