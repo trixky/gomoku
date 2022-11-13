@@ -5,15 +5,12 @@
 	import LoadingStore from '../../stores/loading';
 	import TimeStore from '../../stores/time';
 	import GobanStore from '../../stores/goban';
-	import OptionsStore from '../../stores/options';
 	import PlayersInfosStore from '../../stores/players_info';
 	import PieceNumberStore from '../../stores/piece_number';
 	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 	import WinStore from '../../stores/win';
 
 	const fade_parameters = { duration: 250 };
-
-	export let mode_ia: boolean;
 
 	$: winner = $WinStore.player != 0 && !$WinStore.loophole;
 
@@ -35,8 +32,8 @@
 	<div class="player-container left">
 		<h2>
 			<span class:my-turn={$LastMoveStore.player === 2}> Player 1 </span>
-			{#if mode_ia}
-				<span class="opacity-20"> (You) </span>
+			{#if $VsStore === OpponentsModes[0]}
+				<span class="opacity-20" transition:fade={fade_parameters}> (You) </span>
 			{/if}
 		</h2>
 		<div class="player-infos left">
@@ -49,10 +46,10 @@
 	</div>
 	<div class="player-container right">
 		<h2>
-			<span class:my-turn={$LastMoveStore.player === 1}> Player 2 </span>
-			{#if mode_ia}
-				<span class="opacity-20"> (AI) </span>
+			{#if $VsStore === OpponentsModes[0]}
+				<span class="opacity-20" transition:fade={fade_parameters}> (AI) </span>
 			{/if}
+			<span class:my-turn={$LastMoveStore.player === 1}> Player 2 </span>
 		</h2>
 		<div class="player-infos right">
 			{#if $VsStore === OpponentsModes[0]}
