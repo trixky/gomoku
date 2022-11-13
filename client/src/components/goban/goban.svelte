@@ -145,6 +145,9 @@
 	function handleKeyDown(e: any) {
 		if (e.keyCode === 88) {
 			// If 'x' is pressed
+
+			WinStore.reset();
+			LastMoveStore.reset();
 			PlayersInfosStore.reset();
 			GobanStore.reset();
 		}
