@@ -5,7 +5,8 @@ import type HeuristicStatsModel from 'src/models/heuristic_stats';
 export default derived(GobanStore, ($GobanStore): HeuristicStatsModel => {
 	const heuristic_stats = <HeuristicStatsModel>{
 		max: -Infinity,
-		min: Infinity
+		min: Infinity,
+		unique: true
 	};
 
 	$GobanStore.cells.forEach((line) =>
@@ -16,6 +17,8 @@ export default derived(GobanStore, ($GobanStore): HeuristicStatsModel => {
 			}
 		})
 	);
+
+	heuristic_stats.unique = heuristic_stats.min === heuristic_stats.max;
 
 	return heuristic_stats;
 });

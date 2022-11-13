@@ -23,13 +23,18 @@
 		$OptionsStore.proximity.shape === SHAPES.neighbour;
 
 	$: heuristic_ratio =
-		(heuristic - $HeuristicStatsStore.min) / ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
-	$: heuristic_opacity = heuristic_ratio * 0.3 + 0.1;
+		$HeuristicStatsStore.unique && heuristic
+			? 0
+			: (heuristic - $HeuristicStatsStore.min) /
+			  ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
+	$: heuristic_opacity = heuristic_ratio * 0.3 + 0.15;
 
 	$: suggestion_ratio =
-		(suggestion - $SuggestionStatsStore.min) /
-		($SuggestionStatsStore.max - $SuggestionStatsStore.min);
-	$: suggestion_opacity = suggestion_ratio * 0.3 + 0.1;
+		$SuggestionStatsStore.unique && suggestion
+			? 0
+			: (suggestion - $SuggestionStatsStore.min) /
+			  ($SuggestionStatsStore.max - $SuggestionStatsStore.min);
+	$: suggestion_opacity = suggestion_ratio * 0.3 + 0.15;
 
 	$: ratio = $OptionsStore.suggestion.show ? suggestion_ratio : heuristic_ratio;
 	$: opacity = $OptionsStore.suggestion.show ? suggestion_opacity : heuristic_opacity;
@@ -39,7 +44,7 @@
 <div
 	title="{cell.player > 0
 		? `player: ${cell.player}`
-		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}&#013;heuristic: {heuristic}"
+		: ''}&#013;x: {x}&#013;y: {y}&#013;proximity: {proximity}&#013;heuristic: {heuristic}&#013;suggestion: {suggestion}"
 	class="piece-emplacement"
 	style={$OptionsStore.proximity.show
 		? `background-color: rgba(${pink ? 255 : 0}, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
