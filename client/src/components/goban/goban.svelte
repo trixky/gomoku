@@ -54,6 +54,21 @@
 		return false;
 	}
 
+	function askSuggestion() {
+		PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
+			.then((response) => {
+				const json_response: NextResponseModel = JSON.parse(response);
+
+				AnalyzerStore.set(json_response.analyzer);
+				GobanStore.heuristicFromString(json_response.heuristic_goban, true);
+				TimeStore.set(json_response.options.time);
+			})
+			.catch(() => {
+				alert('an error occured from api [next]');
+				location.reload();
+			});
+	}
+
 	async function handleCellClick(x: number, y: number) {
 		if (!$LoadingStore && !winner) {
 			if ($GobanStore.cells[y][x].player === 0) {
@@ -93,7 +108,7 @@
 											json_response.options.position.y
 										);
 										GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
-										GobanStore.heuristicFromString(json_response.heuristic_goban);
+										GobanStore.heuristicFromString(json_response.heuristic_goban, false);
 										TimeStore.set(json_response.options.time);
 
 										if (check_win()) {
@@ -101,6 +116,7 @@
 											return;
 										}
 
+										askSuggestion();
 										LoadingStore.switch(false);
 									})
 									.catch(() => {
@@ -108,18 +124,7 @@
 										location.reload();
 									});
 							else {
-								PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
-									.then((response) => {
-										const json_response: NextResponseModel = JSON.parse(response);
-
-										AnalyzerStore.set(json_response.analyzer);
-										GobanStore.heuristicFromString(json_response.heuristic_goban);
-										TimeStore.set(json_response.options.time);
-									})
-									.catch(() => {
-										alert('an error occured from api [next]');
-										location.reload();
-									});
+								askSuggestion();
 								LoadingStore.switch(false);
 							}
 						} else {
@@ -176,6 +181,7 @@
 						handleLeftClick={handleCellClick}
 						proximity={$ProximityGobanStore[y][x]}
 						heuristic={cell.heuristic}
+						suggestion={cell.suggestion}
 					/>
 				{/each}
 			{/each}

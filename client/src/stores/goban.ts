@@ -55,7 +55,7 @@ function createBoardStore() {
 				return board;
 			});
 		},
-		heuristicFromString: (str: string) => {
+		heuristicFromString: (str: string, suggestion = false) => {
 			const cells = str.split(',').map((cell) => parseInt(cell));
 
 			update((board) => {
@@ -63,7 +63,8 @@ function createBoardStore() {
 
 				for (let y = 0; y < 19; y++)
 					for (let x = 0; x < 19; x++) {
-						board.cells[y][x].heuristic = cells[i];
+						if (suggestion) board.cells[y][x].suggestion = cells[i];
+						else board.cells[y][x].heuristic = cells[i];
 						i++;
 					}
 

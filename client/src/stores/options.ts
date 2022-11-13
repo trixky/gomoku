@@ -15,6 +15,7 @@ function createOptionsStore() {
 			update((_ai) => {
 				ai.proximity.show = _ai.proximity.show;
 				ai.heuristics.show = _ai.heuristics.show;
+				ai.suggestion.show = _ai.suggestion.show;
 				ai.analyzer.layered = _ai.analyzer.layered;
 				ai.analyzer.percentage = _ai.analyzer.percentage;
 				ai.analyzer.rounded = _ai.analyzer.rounded;
@@ -199,6 +200,17 @@ function createOptionsStore() {
 				const _random = parseInt(random);
 
 				if (!isNaN(_random)) options.heuristics.random = _random;
+				return options;
+			}),
+		// ----------------------- set suggestion
+		showSuggestion: () =>
+			update((options) => {
+				options.suggestion.show = true;
+				return options;
+			}),
+		hideSuggestion: () =>
+			update((options) => {
+				options.suggestion.show = false;
 				return options;
 			}),
 		// ----------------------- set suspicion

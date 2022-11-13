@@ -101,6 +101,11 @@ export default {
 				default: false
 			}
 		},
+		suggestion: {
+			show: {
+				default: false
+			}
+		},
 		suspicion: {
 			active: {
 				default: false

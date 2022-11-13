@@ -35,6 +35,7 @@
 		if (e.target.checked) {
 			OptionsStore.showProximity();
 			optionsStore.hideHeuristics();
+			optionsStore.hideSuggestion();
 		} else {
 			OptionsStore.hideProximity();
 		}
@@ -99,6 +100,7 @@
 		if (e.target.checked) {
 			OptionsStore.showHeuristics();
 			optionsStore.hideProximity();
+			optionsStore.hideSuggestion();
 		} else {
 			OptionsStore.hideHeuristics();
 		}
@@ -114,6 +116,16 @@
 	function handleHeuristicsRandom(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsRandom(e.target.value);
+	}
+	// ----------------------- handle suggestion
+	function handleSuggestion(e: any) {
+		if (e.target.checked) {
+			OptionsStore.showSuggestion();
+			optionsStore.hideProximity();
+			optionsStore.hideHeuristics();
+		} else {
+			OptionsStore.hideSuggestion();
+		}
 	}
 	// ----------------------- handle suspicion
 	function handleSuspicionActivation(e: any) {
@@ -206,6 +218,14 @@
 		{#if advanced_mode}
 			<div class="options-form">
 				<div class="options">
+					<div class="option">
+						<p>suggestion</p>
+						<input
+							type="checkbox"
+							checked={$OptionsStore.suggestion.show}
+							on:change={handleSuggestion}
+						/>
+					</div>
 					<div class="option">
 						<p>multi-threading</p>
 						<input

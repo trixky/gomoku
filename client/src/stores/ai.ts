@@ -39,6 +39,9 @@ export default {
 				random: 2,
 				show: Config.options.heuristics.show.default
 			},
+			suggestion: {
+				show: Config.options.suggestion.show.default
+			},
 			suspicion: {
 				active: Config.options.suspicion.active.default,
 				radius: Config.options.suspicion.radius.default
@@ -82,6 +85,9 @@ export default {
 				random: 3,
 				show: Config.options.heuristics.show.default
 			},
+			suggestion: {
+				show: Config.options.suggestion.show.default
+			},
 			suspicion: {
 				active: true,
 				radius: 6
@@ -123,6 +129,9 @@ export default {
 				capture: 10,
 				random: 1,
 				show: Config.options.heuristics.show.default
+			},
+			suggestion: {
+				show: Config.options.suggestion.show.default
 			},
 			suspicion: {
 				active: false,
@@ -166,6 +175,9 @@ export default {
 				random: 2,
 				show: Config.options.heuristics.show.default
 			},
+			suggestion: {
+				show: Config.options.suggestion.show.default
+			},
 			suspicion: {
 				active: true,
 				radius: 7
@@ -208,6 +220,9 @@ export default {
 				capture: 10,
 				random: 3,
 				show: Config.options.heuristics.show.default
+			},
+			suggestion: {
+				show: Config.options.suggestion.show.default
 			},
 			suspicion: {
 				active: false,
