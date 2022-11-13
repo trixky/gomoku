@@ -9,8 +9,7 @@
 	import PieceNumberStore from '../../stores/piece_number';
 	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 	import WinStore from '../../stores/win';
-
-	const fade_parameters = { duration: 250 };
+	import Config from '../../config';
 
 	$: winner = $WinStore.player != 0 && !$WinStore.loophole;
 
@@ -24,7 +23,7 @@
 <!-- ========================= HTML -->
 <div class="top-container">
 	{#if winner}
-		<div transition:fade={fade_parameters} class="win">
+		<div transition:fade={Config.animation.fade} class="win">
 			<h2>Player {$WinStore.player.toString()} win by {$WinStore.methode} !</h2>
 			<button class="new-game" on:click={handleReset}>new game</button>
 		</div>
@@ -33,7 +32,7 @@
 		<h2>
 			<span class:my-turn={$LastMoveStore.player === 2}> Player 1 </span>
 			{#if $VsStore === OpponentsModes[0]}
-				<span class="opacity-20" transition:fade={fade_parameters}> (You) </span>
+				<span class="opacity-20" transition:fade={Config.animation.fade}> (You) </span>
 			{/if}
 		</h2>
 		<div class="player-infos left">
@@ -47,16 +46,17 @@
 	<div class="player-container right">
 		<h2>
 			{#if $VsStore === OpponentsModes[0]}
-				<span class="opacity-20" transition:fade={fade_parameters}> (AI) </span>
+				<span class="opacity-20" transition:fade={Config.animation.fade}> (AI) </span>
 			{/if}
 			<span class:my-turn={$LastMoveStore.player === 1}> Player 2 </span>
 		</h2>
 		<div class="player-infos right">
 			{#if $VsStore === OpponentsModes[0]}
-				<p transition:fade={fade_parameters} class="time">
+				<p transition:fade={Config.animation.fade} class="time">
 					time:&nbsp;<span class="min-w-[74px] text-right"
-						>{#if $LoadingStore}<span in:fade={fade_parameters} class="blink">loading</span>{:else}
-							<span in:fade={fade_parameters}>{$TimeStore} ms</span>
+						>{#if $LoadingStore}<span in:fade={Config.animation.fade} class="blink">loading</span
+							>{:else}
+							<span in:fade={Config.animation.fade}>{$TimeStore} ms</span>
 						{/if}</span
 					>
 				</p>

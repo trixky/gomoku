@@ -15,6 +15,9 @@ export default {
 		piece_number: Math.pow(size, 2),
 		cell_number: Math.pow(size - 1, 2)
 	},
+	animation: {
+		fade: { duration: 250 }
+	},
 	options: {
 		time_out: {
 			step: 100,
