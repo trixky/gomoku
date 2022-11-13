@@ -1,12 +1,16 @@
 import { writable } from 'svelte/store';
 import type MoveModel from '../models/move';
 
-function createLastMoveStore() {
-	const { subscribe, update } = writable(<MoveModel>{
+function initMove(): MoveModel {
+	return <MoveModel>{
 		player: 2,
 		x: 0,
 		y: 0
-	});
+	};
+}
+
+function createLastMoveStore() {
+	const { subscribe, update, set } = writable(initMove());
 
 	return {
 		subscribe,
@@ -17,7 +21,10 @@ function createLastMoveStore() {
 				last_move.player = last_move.player == 1 ? 2 : 1;
 
 				return last_move;
-			})
+			}),
+		reset: () => {
+			set(initMove());
+		}
 	};
 }
 

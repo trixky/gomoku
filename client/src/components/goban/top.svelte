@@ -15,6 +15,7 @@
 
 	function handleReset() {
 		WinStore.reset();
+		LastMoveStore.reset();
 		PlayersInfosStore.reset();
 		GobanStore.reset();
 	}
