@@ -29,6 +29,9 @@ export default function generateOptions(): OptionsModel {
 			random: Config.options.heuristics.values.default,
 			show: Config.options.heuristics.show.default
 		},
+		suggestion: {
+			show: Config.options.suggestion.show.default
+		},
 		suspicion: {
 			active: Config.options.suspicion.active.default,
 			radius: Config.options.suspicion.radius.default

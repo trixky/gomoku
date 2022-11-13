@@ -4,6 +4,8 @@
 	import Piece from './piece.svelte';
 	import OptionsStore from '../../stores/options';
 	import HeuristicStatsStore from '../../stores/heuristic_stats';
+	import SuggestionStatsStore from '../../stores/suggestion_stats';
+	import { vsStore as VsStore, Modes as OpponentsModes } from '../../stores/vs';
 	import { SHAPES } from '../../models/algo_options';
 
 	export let x: number;
@@ -12,6 +14,7 @@
 	export let handleLeftClick: (x: number, y: number) => void;
 	export let proximity: number;
 	export let heuristic: number;
+	export let suggestion: number;
 
 	$: piece = cell.player != 0;
 
@@ -23,6 +26,10 @@
 		(heuristic - $HeuristicStatsStore.min) / ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
 
 	$: heuristic_opacity = heuristic_ratio * 0.3 + 0.1;
+
+	$: suggestion_ratio =
+		(suggestion - $SuggestionStatsStore.min) /
+		($SuggestionStatsStore.max - $SuggestionStatsStore.min);
 </script>
 
 <!-- ========================= HTML -->
@@ -33,8 +40,11 @@
 	class="piece-emplacement"
 	style={$OptionsStore.proximity.show
 		? `background-color: rgba(${pink ? 255 : 0}, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
-		: $OptionsStore.heuristics.show
-		? `background-color: rgba(${120 - heuristic_ratio * 120}, 255, 0, ${heuristic_opacity})`
+		: $OptionsStore.suggestion.show ||
+		  ($OptionsStore.heuristics.show && $VsStore === OpponentsModes[0])
+		? `background-color: rgba(${
+				120 - ($OptionsStore.suggestion.show ? suggestion_ratio : heuristic_ratio) * 120
+		  }, 255, ${$OptionsStore.suggestion.show ? 255 : 0}, ${heuristic_opacity})`
 		: ''}
 	on:mousedown={() => handleLeftClick(x, y)}
 >
