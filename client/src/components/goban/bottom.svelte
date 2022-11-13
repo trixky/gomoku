@@ -105,6 +105,10 @@
 			OptionsStore.hideHeuristics();
 		}
 	}
+	function handleHeuristicsDepthDivisor(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setHeuristicsDepthDivisor(e.target.value);
+	}
 	function handleHeuristicsAlignement(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsAlignement(e.target.value);
@@ -424,6 +428,17 @@
 							type="checkbox"
 							checked={$OptionsStore.heuristics.show}
 							on:change={handleHeuristicsVisibility}
+						/>
+					</div>
+					<div class="option">
+						<p>depth divisor</p>
+						<input
+							type="number"
+							step={Config.options.heuristics.depth_divisor.step}
+							on:change={handleHeuristicsDepthDivisor}
+							min={Config.options.heuristics.depth_divisor.min}
+							max={Config.options.heuristics.depth_divisor.max}
+							value={$OptionsStore.heuristics.depth_divisor}
 						/>
 					</div>
 				</div>

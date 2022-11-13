@@ -35,6 +35,7 @@ type RequestNextProximityData struct {
 }
 
 type RequestNextHeuristicsData struct {
+	DepthDivisor     int `json:"depth_divisor"`
 	AlignementWeight int `json:"alignement"`
 	CaptureWeight    int `json:"capture"`
 	RandomWeight     int `json:"random"`
@@ -114,6 +115,7 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.HeuristicAlignementWeight = rd.Options.Heuristics.AlignementWeight
 	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
+	options.HeuristicDepthDivisor = rd.Options.Heuristics.DepthDivisor
 
 	// Suspicion
 	options.SuspicionRadius = rd.Options.Suspicion.Radius

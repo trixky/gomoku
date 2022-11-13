@@ -181,6 +181,13 @@ function createOptionsStore() {
 				options.heuristics.show = false;
 				return options;
 			}),
+		setHeuristicsDepthDivisor: (depth_divisor: string) =>
+			update((options) => {
+				const _depth_divisor = parseInt(depth_divisor);
+
+				if (!isNaN(_depth_divisor)) options.heuristics.depth_divisor = _depth_divisor;
+				return options;
+			}),
 		setHeuristicsAlignement: (alignement: string) =>
 			update((options) => {
 				const _alignement = parseInt(alignement);
