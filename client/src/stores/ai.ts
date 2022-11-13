@@ -37,7 +37,8 @@ export default {
 				alignement: 0,
 				capture: 10,
 				random: 2,
-				show: Config.options.heuristics.show.default
+				show: Config.options.heuristics.show.default,
+				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
 				show: Config.options.suggestion.show.default
@@ -83,7 +84,8 @@ export default {
 				alignement: 3,
 				capture: 3,
 				random: 3,
-				show: Config.options.heuristics.show.default
+				show: Config.options.heuristics.show.default,
+				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
 				show: Config.options.suggestion.show.default
@@ -128,7 +130,8 @@ export default {
 				alignement: 2,
 				capture: 10,
 				random: 1,
-				show: Config.options.heuristics.show.default
+				show: Config.options.heuristics.show.default,
+				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
 				show: Config.options.suggestion.show.default
@@ -173,7 +176,8 @@ export default {
 				alignement: 2,
 				capture: 8,
 				random: 2,
-				show: Config.options.heuristics.show.default
+				show: Config.options.heuristics.show.default,
+				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
 				show: Config.options.suggestion.show.default
@@ -219,7 +223,8 @@ export default {
 				alignement: 2,
 				capture: 10,
 				random: 3,
-				show: Config.options.heuristics.show.default
+				show: Config.options.heuristics.show.default,
+				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
 				show: Config.options.suggestion.show.default

@@ -99,6 +99,12 @@ export default {
 			},
 			show: {
 				default: false
+			},
+			depth_divisor: {
+				default: 10,
+				min: 0,
+				max: 100,
+				step: 1
 			}
 		},
 		suggestion: {

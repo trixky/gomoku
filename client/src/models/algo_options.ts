@@ -30,6 +30,7 @@ export interface AlgoOptions {
 		alignement: number;
 		capture: number;
 		random: number;
+		depth_divisor: number;
 	};
 	suspicion: {
 		radius: number;

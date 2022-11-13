@@ -24,6 +24,7 @@ export default interface Options {
 		capture: number;
 		random: number;
 		show: boolean;
+		depth_divisor: number;
 	};
 	suggestion: {
 		show: boolean;
