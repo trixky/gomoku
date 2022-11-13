@@ -20,11 +20,42 @@
 	import winByAlignement from '../../logic/win_by_alignement';
 	import winByCapture from '../../logic/win_by_capture';
 	import RulesStore from '../../stores/rules';
+	import WinStore from '../../stores/win';
 
 	let rules = false;
 
+	$: winner = $WinStore.player != 0 && !$WinStore.loophole;
+
+	function check_win(): boolean {
+		let capture_winner = winByCapture($PlayersInfoStore);
+		if (capture_winner != 0) {
+			WinStore.setCapture(capture_winner);
+			return true;
+		}
+
+		let alignement_winner = winByAlignement($GobanStore.cells);
+		if (
+			(alignement_winner[1].win && $WinStore.player === 1) ||
+			(alignement_winner[2].win && $WinStore.player === 2)
+		) {
+			WinStore.confirmAlignement();
+			return true;
+		} else if (alignement_winner[1].win) {
+			WinStore.setAlignement(1, alignement_winner[1].loophole);
+			if (!alignement_winner[1].loophole) {
+				return true;
+			}
+		} else if (alignement_winner[2].win) {
+			WinStore.setAlignement(2, alignement_winner[2].loophole);
+			if (!alignement_winner[2].loophole) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	async function handleCellClick(x: number, y: number) {
-		if (!$LoadingStore) {
+		if (!$LoadingStore && !winner) {
 			if ($GobanStore.cells[y][x].player === 0) {
 				LoadingStore.switch(true);
 
@@ -44,8 +75,10 @@
 							TimeStore.reset();
 							GobanStore.playersFromString(json_response.goban);
 
-							winByCapture($PlayersInfoStore);
-							winByAlignement($GobanStore.cells);
+							if (check_win()) {
+								LoadingStore.switch(false);
+								return;
+							}
 
 							if ($VsStore === Modes[0])
 								PostNext($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
@@ -63,8 +96,10 @@
 										GobanStore.heuristicFromString(json_response.heuristic_goban);
 										TimeStore.set(json_response.options.time);
 
-										winByCapture($PlayersInfoStore);
-										winByAlignement($GobanStore.cells);
+										if (check_win()) {
+											LoadingStore.switch(false);
+											return;
+										}
 
 										LoadingStore.switch(false);
 									})
@@ -118,7 +153,7 @@
 			{/each}
 		</ul>
 	</div>
-	<div class:rules class="goban">
+	<div class:rules class:winner class="goban">
 		<div class="piece-container">
 			{#each $GobanStore.cells as cells, y}
 				{#each cells as cell, x}
@@ -165,6 +200,10 @@
 
 	.goban.rules {
 		@apply opacity-[3%];
+	}
+
+	.goban.winner {
+		@apply opacity-20;
 	}
 
 	.cell-container {
