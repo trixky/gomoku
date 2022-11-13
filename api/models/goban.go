@@ -25,21 +25,18 @@ func (g *Goban) ComputeGlobalProximity(threshold uint8, radius uint8, shape byte
 		for y := uint8(0); y < 19; y++ {
 			// For each cell
 
-			if suspicious_radius == 0 || (int(x) >= int(last_move.Position.X)-suspicious_radius && int(x) <= int(last_move.Position.X)+suspicious_radius && int(y) >= int(last_move.Position.Y)-suspicious_radius && int(y) <= int(last_move.Position.Y)+suspicious_radius) {
-				// If the suspicious radius in disable or respected
-				if g[y][x] >= PLAYER_1 {
-					// If the cell is taken by a player
-					position.X = x
-					position.Y = y
-					g.ComputePieceProximity(&position, threshold, radius, shape)
-				}
+			if g[y][x] >= PLAYER_1 {
+				// If the cell is taken by a player
+				position.X = x
+				position.Y = y
+				g.ComputePieceProximity(&position, threshold, radius, shape, suspicious_radius, last_move)
 			}
 		}
 	}
 }
 
 // ComputeGlobalProximity computes a local proximity
-func (g *Goban) ComputePieceProximity(position *Position, threshold uint8, radius uint8, shape byte) {
+func (g *Goban) ComputePieceProximity(position *Position, threshold uint8, radius uint8, shape byte, suspicious_radius int, last_move Move) {
 	radius_plus := radius + 1
 	radius_end := 19 - radius
 
@@ -81,16 +78,21 @@ func (g *Goban) ComputePieceProximity(position *Position, threshold uint8, radiu
 		for xx := xx_start; xx < xx_end; xx++ {
 			// For each cell of local radius
 
-			// Compute x and y diffs
-			diff_x := utils.DiffUint8(position.X, xx)
-			diff_y := utils.DiffUint8(position.Y, yy)
+			if suspicious_radius == 0 || int(xx) <= int(last_move.Position.X)+(suspicious_radius) && int(xx) >= int(last_move.Position.X)-(suspicious_radius) && int(yy) <= int(last_move.Position.Y)+(suspicious_radius) && int(yy) >= int(last_move.Position.Y)-(suspicious_radius) {
+				// If the suspicious radius is disable
+				// Or the current cell is in
 
-			if g[yy][xx] < PLAYER_1 {
-				// If the cell is not taken by a player
-				if shape == SHAPE_SQUARE || diff_x == diff_y || diff_x == 0 || diff_y == 0 {
-					// If the cell is in the shape
-					g[yy][xx] += radius + 1 - utils.MaxUint8(diff_x, diff_y)
-					g[yy][xx] = utils.MinUint8(g[yy][xx], threshold)
+				// Compute x and y diffs
+				diff_x := utils.DiffUint8(position.X, xx)
+				diff_y := utils.DiffUint8(position.Y, yy)
+
+				if g[yy][xx] < PLAYER_1 {
+					// If the cell is not taken by a player
+					if shape == SHAPE_SQUARE || diff_x == diff_y || diff_x == 0 || diff_y == 0 {
+						// If the cell is in the shape
+						g[yy][xx] += radius + 1 - utils.MaxUint8(diff_x, diff_y)
+						g[yy][xx] = utils.MinUint8(g[yy][xx], threshold)
+					}
 				}
 			}
 		}
