@@ -1,9 +1,10 @@
-import BoardStore from './goban';
+import GobanStore from './goban';
 import OptionsStore from './options';
+import LastMoveStore from './last_move';
 import { SHAPES } from '../models/algo_options';
 import { derived } from 'svelte/store';
 
-export default derived([OptionsStore, BoardStore], ($Stores): number[][] => {
+export default derived([OptionsStore, GobanStore, LastMoveStore], ($Stores): number[][] => {
 	const proximity_cells = new Array(19).fill(undefined).map(() => new Array(19).fill(0));
 
 	const shape_neighboor = $Stores[0].proximity.shape == SHAPES.neighbour;
@@ -17,26 +18,35 @@ export default derived([OptionsStore, BoardStore], ($Stores): number[][] => {
 				for (let local_y = -radius; local_y <= radius; local_y++) {
 					const real_y = local_y + y;
 
-					if (real_y >= 0 && real_y < 19)
-						for (let local_x = -radius; local_x <= radius; local_x++) {
-							const real_x = local_x + x;
+					if (
+						!$Stores[0].suspicion.active ||
+						$Stores[0].suspicion.radius >= Math.abs(real_y - $Stores[2].y)
+					)
+						if (real_y >= 0 && real_y < 19)
+							for (let local_x = -radius; local_x <= radius; local_x++) {
+								const real_x = local_x + x;
 
-							const diff = radius_plus - Math.max(Math.abs(local_x), Math.abs(local_y));
-
-							if (real_x >= 0 && real_x < 19) {
 								if (
-									$Stores[0].proximity.shape === SHAPES.square ||
-									Math.abs(local_x) === Math.abs(local_y) ||
-									local_x === 0 ||
-									local_y === 0
+									!$Stores[0].suspicion.active ||
+									$Stores[0].suspicion.radius >= Math.abs(real_x - $Stores[2].x)
 								) {
-									proximity_cells[real_y][real_x] = Math.min(
-										proximity_cells[real_y][real_x] + diff,
-										selection_threshold
-									);
+									const diff = radius_plus - Math.max(Math.abs(local_x), Math.abs(local_y));
+
+									if (real_x >= 0 && real_x < 19) {
+										if (
+											$Stores[0].proximity.shape === SHAPES.square ||
+											Math.abs(local_x) === Math.abs(local_y) ||
+											local_x === 0 ||
+											local_y === 0
+										) {
+											proximity_cells[real_y][real_x] = Math.min(
+												proximity_cells[real_y][real_x] + diff,
+												selection_threshold
+											);
+										}
+									}
 								}
 							}
-						}
 				}
 			}
 		});
