@@ -66,7 +66,7 @@ func (c *Context) Next(position Position) (context Context) {
 	}
 
 	if c.Options.ProximityEvolution {
-		context.Goban.ComputePieceProximity(&position, context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape)
+		context.Goban.ComputePieceProximity(&position, context.Options.ProximityThreshold, context.Options.ProximityRadius, context.Options.ProximityShape, context.Options.SuspicionRadius, context.State.LastMove)
 	}
 
 	context.Analyzer = c.Analyzer
