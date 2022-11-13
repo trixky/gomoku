@@ -24,12 +24,15 @@
 
 	$: heuristic_ratio =
 		(heuristic - $HeuristicStatsStore.min) / ($HeuristicStatsStore.max - $HeuristicStatsStore.min);
-
 	$: heuristic_opacity = heuristic_ratio * 0.3 + 0.1;
 
 	$: suggestion_ratio =
 		(suggestion - $SuggestionStatsStore.min) /
 		($SuggestionStatsStore.max - $SuggestionStatsStore.min);
+	$: suggestion_opacity = suggestion_ratio * 0.3 + 0.1;
+
+	$: ratio = $OptionsStore.suggestion.show ? suggestion_ratio : heuristic_ratio;
+	$: opacity = $OptionsStore.suggestion.show ? suggestion_opacity : heuristic_opacity;
 </script>
 
 <!-- ========================= HTML -->
@@ -42,9 +45,9 @@
 		? `background-color: rgba(${pink ? 255 : 0}, 120, 255, ${Math.min(proximity * 0.09, 0.95)})`
 		: $OptionsStore.suggestion.show ||
 		  ($OptionsStore.heuristics.show && $VsStore === OpponentsModes[0])
-		? `background-color: rgba(${
-				120 - ($OptionsStore.suggestion.show ? suggestion_ratio : heuristic_ratio) * 120
-		  }, 255, ${$OptionsStore.suggestion.show ? 255 : 0}, ${heuristic_opacity})`
+		? `background-color: rgba(${120 - ratio * 120}, 255, ${
+				$OptionsStore.suggestion.show ? 255 : 0
+		  }, ${opacity})`
 		: ''}
 	on:mousedown={() => handleLeftClick(x, y)}
 >
