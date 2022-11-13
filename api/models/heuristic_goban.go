@@ -50,13 +50,11 @@ func (hb *HeuristicGoban) Print() {
 
 			if cell != math.MinInt {
 				fmt.Print(colorYellow)
-				fmt.Printf("%4d", int(cell))
+				fmt.Printf("%6d", cell)
 				fmt.Print(colorReset)
 			} else {
-				fmt.Printf("%4c", 'x')
+				fmt.Printf("%6c", 'x')
 			}
-
-			break
 		}
 		fmt.Println()
 	}
