@@ -15,8 +15,6 @@
 
 	export let mode_ia: boolean;
 
-	$: show_time = $VsStore === OpponentsModes[0] || $OptionsStore.heuristics.show;
-
 	$: winner = $WinStore.player != 0 && !$WinStore.loophole;
 
 	function handleReset() {
@@ -57,7 +55,7 @@
 			{/if}
 		</h2>
 		<div class="player-infos right">
-			{#if show_time}
+			{#if $VsStore === OpponentsModes[0]}
 				<p transition:fade={fade_parameters} class="time">
 					time:&nbsp;<span class="min-w-[74px] text-right"
 						>{#if $LoadingStore}<span in:fade={fade_parameters} class="blink">loading</span>{:else}
