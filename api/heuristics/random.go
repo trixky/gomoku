@@ -10,7 +10,7 @@ import (
 func Random(context *models.Context) int {
 	if context.Options.HeuristicRandomWeight > 0 {
 		// If the weight of the heuristic is not null
-		return (int(rand.Int31n(101)) - 50) * context.Options.HeuristicRandomWeight
+		return (int(rand.Int31n(101)) - 50) * 1000 * context.Options.HeuristicRandomWeight
 	}
 
 	return 0

@@ -23,7 +23,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 	min_depth_protection := context.State.Depth < context.Options.DepthMin
 
 	// ************************************** pruning
-	context.State.SetBeta(heuristics.Alignement(context))
+	context.State.SetBeta(heuristics.All(context))
 
 	if depth_pruning || width_pruning {
 		// var analyzed_parent_layer *models.LayerInfo
