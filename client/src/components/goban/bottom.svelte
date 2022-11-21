@@ -213,7 +213,7 @@
 		<div class="options-form">
 			<div class="options">
 				<div class="option">
-					<p class="max-w-[400px] text-right italic text-sm">
+					<p class="description">
 						{@html Object.entries(AiStore).find((ai) => ai[0] === selected_ai)?.[1].description}
 					</p>
 				</div>
@@ -584,6 +584,15 @@
 
 	h3 {
 		@apply inline-block w-[110px] opacity-30;
+	}
+
+	.description {
+		@apply max-w-[400px] text-right italic text-sm;
+
+		-webkit-user-select: text; /* Safari */
+		-moz-user-select: text; /* Firefox */
+		-ms-user-select: text; /* IE10+/Edge */
+		user-select: text; /* Standard */
 	}
 
 	.option {
