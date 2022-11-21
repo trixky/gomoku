@@ -5,7 +5,7 @@ const size = 19;
 export default {
 	environment: {
 		api: {
-			origin: env.PUBLIC_DOMAIN ?? 'localhost',
+			url: env.PUBLIC_API_URL ?? 'http://localhost',
 			port: env.PUBLIC_API_PORT
 		}
 	},
