@@ -8,7 +8,7 @@ function postNext(
 	players_info: PlayersInfoModel
 ): Promise<string> {
 	return new Promise<string>((resolve, reject) => {
-		const url = `http://${Config.environment.api.origin}:${Config.environment.api.port}/next`;
+		const url = `${Config.environment.api.url}/next`;
 
 		const data = {
 			options,
