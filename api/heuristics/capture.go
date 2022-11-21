@@ -17,9 +17,9 @@ func Capture(context *models.Context, player uint8) int {
 		}
 
 		if capturesP1 >= 10 {
-			score += context.Options.HeuristicCaptureWeight * 20000
+			score += context.Options.HeuristicCaptureWeight * 30000
 		} else if capturesP2 >= 10 {
-			score -= context.Options.HeuristicCaptureWeight * 20000
+			score -= context.Options.HeuristicCaptureWeight * 30000
 		} else if capturesP1 == 8 {
 			score += context.Options.HeuristicCaptureWeight * 5000
 		} else if capturesP2 == 8 {

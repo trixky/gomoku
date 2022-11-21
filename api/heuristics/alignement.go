@@ -81,7 +81,7 @@ func Alignement(context *models.Context, player uint8) int {
 			}
 		}
 
-		var score int = context.Options.HeuristicAlignementWeight*10000*(alignedFive[0]-alignedFive[1]) +
+		var score int = context.Options.HeuristicAlignementWeight*50000*(alignedFive[0]-alignedFive[1]) +
 			context.Options.HeuristicAlignementWeight*5000*(alignedFour[0]-alignedFour[1]) +
 			context.Options.HeuristicAlignementWeight*2000*(alignedThree[0]-alignedThree[1]) +
 			context.Options.HeuristicAlignementWeight*1000*(alignedTwo[0]-alignedTwo[1]) +
