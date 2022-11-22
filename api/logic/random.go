@@ -6,7 +6,7 @@ import (
 	"github.com/trixky/gomoku/models"
 )
 
-// Random chooses a random child
+// Random chooses a random child.
 func Random(context *models.Context, proximity bool) models.Context {
 	for {
 		for y, line := range context.Goban {

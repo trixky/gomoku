@@ -8,7 +8,8 @@ import (
 	"github.com/trixky/gomoku/models"
 )
 
-// Negamax ...
+// Negamax is the main logic function of the program.
+// Using the negamax algorithm, boosted by width and depth alpha-beta pruning and tranlsated tables.
 func Negamax(context *models.Context, parent_channel chan<- *models.Context) (childs []models.Context) {
 	analyzed_layer := &context.Analyzer.Layers[context.State.Depth]
 	best_child := &models.Context{}
@@ -26,20 +27,25 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 	context.State.SetBeta(heuristics.All(context))
 
 	if depth_pruning || width_pruning {
-		// var analyzed_parent_layer *models.LayerInfo
+		// If depth or width pruning is active
 
 		if depth_pruning && DepthPruning(context) {
 			// If depth pruning is active and beta is too weak
 
 			if min_depth_protection {
+				// If the min depth protection is active
+				// Save the childs
 				if !context.State.Saved {
 					analyzed_layer.IncrementSavedByMinDepth()
 					context.State.Saved = true
 				}
 			} else {
+				// Else the min depth protection is not active
 				analyzed_layer.IncrementPrunedInDepth()
 
 				if parent_channel != nil {
+					// If the parent channel exists
+					// Return himself without start its childs
 					parent_channel <- context
 				}
 				return
@@ -51,14 +57,20 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 			// If width pruning is active and beta is too weak
 
 			if min_depth_protection {
+				// If the min depth protection is active
+				// Save the childs
 				if !context.State.Saved {
 					analyzed_layer.IncrementSavedByMinDepth()
 					context.State.Saved = true
 				}
 			} else {
+				// Else the min depth protection is not active
+
 				analyzed_layer.IncrementPrunedInWidth()
 
 				if parent_channel != nil {
+					// If the parent channel exists
+					// Return himself without start its childs
 					parent_channel <- context
 				}
 				return
@@ -67,13 +79,16 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 		}
 	}
 
+	// ************************************** childs
 	if context.State.Depth != context.Options.DepthMax-1 {
+		// If the context layer is not the last.
+		// Start the childs processus
+
 		analyzed_child_layer := &context.Analyzer.Layers[context.State.Depth+1]
 
 		cutted_by_max_width := false
 		time_out := false
 
-		// ************************************** childs
 		for y, line := range context.Goban {
 			// For each line
 			for x, cell := range line {
@@ -84,19 +99,24 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 					if !cutted_by_max_width && !time_out {
 						// If the max width and time out are not reached
 
+						// Create a child for the current cell
 						child := context.Next(models.Position{
 							X: uint8(x),
 							Y: uint8(y),
 						})
-						isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(child.Goban,
-							models.Position{X: uint8(x), Y: uint8(y)},
-							child.State.LastMove.Player)
 
-						if isDoubleThree {
+						if isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(child.Goban,
+							models.Position{X: uint8(x), Y: uint8(y)},
+							child.State.LastMove.Player); isDoubleThree {
+							// If the child is a double three
+							// Skip it
 							continue
-						}
-						if lenCaptured > 0 {
+						} else if lenCaptured > 0 {
+							// Else if at least one capture occured
+							// Update the goban is these captures
 							child.Goban = newGoban
+
+							// Increment the captures in the state of the concerned player
 							if child.State.LastMove.Player == false {
 								child.State.PlayersInfo.Player_1.Captures += uint8(lenCaptured)
 							} else {
@@ -105,23 +125,33 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 						}
 
 						if context.State.Depth == 0 && context.Options.WidthMultiThreading {
+							// If it's the first layer and the multi-threading option is active
+							// Start the negamax of the child in a go-routine
 							go Negamax(&child, child_channel)
 						} else {
+							// Start the negamax of the child
 							Negamax(&child, child_channel)
 						}
 
+						// Compute the elapsed time from the beginning
 						elapsed_time := time.Now().Sub(context.Start).Milliseconds()
 
+						// Increment the number of childs to wait
 						childs_to_wait++
 
 						if childs_to_wait >= context.Options.WidthMax {
 							// If the max width is reached
 							if min_depth_protection {
+								// If the min depth protection is active
+								// Save the child
 								if !context.State.Saved {
 									analyzed_layer.IncrementSavedByMinDepth()
 									context.State.Saved = true
 								}
 							} else {
+								// Else the min depth protection is not active
+								// Don't save the child
+
 								cutted_by_max_width = true
 							}
 						} else if elapsed_time >= context.Options.TimeOut {
@@ -141,21 +171,30 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 			}
 		}
 
-		// ************************************** jugement
+		// ************************************** jugement of childs
 		for i := 0; i < childs_to_wait; i++ {
+			// For each started child
+			// Wait the child result
 			child := <-child_channel
 
 			if child != nil {
+				// If the child have result
+				// Save it
 				childs = append(childs, *child)
 
 				if child.State.Beta > best_child.State.Beta {
+					// If the child is the best one
+					// Save it as the best one
 					best_child = child
 				}
 			}
 		}
 
 		if len(childs) == 0 {
+			// If no childs
 			if parent_channel != nil {
+				// If the parent channel exists
+				// Return himself
 				parent_channel <- context
 			}
 
@@ -170,7 +209,9 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 	}
 
 	if parent_channel != nil {
+		// If the parent channel exists
 		analyzed_layer.IncrementSelected()
+		// Return himself
 		parent_channel <- context
 	}
 
