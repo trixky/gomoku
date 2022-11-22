@@ -178,11 +178,11 @@
 		<div class="options-form">
 			<h3>Parameters</h3>
 			<div class="options">
-				<div class="option">
+				<div class="option" title="Advanced parameters mode.">
 					<p>advanced</p>
 					<input type="checkbox" bind:checked={advanced_mode} />
 				</div>
-				<div class="option">
+				<div class="option" title="After this time out, the algorithm stops its progression.">
 					<p>time out</p>
 					<input
 						type="number"
@@ -193,14 +193,22 @@
 						value={$OptionsStore.time_out}
 					/>
 				</div>
-				<div class="option">
+				<div class="option" title="Select the second player mode/personality.">
 					<p>vs&nbsp;</p>
-					<select value={$VsStore} on:change={handleVs}>
+					<select
+						value={$VsStore}
+						on:change={handleVs}
+						title="Play with the Ai or with an human in local on the same interface."
+					>
 						{#each OpponentsModes as opponent}
 							<option value={opponent}>{opponent}</option>
 						{/each}
 					</select>
-					<select value={selected_ai} on:change={handleAi}>
+					<select
+						value={selected_ai}
+						on:change={handleAi}
+						title="The personality of the Ai, even if you play with against an human.&#013;It can be useful for the suggestion option."
+					>
 						{#each Object.entries(AiStore) as ai}
 							<option value={ai[0]}>
 								{ai[0]}
@@ -222,7 +230,10 @@
 		{#if advanced_mode}
 			<div class="options-form">
 				<div class="options">
-					<div class="option">
+					<div
+						class="option"
+						title="The Ai personality suggests you bests moves according to him by coloring the cells in the goban."
+					>
 						<p>suggestion</p>
 						<input
 							type="checkbox"
@@ -230,7 +241,10 @@
 							on:change={handleSuggestion}
 						/>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="The multi-threading improve performances for multi-thread CPUs."
+					>
 						<p>multi-threading</p>
 						<input
 							type="checkbox"
@@ -243,7 +257,10 @@
 			<div class="options-form">
 				<h3>Proximity</h3>
 				<div class="options">
-					<div class="option">
+					<div
+						class="option"
+						title="Display considered cells at the first layer by the Ai by coloring the cells in the goban."
+					>
 						<p>show</p>
 						<input
 							type="checkbox"
@@ -251,7 +268,10 @@
 							on:change={handleProximityVisibility}
 						/>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="The Evolution refresh the considered cells for each layer/child."
+					>
 						<p>evolution</p>
 						<input
 							type="checkbox"
@@ -259,7 +279,10 @@
 							on:change={handleProximityEvolution}
 						/>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="Minimize the considered cells by selecting only those who are around the last move played."
+					>
 						<p>suspicion</p>
 						<input
 							type="checkbox"
@@ -267,7 +290,10 @@
 							on:change={handleSuspicionActivation}
 						/>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="The radius around the last move played of the zone where cells are selected, if the suspicion is active."
+					>
 						<p>radius</p>
 						<input
 							type="number"
@@ -284,7 +310,10 @@
 			<div class="options-form">
 				<h3>Shape</h3>
 				<div class="options">
-					<div class="option">
+					<div
+						class="option"
+						title="Each occuped cell create a shape around it where childs of the next layer can be created."
+					>
 						<p>type</p>
 						<select value={$OptionsStore.proximity.shape} on:change={handleProximityShape}>
 							{#each Object.entries(SHAPES) as shape}
@@ -294,7 +323,10 @@
 							{/each}
 						</select>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="Radius of the selected shape.&#013;The most a cell of a shape is far of the center, the less its value worth."
+					>
 						<p>radius</p>
 						<input
 							type="number"
@@ -306,7 +338,10 @@
 							disabled={shape_neighboor}
 						/>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="According to the previous options:&#013;Each cell have a proximity value computed by the some of the shapes it's in.&#013;This option determines the minimal value for a cell to be considered as a potential move for the next layer."
+					>
 						<p>threshold</p>
 						<input
 							type="number"
@@ -322,7 +357,10 @@
 			<div class="options-form">
 				<h3>Width</h3>
 				<div class="options">
-					<div class="option">
+					<div
+						class="option"
+						title="The minimum percentage for a cell of its heuristic compared to the best of its layer to have childs."
+					>
 						<p>pruning</p>
 						<input
 							type="checkbox"
@@ -349,7 +387,10 @@
 						/>
 						<span>%</span>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="The maximum number of child of a cell.&#013;Use it creates a side effect:&#013;childs are generated left to right and top to bottom."
+					>
 						<p>max</p>
 						<input
 							type="number"
@@ -365,7 +406,10 @@
 			<div class="options-form">
 				<h3>Depth</h3>
 				<div class="options">
-					<div class="option">
+					<div
+						class="option"
+						title="The minimum layer before which pruning and max childs (width and depth) parameters can't be applied.&#013;The time out is not affected by this parameter."
+					>
 						<p>min</p>
 						<input
 							type="number"
@@ -376,7 +420,10 @@
 							disabled={!$OptionsStore.depth.pruning && !$OptionsStore.width.pruning}
 						/>
 					</div>
-					<div class="option">
+					<div
+						class="option"
+						title="The minimum percentage for a cell of its heuristic compared to the best of its previous layer to have childs."
+					>
 						<p>pruning</p>
 						<input
 							type="checkbox"
@@ -403,7 +450,7 @@
 						/>
 						<span>%</span>
 					</div>
-					<div class="option">
+					<div class="option" title="The maximum layer depth.">
 						<p>max</p>
 						<input
 							type="number"
@@ -418,7 +465,10 @@
 			<div class="options-form">
 				<h3>Heuristics</h3>
 				<div class="options">
-					<div class="option">
+					<div
+						class="option"
+						title="Display the heuristic of cells at the first layer used by the Ai to choose its best move by coloring the cells in the goban."
+					>
 						<p>show</p>
 						<input
 							type="checkbox"
@@ -426,7 +476,7 @@
 							on:change={handleHeuristicsVisibility}
 						/>
 					</div>
-					<div class="option">
+					<div class="option" title="The most a layer is deep, lesser is its heuristic value.">
 						<p>depth divisor</p>
 						<input
 							type="number"
@@ -441,7 +491,7 @@
 			</div>
 			<div class="options-form range">
 				<div class="range-container">
-					<div class="option">
+					<div class="option" title="The weight of the alignement heuristic importance.">
 						<p>alignement</p>
 						<input
 							type="range"
@@ -454,7 +504,7 @@
 							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
-					<div class="option">
+					<div class="option" title="The weight of the capture heuristic importance.">
 						<p>capture</p>
 						<input
 							type="range"
@@ -467,7 +517,7 @@
 							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.values.max}
 						</p>
 					</div>
-					<div class="option">
+					<div class="option" title="The weight of the random heuristic importance.">
 						<p>random</p>
 						<input
 							type="range"
@@ -485,7 +535,7 @@
 			<div class="options-form">
 				<h3>Analyzer</h3>
 				<div class="options">
-					<div class="option">
+					<div class="option" title="Give details for each layers.">
 						<p>layered</p>
 						<input
 							type="checkbox"
@@ -493,7 +543,7 @@
 							on:change={handleAnalyzerLayered}
 						/>
 					</div>
-					<div class="option">
+					<div class="option" title="Display the values using the percentage notation.">
 						<p>percentage</p>
 						<input
 							type="checkbox"
@@ -501,7 +551,7 @@
 							on:change={handleAnalyzerPercentage}
 						/>
 					</div>
-					<div class="option">
+					<div class="option" title="Round the values if percentage is active.">
 						<p>rounded</p>
 						<input
 							type="checkbox"
