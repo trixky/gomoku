@@ -53,8 +53,6 @@ export default function winByAlignement(cells: CellModel[][]): checkWinByAlignem
 			reset();
 
 			if (current_player != 0) {
-				if (response[current_player].win && response[current_player].loophole) continue;
-
 				if (cellCanBeCaptured(x, y, cells)) {
 					global_loophole = true;
 				}
@@ -119,17 +117,21 @@ export default function winByAlignement(cells: CellModel[][]): checkWinByAlignem
 				}
 
 				if (horizontal_alignement === 5) {
+					if (!response[current_player].win || response[current_player].loophole)
+						response[current_player].loophole = horizontal_loophole || global_loophole;
 					response[current_player].win = true;
-					response[current_player].loophole = horizontal_loophole || global_loophole;
 				} else if (vertical_alignement === 5) {
+					if (!response[current_player].win || response[current_player].loophole)
+						response[current_player].loophole = vertical_loophole || global_loophole;
 					response[current_player].win = true;
-					response[current_player].loophole = vertical_loophole || global_loophole;
 				} else if (diagonal_alignement === 5) {
+					if (!response[current_player].win || response[current_player].loophole)
+						response[current_player].loophole = diagonal_loophole || global_loophole;
 					response[current_player].win = true;
-					response[current_player].loophole = diagonal_loophole || global_loophole;
 				} else if (reversed_diagonal_alignement === 5) {
+					if (!response[current_player].win || response[current_player].loophole)
+						response[current_player].loophole = reversed_diagonal_loophole || global_loophole;
 					response[current_player].win = true;
-					response[current_player].loophole = reversed_diagonal_loophole || global_loophole;
 				}
 			}
 		}
