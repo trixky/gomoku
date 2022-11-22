@@ -98,7 +98,7 @@ export default {
 			values: {
 				min: 0,
 				max: 10,
-				default: 0
+				default: 5
 			},
 			show: {
 				default: false

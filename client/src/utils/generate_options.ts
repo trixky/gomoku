@@ -26,7 +26,7 @@ export default function generateOptions(): OptionsModel {
 		heuristics: {
 			alignement: Config.options.heuristics.values.default,
 			capture: Config.options.heuristics.values.default,
-			random: Config.options.heuristics.values.default,
+			random: 0,
 			show: Config.options.heuristics.show.default,
 			depth_divisor: Config.options.heuristics.depth_divisor.default
 		},
