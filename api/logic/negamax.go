@@ -201,11 +201,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 			return
 		}
 
-		if context.State.Beta < -best_child.State.Beta {
-			// If the best child have a best heuristic than the local heuristic
-			// Use the best child heuristic
-			context.State.SetBeta(-best_child.State.Beta)
-		}
+		context.State.SetBeta(-best_child.State.Beta)
 	}
 
 	if parent_channel != nil {
