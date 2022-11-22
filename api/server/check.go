@@ -40,6 +40,12 @@ func check(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := data.Sanitize(); err != nil {
+		// If the data is corrupted
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
 	// Compute a new context from the data
 	context, err := data.ComputeContext()
 

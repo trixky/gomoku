@@ -2,8 +2,12 @@ package models
 
 import (
 	"errors"
+	"strconv"
+	"strings"
 	"time"
 )
+
+const cells_nbr = 19 * 19
 
 var (
 	ERR_RD_GOBAN_LENGTH             = errors.New("goban string need 361 characters")
@@ -56,9 +60,128 @@ type RequestNextData struct {
 	Goban       string                `json:"goban"`
 }
 
+// Sanitize sanitizes these attributes
+func (rndd *RequestNextDepthData) Sanitize() error {
+	if rndd.Max < rndd.Min {
+		return errors.New("max depth need to be greater or equal than the min depth")
+	}
+	if rndd.PruningPercentage < 0 {
+		return errors.New("depth pruning percentage can't be negative")
+	}
+	if rndd.PruningPercentage > 400 {
+		return errors.New("depth pruning percentage need to be smaller or equal than 400")
+	}
+
+	return nil
+}
+
+// Sanitize sanitizes these attributes
+func (rnwd *RequestNextWidthData) Sanitize() error {
+	if rnwd.PruningPercentage > cells_nbr {
+		return errors.New("max width cutting need to be smaller or equal than " + strconv.Itoa(cells_nbr))
+	}
+	if rnwd.PruningPercentage > 200 {
+		return errors.New("depth pruning percentage need to be smaller or equal than 200")
+	}
+
+	return nil
+}
+
+// Sanitize sanitizes these attributes
+func (rnpd *RequestNextProximityData) Sanitize() error {
+	if rnpd.Radius > 9 {
+		return errors.New("max proximity shape radius must be smaller or equal than 9")
+	}
+	if rnpd.Threshold > 36 {
+		return errors.New("max proximity threshold must be smaller or equal than 36")
+	}
+	if rnpd.Shape != SHAPE_SQUARE && rnpd.Shape != SHAPE_STAR {
+		return errors.New("proximity shape need to be <neighbour(square)/square/star>")
+	}
+
+	return nil
+}
+
+// Sanitize sanitizes these attributes
+func (rnhd *RequestNextHeuristicsData) Sanitize() error {
+	if rnhd.DepthDivisor < 0 {
+		return errors.New("depth divisor can't be negative")
+	}
+	if rnhd.DepthDivisor > 100 {
+		return errors.New("depth heuristic divisor must be smaller or equal than 100")
+	}
+	if rnhd.AlignementWeight < 0 || rnhd.AlignementWeight > 10 {
+		return errors.New("alignement heuristic weight must be between 0 and 10")
+	}
+	if rnhd.CaptureWeight < 0 || rnhd.CaptureWeight > 10 {
+		return errors.New("capture heuristic weight must be between 0 and 10")
+	}
+	if rnhd.RandomWeight < 0 || rnhd.RandomWeight > 10 {
+		return errors.New("random heuristic weight must be between 0 and 10")
+	}
+
+	return nil
+}
+
+// Sanitize sanitizes these attributes
+func (rnsd *RequestNextSuspicionData) Sanitize() error {
+	if rnsd.Radius < 0 {
+		return errors.New("suspicion radius must can't be negative")
+	}
+	if rnsd.Radius > 19 {
+		return errors.New("suspicion radius must be smaller or equal than 19")
+	}
+	return nil
+}
+
+// Sanitize sanitizes these attributes
+func (rnod *RequestNextOptionData) Sanitize() error {
+	if rnod.TimeOut < 0 || rnod.TimeOut > 60000 {
+		return errors.New("time out must be between 0 and 60000")
+	}
+	if err := rnod.Position.Sanitize(); err != nil {
+		return err
+	}
+	if err := rnod.Depth.Sanitize(); err != nil {
+		return err
+	}
+	if err := rnod.Width.Sanitize(); err != nil {
+		return err
+	}
+	if err := rnod.Proximity.Sanitize(); err != nil {
+		return err
+	}
+	if err := rnod.Heuristics.Sanitize(); err != nil {
+		return err
+	}
+	if err := rnod.Suspicion.Sanitize(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Sanitize sanitizes these attributes
+func (rd *RequestNextData) Sanitize() error {
+	if err := rd.Options.Sanitize(); err != nil {
+		return err
+	}
+	if err := rd.PlayersInfo.Sanitize(); err != nil {
+		return err
+	}
+	if len(rd.Goban) != cells_nbr {
+		return errors.New("goban (19x19) expected " + strconv.Itoa(cells_nbr) + " cells, got " + strconv.Itoa(len(rd.Goban)))
+	}
+	if strings.Count(rd.Goban, "0")+strings.Count(rd.Goban, "1")+strings.Count(rd.Goban, "2") != cells_nbr {
+		return errors.New("goban corrupted, it only accepts '0', '1', '2' characters")
+	}
+
+	return nil
+}
+
 // ExtractGoban extracts the goban from the requestNext data
 func (rd *RequestNextData) ExtractGoban() (goban Goban, err error) {
-	if len(rd.Goban) != 361 {
+	if len(rd.Goban) != cells_nbr {
 		// If the goban is not exactly the right length
 		return goban, ERR_RD_GOBAN_LENGTH
 	}
