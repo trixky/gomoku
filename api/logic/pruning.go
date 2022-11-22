@@ -6,6 +6,7 @@ import (
 	"github.com/trixky/gomoku/models"
 )
 
+// DepthPruning determines if the given context have to be pruned by depth.
 func DepthPruning(context *models.Context) bool {
 	// Get the best beta value of the previous layer
 	best_beta, best_beta_percentage, first := context.Bests[context.State.Depth].MaxAndGetAll(context.State.Beta)
@@ -26,9 +27,9 @@ func DepthPruning(context *models.Context) bool {
 	return false
 }
 
+// WidthPruning determines if the given context have to be pruned by width.
 func WidthPruning(context *models.Context) bool {
 	// Get the best beta value of the current layer
-
 	best_beta, best_beta_percentage, first := context.Bests[context.State.Depth].MaxAndGetAll(context.State.Beta)
 
 	if !first && context.State.BetaPercentage < best_beta_percentage-(int(math.Abs(float64(best_beta)))*(context.Options.PreComputedOptions.ReversedWidthPruningPercentage)) {
