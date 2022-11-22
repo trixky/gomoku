@@ -259,10 +259,6 @@
 							on:change={handleProximityEvolution}
 						/>
 					</div>
-				</div>
-			</div>
-			<div class="options-form">
-				<div class="options">
 					<div class="option">
 						<p>suspicion</p>
 						<input
