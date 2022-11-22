@@ -108,7 +108,7 @@ export default {
 			},
 			depth_divisor: {
 				default: 10,
-				min: 0,
+				min: 1,
 				max: 100,
 				step: 1
 			}
