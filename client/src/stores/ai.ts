@@ -36,7 +36,7 @@ export default {
 			heuristics: {
 				alignement: 0,
 				capture: 10,
-				random: 2,
+				random: 0,
 				show: Config.options.heuristics.show.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
@@ -129,7 +129,7 @@ export default {
 			heuristics: {
 				alignement: 2,
 				capture: 10,
-				random: 1,
+				random: 0,
 				show: Config.options.heuristics.show.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
@@ -175,7 +175,7 @@ export default {
 			heuristics: {
 				alignement: 2,
 				capture: 8,
-				random: 2,
+				random: 0,
 				show: Config.options.heuristics.show.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
@@ -222,7 +222,7 @@ export default {
 			heuristics: {
 				alignement: 2,
 				capture: 10,
-				random: 3,
+				random: 1,
 				show: Config.options.heuristics.show.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
