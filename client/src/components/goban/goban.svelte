@@ -1,5 +1,6 @@
 <!-- ========================= SCRIPT -->
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import Config from '../../config';
 	import GobanStore from '../../stores/goban';
 	import StringGobanStore from '../../stores/string_goban';
@@ -160,9 +161,22 @@
 	function handleMouseLeaveRules() {
 		rules = false;
 	}
+
+	function handleReset() {
+		WinStore.reset();
+		LastMoveStore.reset();
+		PlayersInfosStore.reset();
+		GobanStore.reset();
+	}
 </script>
 
 <!-- ========================= HTML -->
+{#if winner && !rules}
+	<div transition:fade={Config.animation.fade.normal} class="win">
+		<h2>Player {$WinStore.player.toString()} win by {$WinStore.methode} !</h2>
+		<button class="new-game" on:click={handleReset}>new game</button>
+	</div>
+{/if}
 <div class:rules class="goban-container">
 	<div class:rules class="rules-container">
 		<ul>
@@ -225,6 +239,11 @@
 
 	.goban.winner {
 		@apply opacity-20;
+	}
+
+	.win {
+		@apply absolute top-44 bg-white py-4 w-full text-center z-10;
+		border: 2px solid black;
 	}
 
 	.cell-container {

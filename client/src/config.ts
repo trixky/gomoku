@@ -18,6 +18,7 @@ export default {
 	animation: {
 		fade: {
 			slow: { duration: 250 },
+			normal: { duration: 120 },
 			fast: { duration: 75 }
 		}
 	},

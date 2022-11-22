@@ -12,3 +12,10 @@
 	<Goban />
 	<BottomGoban />
 </div>
+
+<!-- ========================= CSS -->
+<style lang="postcss">
+	.game {
+		@apply relative;
+	}
+</style>
