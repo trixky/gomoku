@@ -1,6 +1,6 @@
 # gomoku
 
-A goban game, with an Ai using a customizable [negamax](https://en.wikipedia.org/wiki/Negamax) implementation improved by [alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) (in depth and width) and [transposition tables](https://en.wikipedia.org/wiki/Negamax#Negamax_with_alpha_beta_pruning_and_transposition_tables).
+A goban game [online](https://gomoku.trixky.com/), with an Ai using a customizable [negamax](https://en.wikipedia.org/wiki/Negamax) implementation improved by [alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) (in depth and width) and [transposition tables](https://en.wikipedia.org/wiki/Negamax#Negamax_with_alpha_beta_pruning_and_transposition_tables).
 
 <img src="https://raw.githubusercontent.com/trixky/gomoku/main/.demo/screens.gif" alt="Demo gif" width="361"/>
 
