@@ -218,16 +218,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="options-form">
-			<div class="options">
-				<div class="option">
-					<p class="description">
-						{@html Object.entries(AiStore).find((ai) => ai[0] === selected_ai)?.[1].description}
-					</p>
+		{#if advanced_mode}
+			<div class="options-form">
+				<div class="options">
+					<div class="option">
+						<p class="description">
+							{@html Object.entries(AiStore).find((ai) => ai[0] === selected_ai)?.[1].description}
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
-		{#if advanced_mode}
 			<div class="options-form">
 				<div class="options">
 					<div
