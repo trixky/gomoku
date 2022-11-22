@@ -1,0 +1,1 @@
+used for crop border: https://www.online-image-editor.com/
