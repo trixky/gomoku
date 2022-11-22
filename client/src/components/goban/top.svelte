@@ -11,8 +11,6 @@
 	import WinStore from '../../stores/win';
 	import Config from '../../config';
 
-	$: winner = $WinStore.player != 0 && !$WinStore.loophole;
-
 	function handleReset() {
 		WinStore.reset();
 		LastMoveStore.reset();
@@ -23,12 +21,6 @@
 
 <!-- ========================= HTML -->
 <div class="top-container">
-	{#if winner}
-		<div transition:fade={Config.animation.fade.slow} class="win">
-			<h2>Player {$WinStore.player.toString()} win by {$WinStore.methode} !</h2>
-			<button class="new-game" on:click={handleReset}>new game</button>
-		</div>
-	{/if}
 	<div class="player-container left">
 		<h2>
 			<span class:my-turn={$LastMoveStore.player === 2}> Player 1 </span>
@@ -124,11 +116,6 @@
 
 	h2 > .my-turn {
 		@apply border-b-neutral-500;
-	}
-
-	.win {
-		@apply absolute top-44 bg-white py-4 w-full text-center z-10;
-		border: 2px solid black;
 	}
 
 	button.new-game {
