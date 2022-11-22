@@ -24,7 +24,7 @@
 <!-- ========================= HTML -->
 <div class="top-container">
 	{#if winner}
-		<div transition:fade={Config.animation.fade} class="win">
+		<div transition:fade={Config.animation.fade.slow} class="win">
 			<h2>Player {$WinStore.player.toString()} win by {$WinStore.methode} !</h2>
 			<button class="new-game" on:click={handleReset}>new game</button>
 		</div>
@@ -33,7 +33,7 @@
 		<h2>
 			<span class:my-turn={$LastMoveStore.player === 2}> Player 1 </span>
 			{#if $VsStore === OpponentsModes[0]}
-				<span class="opacity-20" transition:fade={Config.animation.fade}> (You) </span>
+				<span class="opacity-20" transition:fade={Config.animation.fade.slow}> (You) </span>
 			{/if}
 		</h2>
 		<div class="player-infos left">
@@ -47,17 +47,18 @@
 	<div class="player-container right">
 		<h2>
 			{#if $VsStore === OpponentsModes[0]}
-				<span class="opacity-20" transition:fade={Config.animation.fade}> (AI) </span>
+				<span class="opacity-20" transition:fade={Config.animation.fade.slow}> (AI) </span>
 			{/if}
 			<span class:my-turn={$LastMoveStore.player === 1}> Player 2 </span>
 		</h2>
 		<div class="player-infos right">
 			{#if $VsStore === OpponentsModes[0]}
-				<p transition:fade={Config.animation.fade} class="time">
+				<p transition:fade={Config.animation.fade.slow} class="time">
 					time:&nbsp;<span class="min-w-[74px] text-right"
-						>{#if $LoadingStore}<span in:fade={Config.animation.fade} class="blink">loading</span
+						>{#if $LoadingStore}<span in:fade={Config.animation.fade.slow} class="blink"
+								>loading</span
 							>{:else}
-							<span in:fade={Config.animation.fade}>{$TimeStore} ms</span>
+							<span in:fade={Config.animation.fade.slow}>{$TimeStore} ms</span>
 						{/if}</span
 					>
 				</p>

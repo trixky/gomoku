@@ -64,7 +64,7 @@
 <!-- ========================= CSS -->
 <style lang="postcss">
 	.piece-emplacement {
-		@apply flex justify-center items-center w-[26px] h-[26px] max-w-[26px] max-h-[26px] transition-all duration-75;
+		@apply flex justify-center items-center w-[26px] h-[26px] max-w-[26px] max-h-[26px] transition-all duration-150;
 	}
 
 	.piece-emplacement:hover {

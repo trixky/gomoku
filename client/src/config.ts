@@ -16,7 +16,10 @@ export default {
 		cell_number: Math.pow(size - 1, 2)
 	},
 	animation: {
-		fade: { duration: 250 }
+		fade: {
+			slow: { duration: 250 },
+			fast: { duration: 75 }
+		}
 	},
 	options: {
 		time_out: {
