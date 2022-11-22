@@ -1,10 +1,18 @@
 <!-- ========================= SCRIPT -->
 <script lang="ts">
+	import { fade } from 'svelte/transition';
+	import Config from '../../config';
+
 	export let player: 0 | 1 | 2;
 </script>
 
 <!-- ========================= HTML -->
-<div class:white={player === 1} class:black={player === 2} class="piece" />
+<div
+	transition:fade={Config.animation.fade.fast}
+	class:white={player === 1}
+	class:black={player === 2}
+	class="piece"
+/>
 
 <!-- ========================= CSS -->
 <style lang="postcss">
