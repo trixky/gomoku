@@ -104,8 +104,8 @@ func (rnpd *RequestNextProximityData) Sanitize() error {
 
 // Sanitize sanitizes these attributes
 func (rnhd *RequestNextHeuristicsData) Sanitize() error {
-	if rnhd.DepthDivisor <= 0 {
-		return errors.New("depth divisor can't be negative or null")
+	if rnhd.DepthDivisor < 0 {
+		return errors.New("depth divisor can't be negative")
 	}
 	if rnhd.DepthDivisor > 100 {
 		return errors.New("depth heuristic divisor must be smaller or equal than 100")

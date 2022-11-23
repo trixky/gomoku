@@ -34,7 +34,7 @@ export default {
 		},
 		depth: {
 			max: {
-				default: 2,
+				default: 3,
 				min: 1,
 				max: 10
 			},
@@ -92,7 +92,7 @@ export default {
 				default: false
 			},
 			shape: {
-				default: SHAPES.neighbour
+				default: SHAPES.square
 			},
 			evolution: {
 				default: true
@@ -109,7 +109,7 @@ export default {
 			},
 			depth_divisor: {
 				default: 10,
-				min: 1,
+				min: 0,
 				max: 100,
 				step: 1
 			}
