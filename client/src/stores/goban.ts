@@ -16,14 +16,31 @@ function generateBoard(): GobanModel {
 	};
 }
 
+const g_history: GobanModel[] = [];
+
+function deepBoardCopy(board: GobanModel) {
+	return <GobanModel>{
+		cells: board.cells.map((line) =>
+			line.map(
+				(cell) =>
+					<CellModel>{ heuristic: cell.heuristic, player: cell.player, suggestion: cell.suggestion }
+			)
+		)
+	};
+}
+
 function createBoardStore() {
 	const { subscribe, set, update } = writable(generateBoard());
 
 	return {
 		subscribe,
-		reset: () => set(generateBoard()),
-		addPiece: (player: 1 | 2, x: number, y: number) => {
+		reset: () => {
+			g_history.splice(0, g_history.length);
+			set(generateBoard());
+		},
+		addPiece: (player: 1 | 2, x: number, y: number, history = false) => {
 			update((board) => {
+				if (history) g_history.push(deepBoardCopy(board));
 				board.cells[y][x] = <CellModel>{
 					player
 				};
@@ -40,10 +57,12 @@ function createBoardStore() {
 				return board;
 			});
 		},
-		playersFromString: (str: string) => {
+		playersFromString: (str: string, history = false) => {
 			const cells = str.split('').map((cell) => <0 | 1 | 2>parseInt(cell));
 
 			update((board) => {
+				if (history) g_history.push(deepBoardCopy(board));
+
 				let i = 0;
 
 				for (let y = 0; y < 19; y++)
@@ -70,6 +89,13 @@ function createBoardStore() {
 
 				return board;
 			});
+		},
+		undo: () => {
+			const previous_board = g_history.pop();
+
+			if (previous_board != undefined) {
+				set(previous_board);
+			}
 		}
 	};
 }

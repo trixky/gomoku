@@ -24,7 +24,8 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 	min_depth_protection := context.State.Depth < context.Options.DepthMin
 
 	// ************************************** pruning
-	context.State.SetBeta(heuristics.All(context))
+	local_beta, _ := heuristics.All(context)
+	context.State.SetBeta(local_beta)
 
 	if depth_pruning || width_pruning {
 		// If depth or width pruning is active
@@ -48,6 +49,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 					// Return himself without start its childs
 					parent_channel <- context
 				}
+
 				return
 			}
 
@@ -73,6 +75,7 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 					// Return himself without start its childs
 					parent_channel <- context
 				}
+
 				return
 			}
 
@@ -94,9 +97,11 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 			for x, cell := range line {
 				// For each cell
 				if cell >= context.Options.ProximityThreshold && cell < models.PLAYER_1 {
+
 					analyzed_child_layer.IncrementTotal()
 
 					if !cutted_by_max_width && !time_out {
+
 						// If the max width and time out are not reached
 
 						// Create a child for the current cell
@@ -105,16 +110,21 @@ func Negamax(context *models.Context, parent_channel chan<- *models.Context) (ch
 							Y: uint8(y),
 						})
 
-						if isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(child.Goban,
-							models.Position{X: uint8(x), Y: uint8(y)},
-							child.State.LastMove.Player); isDoubleThree {
+						isDoubleThree, lenCaptured, newGoban := doubleThree.CheckDoubleThree(child.Goban,
+							child.State.LastMove.Position,
+							child.State.LastMove.Player)
+
+						if isDoubleThree {
 							// If the child is a double three
 							// Skip it
 							continue
-						} else if lenCaptured > 0 {
+						}
+
+						child.Goban = newGoban
+
+						if lenCaptured > 0 {
 							// Else if at least one capture occured
 							// Update the goban is these captures
-							child.Goban = newGoban
 
 							// Increment the captures in the state of the concerned player
 							if child.State.LastMove.Player == false {

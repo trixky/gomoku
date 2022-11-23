@@ -297,7 +297,7 @@
 						<p>radius</p>
 						<input
 							type="number"
-							class="short"
+							class="shor-1"
 							on:change={handleSuspicionRadius}
 							min={Config.options.suspicion.radius.min}
 							max={Config.options.suspicion.radius.max}
@@ -330,7 +330,7 @@
 						<p>radius</p>
 						<input
 							type="number"
-							class="short"
+							class="short-1"
 							on:change={handleProximityRadius}
 							min={Config.options.proximity.radius.min}
 							max={Config.options.proximity.radius.max}
@@ -385,7 +385,7 @@
 							value={$OptionsStore.width.pruning_percentage}
 							disabled={!$OptionsStore.width.pruning}
 						/>
-						<span>%</span>
+						<span class="percentage">%</span>
 					</div>
 					<div
 						class="option"
@@ -448,7 +448,7 @@
 							value={$OptionsStore.depth.pruning_percentage}
 							disabled={!$OptionsStore.depth.pruning}
 						/>
-						<span>%</span>
+						<span class="percentage">%</span>
 					</div>
 					<div class="option" title="The maximum layer depth.">
 						<p>max</p>
@@ -480,12 +480,14 @@
 						<p>depth divisor</p>
 						<input
 							type="number"
+							class="short-2"
 							step={Config.options.heuristics.depth_divisor.step}
 							on:change={handleHeuristicsDepthDivisor}
 							min={Config.options.heuristics.depth_divisor.min}
 							max={Config.options.heuristics.depth_divisor.max}
 							value={$OptionsStore.heuristics.depth_divisor}
 						/>
+						<span class="percentage">%</span>
 					</div>
 				</div>
 			</div>
@@ -670,6 +672,10 @@
 		border: solid 1px black;
 	}
 
+	span.percentage {
+		@apply ml-[3px];
+	}
+
 	select {
 		@apply bg-white rounded-sm ml-1;
 		border: solid 1px black;
@@ -679,8 +685,12 @@
 		@apply w-48 m-0 ml-3 translate-y-[6px];
 	}
 
-	input.short {
-		@apply w-[56px];
+	input.short-1 {
+		@apply w-[59px];
+	}
+
+	input.short-2 {
+		@apply w-[53px];
 	}
 
 	.range-value {

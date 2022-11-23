@@ -22,8 +22,10 @@
 	import winByCapture from '../../logic/win_by_capture';
 	import RulesStore from '../../stores/rules';
 	import WinStore from '../../stores/win';
+	import playersInfoStore from '../../stores/players_info';
 
 	let rules = false;
+	let rubber = false;
 
 	$: winner = $WinStore.player != 0 && !$WinStore.loophole;
 
@@ -78,7 +80,7 @@
 				const current_last_move = $LastMoveStore;
 
 				LastMoveStore.push(x, y);
-				GobanStore.addPiece($LastMoveStore.player, x, y);
+				GobanStore.addPiece($LastMoveStore.player, x, y, true);
 
 				PostCheck($StringGobanStore, $AlgoOptionsStore, $PlayersInfoStore)
 					.then((response) => {
@@ -101,14 +103,13 @@
 									.then((response) => {
 										const json_response: NextResponseModel = JSON.parse(response);
 
-										GobanStore.playersFromString(json_response.goban);
+										GobanStore.playersFromString(json_response.goban, true);
 										PlayersInfoStore.add(json_response.players_info);
 										AnalyzerStore.set(json_response.analyzer);
 										LastMoveStore.push(
 											json_response.options.position.x,
 											json_response.options.position.y
 										);
-										GobanStore.addPiece($LastMoveStore.player, $LastMoveStore.x, $LastMoveStore.y);
 										GobanStore.heuristicFromString(json_response.heuristic_goban, false);
 										TimeStore.set(json_response.options.time);
 
@@ -130,7 +131,10 @@
 							}
 						} else {
 							alert("you can't play here");
-							GobanStore.removePiece(x, y);
+							LastMoveStore.undo();
+							GobanStore.undo();
+
+							// GobanStore.removePiece(x, y);
 							LastMoveStore.push(current_last_move.x, current_last_move.y);
 							LoadingStore.switch(false);
 						}
@@ -139,11 +143,28 @@
 						alert('an error occured from api [check]');
 						location.reload();
 					});
+			} else if (rubber) {
+				GobanStore.removePiece(x, y);
 			}
 		}
 	}
 
 	function handleKeyDown(e: any) {
+		if (e.keyCode === 85) {
+			// If 'u' is pressed
+
+			playersInfoStore.undo();
+			WinStore.undo();
+			LastMoveStore.undo();
+			GobanStore.undo();
+		}
+
+		if (e.keyCode === 73) {
+			// If 'i' is pressed
+
+			rubber = !rubber;
+		}
+
 		if (e.keyCode === 88) {
 			// If 'x' is pressed
 

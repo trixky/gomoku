@@ -4,8 +4,26 @@ import (
 	"github.com/trixky/gomoku/models"
 )
 
+const opponent_bonus = 2
+
+const multiplicator_player_aligned_5 = 30000
+const multiplicator_opponent_aligned_5 = multiplicator_player_aligned_5 * opponent_bonus
+const multiplicator_player_aligned_4 = 5000
+const multiplicator_opponent_aligned_4 = multiplicator_player_aligned_4 * opponent_bonus
+const multiplicator_player_aligned_3 = 2000
+const multiplicator_opponent_aligned_3 = multiplicator_player_aligned_3 * opponent_bonus
+const multiplicator_player_aligned_2 = 1000
+const multiplicator_opponent_aligned_2 = multiplicator_player_aligned_2 * opponent_bonus
+
+const multiplicator_player_rest_4 = multiplicator_player_aligned_4
+const multiplicator_opponent_rest_4 = multiplicator_player_rest_4 * opponent_bonus
+const multiplicator_player_rest_3 = multiplicator_player_aligned_3
+const multiplicator_opponent_rest_3 = multiplicator_player_rest_3 * opponent_bonus
+const multiplicator_player_rest_2 = 600
+const multiplicator_opponent_rest_2 = multiplicator_player_rest_2 * opponent_bonus
+
 // All computes all heuristics of a given context
-func Alignement(context *models.Context, player uint8) int {
+func Alignement(context *models.Context, player uint8) (heuristic int, aligned_five bool) {
 	if context.Options.HeuristicAlignementWeight > 0 {
 		var alignedFive, alignedFour, alignedThree, alignedTwo [2]int // 0 is player, 1 is opponent
 		var restOfFour, restOfThree, restOfTwo [2]int
@@ -16,6 +34,7 @@ func Alignement(context *models.Context, player uint8) int {
 				if context.Goban[y][x] >= models.PLAYER_1 {
 					nbAligned, canPlay, blocked, emptyMiddle := alignHeuristic(context.Goban, x, y, context.Goban[y][x])
 					if nbAligned == 5 {
+						aligned_five = true
 						if context.Goban[y][x] == player {
 							alignedFive[0]++
 						} else {
@@ -81,18 +100,25 @@ func Alignement(context *models.Context, player uint8) int {
 			}
 		}
 
-		var score int = context.Options.HeuristicAlignementWeight*50000*(alignedFive[0]-alignedFive[1]) +
-			context.Options.HeuristicAlignementWeight*5000*(alignedFour[0]-alignedFour[1]) +
-			context.Options.HeuristicAlignementWeight*2000*(alignedThree[0]-alignedThree[1]) +
-			context.Options.HeuristicAlignementWeight*1000*(alignedTwo[0]-alignedTwo[1]) +
+		heuristic = context.Options.HeuristicAlignementWeight*multiplicator_player_aligned_5*(alignedFive[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_opponent_aligned_5*(alignedFive[1]) +
+			context.Options.HeuristicAlignementWeight*multiplicator_player_aligned_4*(alignedFour[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_opponent_aligned_4*(alignedFour[1]) +
+			context.Options.HeuristicAlignementWeight*multiplicator_player_aligned_3*(alignedThree[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_player_aligned_2*(alignedThree[1]) +
+			context.Options.HeuristicAlignementWeight*multiplicator_player_aligned_2*(alignedTwo[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_opponent_aligned_2*(alignedTwo[1]) +
 
-			context.Options.HeuristicAlignementWeight*2000*(restOfFour[0]-restOfFour[1]) +
-			context.Options.HeuristicAlignementWeight*1000*(restOfThree[0]-restOfThree[1]) +
-			context.Options.HeuristicAlignementWeight*500*(restOfTwo[0]-restOfTwo[1])
+			context.Options.HeuristicAlignementWeight*multiplicator_player_rest_4*(restOfFour[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_opponent_rest_4*(restOfFour[1]) +
+			context.Options.HeuristicAlignementWeight*multiplicator_player_rest_3*(restOfThree[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_opponent_rest_3*(restOfThree[1]) +
+			context.Options.HeuristicAlignementWeight*multiplicator_player_rest_2*(restOfTwo[0]) -
+			context.Options.HeuristicAlignementWeight*multiplicator_opponent_rest_2*(restOfTwo[1])
 
-		score += context.Options.HeuristicCaptureWeight * 2000 * (possibleCaptures[0] - possibleCaptures[1])
+		heuristic += context.Options.HeuristicCaptureWeight * 2000 * (possibleCaptures[0] - possibleCaptures[1])
 
-		return score
+		return
 	}
-	return 0
+	return
 }
