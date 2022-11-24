@@ -33,6 +33,7 @@ type Options struct {
 	ProximityEvolution bool
 
 	// Heuristics
+	HeuristicAggro            int
 	HeuristicDepthDivisor     int
 	HeuristicAlignementWeight int
 	HeuristicCaptureWeight    int
@@ -79,6 +80,7 @@ func (o *Options) Print() {
 
 	// Prints heuristics
 	fmt.Println("--------------- [heuristics]")
+	fmt.Printf("aggro:\t\t\t%5d\n", o.HeuristicAggro)
 	fmt.Printf("depth-divisor:\t\t%5d\n", o.HeuristicDepthDivisor)
 	fmt.Printf("alignement:\t\t\t%2d/10\n", o.HeuristicAlignementWeight)
 	fmt.Printf("capture:\t\t\t%2d/10\n", o.HeuristicCaptureWeight)

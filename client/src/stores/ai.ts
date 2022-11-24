@@ -38,6 +38,7 @@ export default {
 				capture: 10,
 				random: 0,
 				show: Config.options.heuristics.show.default,
+				aggro: Config.options.heuristics.aggro.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
@@ -85,6 +86,7 @@ export default {
 				capture: 3,
 				random: 3,
 				show: Config.options.heuristics.show.default,
+				aggro: Config.options.heuristics.aggro.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
@@ -131,6 +133,7 @@ export default {
 				capture: 10,
 				random: 0,
 				show: Config.options.heuristics.show.default,
+				aggro: Config.options.heuristics.aggro.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
@@ -177,6 +180,7 @@ export default {
 				capture: 8,
 				random: 0,
 				show: Config.options.heuristics.show.default,
+				aggro: Config.options.heuristics.aggro.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {
@@ -224,6 +228,7 @@ export default {
 				capture: 10,
 				random: 1,
 				show: Config.options.heuristics.show.default,
+				aggro: Config.options.heuristics.aggro.default,
 				depth_divisor: Config.options.heuristics.depth_divisor.default
 			},
 			suggestion: {

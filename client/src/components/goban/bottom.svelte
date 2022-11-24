@@ -105,6 +105,10 @@
 			OptionsStore.hideHeuristics();
 		}
 	}
+	function handleHeuristicsAggro(e: any) {
+		selected_ai = 'custom';
+		OptionsStore.setHeuristicsAggro(e.target.value);
+	}
 	function handleHeuristicsDepthDivisor(e: any) {
 		selected_ai = 'custom';
 		OptionsStore.setHeuristicsDepthDivisor(e.target.value);
@@ -369,13 +373,14 @@
 						/>
 						<input
 							type="number"
+							class="short-2"
 							style={$OptionsStore.width.pruning
 								? $OptionsStore.width.pruning_percentage >=
 								  Config.options.width.pruning_percentage.red
 									? 'color: crimson;'
 									: $OptionsStore.width.pruning_percentage >=
 									  Config.options.width.pruning_percentage.orange
-									? 'color: orangered;'
+									? 'color: orange;'
 									: ''
 								: ''}
 							step={Config.options.width.pruning_percentage.step}
@@ -432,13 +437,14 @@
 						/>
 						<input
 							type="number"
+							class="short-2"
 							style={$OptionsStore.depth.pruning
 								? $OptionsStore.depth.pruning_percentage >=
 								  Config.options.depth.pruning_percentage.red
 									? 'color: crimson;'
 									: $OptionsStore.depth.pruning_percentage >=
 									  Config.options.depth.pruning_percentage.orange
-									? 'color: orangered;'
+									? 'color: orange;'
 									: ''
 								: ''}
 							step={Config.options.depth.pruning_percentage.step}
@@ -475,6 +481,27 @@
 							checked={$OptionsStore.heuristics.show}
 							on:change={handleHeuristicsVisibility}
 						/>
+					</div>
+					<div
+						class="option"
+						title="Determines offensive or defensive oriented behavior.&#013;100 percent is the balance."
+					>
+						<p>aggro</p>
+						<input
+							type="number"
+							class="short-2"
+							style={$OptionsStore.heuristics.aggro >= Config.options.heuristics.aggro.red
+								? 'color: crimson;'
+								: $OptionsStore.heuristics.aggro >= Config.options.heuristics.aggro.orange
+								? 'color: orange;'
+								: ''}
+							step={Config.options.heuristics.aggro.step}
+							on:change={handleHeuristicsAggro}
+							min={Config.options.heuristics.aggro.min}
+							max={Config.options.heuristics.aggro.max}
+							value={$OptionsStore.heuristics.aggro}
+						/>
+						<span class="percentage">%</span>
 					</div>
 					<div class="option" title="The most a layer is deep, lesser is its heuristic value.">
 						<p>depth divisor</p>
@@ -687,7 +714,7 @@
 	}
 
 	input.short-1 {
-		@apply w-[59px];
+		@apply w-[40px];
 	}
 
 	input.short-2 {

@@ -39,6 +39,7 @@ type RequestNextProximityData struct {
 }
 
 type RequestNextHeuristicsData struct {
+	Aggro            int `json:"aggro"`
 	DepthDivisor     int `json:"depth_divisor"`
 	AlignementWeight int `json:"alignement"`
 	CaptureWeight    int `json:"capture"`
@@ -104,6 +105,12 @@ func (rnpd *RequestNextProximityData) Sanitize() error {
 
 // Sanitize sanitizes these attributes
 func (rnhd *RequestNextHeuristicsData) Sanitize() error {
+	if rnhd.Aggro < 0 {
+		return errors.New("aggro can't be negative")
+	}
+	if rnhd.Aggro > 300 {
+		return errors.New("aggro can't be higher than 300")
+	}
 	if rnhd.DepthDivisor < 0 {
 		return errors.New("depth divisor can't be negative")
 	}
@@ -238,6 +245,7 @@ func (rd *RequestNextData) ExtractOptions() (options Options, err error) {
 	options.HeuristicAlignementWeight = rd.Options.Heuristics.AlignementWeight
 	options.HeuristicCaptureWeight = rd.Options.Heuristics.CaptureWeight
 	options.HeuristicRandomWeight = rd.Options.Heuristics.RandomWeight
+	options.HeuristicAggro = rd.Options.Heuristics.Aggro
 	options.HeuristicDepthDivisor = rd.Options.Heuristics.DepthDivisor
 
 	// Suspicion

@@ -51,8 +51,8 @@ export default {
 				default: 0,
 				min: 0,
 				max: 400,
-				orange: 300,
-				red: 280
+				orange: 280,
+				red: 300
 			}
 		},
 		width: {
@@ -70,8 +70,8 @@ export default {
 				default: 0,
 				min: 0,
 				max: 200,
-				orange: 100,
-				red: 80
+				orange: 80,
+				red: 100
 			},
 			multi_threading: {
 				default: true
@@ -115,6 +115,14 @@ export default {
 					max: 10,
 					default: 0
 				}
+			},
+			aggro: {
+				min: 0,
+				max: 300,
+				default: 50,
+				step: 10,
+				orange: 90,
+				red: 120
 			},
 			show: {
 				default: false

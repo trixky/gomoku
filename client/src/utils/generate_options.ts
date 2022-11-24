@@ -28,6 +28,7 @@ export default function generateOptions(): OptionsModel {
 			capture: Config.options.heuristics.weights.capture.default,
 			random: Config.options.heuristics.weights.random.default,
 			show: Config.options.heuristics.show.default,
+			aggro: Config.options.heuristics.aggro.default,
 			depth_divisor: Config.options.heuristics.depth_divisor.default
 		},
 		suggestion: {

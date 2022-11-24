@@ -111,7 +111,7 @@ func (a *Analyzer) Print() {
 		layer.MutexTotal.Unlock()
 
 		layer.MutexCuttedByTimeOut.Lock()
-		fmt.Println("cutted by time out:\t\t\t", layer.CuttedByTimeOut)
+		fmt.Println("cutted by time out:\t\t", layer.CuttedByTimeOut)
 		layer.MutexCuttedByTimeOut.Unlock()
 
 		layer.MutexPrunedInDepth.Lock()
