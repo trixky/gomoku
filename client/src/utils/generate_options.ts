@@ -24,9 +24,9 @@ export default function generateOptions(): OptionsModel {
 			shape: Config.options.proximity.shape.default
 		},
 		heuristics: {
-			alignement: Config.options.heuristics.values.default,
-			capture: Config.options.heuristics.values.default,
-			random: 0,
+			alignement: Config.options.heuristics.weights.alignement.default,
+			capture: Config.options.heuristics.weights.capture.default,
+			random: Config.options.heuristics.weights.random.default,
 			show: Config.options.heuristics.show.default,
 			depth_divisor: Config.options.heuristics.depth_divisor.default
 		},

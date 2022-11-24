@@ -497,39 +497,40 @@
 						<p>alignement</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.values.min}
-							max={Config.options.heuristics.values.max}
+							min={Config.options.heuristics.weights.alignement.min}
+							max={Config.options.heuristics.weights.alignement.max}
 							on:input={handleHeuristicsAlignement}
 							value={$OptionsStore.heuristics.alignement}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.values.max}
+							{$OptionsStore.heuristics.alignement}/{Config.options.heuristics.weights.alignement
+								.max}
 						</p>
 					</div>
 					<div class="option" title="The weight of the capture heuristic importance.">
 						<p>capture</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.values.min}
-							max={Config.options.heuristics.values.max}
+							min={Config.options.heuristics.weights.capture.min}
+							max={Config.options.heuristics.weights.capture.max}
 							on:input={handleHeuristicsCapture}
 							value={$OptionsStore.heuristics.capture}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.values.max}
+							{$OptionsStore.heuristics.capture}/{Config.options.heuristics.weights.capture.max}
 						</p>
 					</div>
 					<div class="option" title="The weight of the random heuristic importance.">
 						<p>random</p>
 						<input
 							type="range"
-							min={Config.options.heuristics.values.min}
-							max={Config.options.heuristics.values.max}
+							min={Config.options.heuristics.weights.random.min}
+							max={Config.options.heuristics.weights.random.max}
 							on:input={handleHeuristicsRandom}
 							value={$OptionsStore.heuristics.random}
 						/>
 						<p class="range-value">
-							{$OptionsStore.heuristics.random}/{Config.options.heuristics.values.max}
+							{$OptionsStore.heuristics.random}/{Config.options.heuristics.weights.random.max}
 						</p>
 					</div>
 				</div>
