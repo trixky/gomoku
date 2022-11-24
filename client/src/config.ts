@@ -25,7 +25,7 @@ export default {
 	options: {
 		time_out: {
 			step: 100,
-			default: 500,
+			default: 1500,
 			min: 100, // ms
 			max: 60000 // ms
 		},
@@ -92,7 +92,7 @@ export default {
 				default: false
 			},
 			shape: {
-				default: SHAPES.square
+				default: SHAPES.neighbour
 			},
 			evolution: {
 				default: true
