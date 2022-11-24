@@ -33,6 +33,7 @@ export default derived([OptionsStore, lastMoveStore], ($Stores): ModelAlgoOption
 			alignement: $Stores[0].heuristics.alignement,
 			capture: $Stores[0].heuristics.capture,
 			random: $Stores[0].heuristics.random,
+			aggro: $Stores[0].heuristics.aggro,
 			depth_divisor: $Stores[0].heuristics.depth_divisor
 		},
 		suspicion: {

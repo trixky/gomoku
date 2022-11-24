@@ -1,26 +1,19 @@
 package heuristics
 
 import (
+	"fmt"
+
 	"github.com/trixky/gomoku/models"
 )
 
-const opponent_bonus = 2
+// aligned
+const multiplicator_aligned_5 = 60000
+const multiplicator_aligned_4 = 10000
+const multiplicator_aligned_3 = 4000
+const multiplicator_aligned_2 = 2000
 
-const multiplicator_player_aligned_5 = 30000
-const multiplicator_opponent_aligned_5 = multiplicator_player_aligned_5 * opponent_bonus
-const multiplicator_player_aligned_4 = 5000
-const multiplicator_opponent_aligned_4 = multiplicator_player_aligned_4 * opponent_bonus
-const multiplicator_player_aligned_3 = 2000
-const multiplicator_opponent_aligned_3 = multiplicator_player_aligned_3 * opponent_bonus
-const multiplicator_player_aligned_2 = 1000
-const multiplicator_opponent_aligned_2 = multiplicator_player_aligned_2 * opponent_bonus
-
-const multiplicator_player_rest_4 = multiplicator_player_aligned_4
-const multiplicator_opponent_rest_4 = multiplicator_player_rest_4 * opponent_bonus
-const multiplicator_player_rest_3 = multiplicator_player_aligned_3
-const multiplicator_opponent_rest_3 = multiplicator_player_rest_3 * opponent_bonus
-const multiplicator_player_rest_2 = 600
-const multiplicator_opponent_rest_2 = multiplicator_player_rest_2 * opponent_bonus
+// reset
+const multiplicator_rest_2 = 1200
 
 // All computes all heuristics of a given context
 func Alignement(context *models.Context, player uint8) (heuristic int, aligned_five bool) {
@@ -99,6 +92,35 @@ func Alignement(context *models.Context, player uint8) (heuristic int, aligned_f
 				}
 			}
 		}
+
+		aggro := context.Options.HeuristicAggro
+
+		// aligned
+		multiplicator_player_aligned_5 := (multiplicator_aligned_5 / 100) * aggro
+		multiplicator_opponent_aligned_5 := multiplicator_aligned_5
+
+		multiplicator_player_aligned_4 := (multiplicator_aligned_4 / 100) * aggro
+		multiplicator_opponent_aligned_4 := multiplicator_aligned_4
+
+		multiplicator_player_aligned_3 := (multiplicator_aligned_3 / 100) * aggro
+		multiplicator_opponent_aligned_3 := multiplicator_aligned_3
+
+		multiplicator_player_aligned_2 := (multiplicator_aligned_2 / 100) * aggro
+		multiplicator_opponent_aligned_2 := multiplicator_aligned_2
+
+		// reset
+		multiplicator_player_rest_4 := multiplicator_player_aligned_4
+		multiplicator_opponent_rest_4 := multiplicator_opponent_aligned_4
+
+		multiplicator_player_rest_3 := multiplicator_player_aligned_3
+		multiplicator_opponent_rest_3 := multiplicator_opponent_aligned_3
+
+		multiplicator_player_rest_2 := (multiplicator_rest_2 / 100) * aggro
+		multiplicator_opponent_rest_2 := multiplicator_rest_2
+
+		fmt.Println("aggro:", aggro)
+		fmt.Println("multiplicator_player_aligned_5:", multiplicator_player_aligned_5)
+		fmt.Println("multiplicator_opponent_aligned_5:", multiplicator_opponent_aligned_5)
 
 		heuristic = context.Options.HeuristicAlignementWeight*multiplicator_player_aligned_5*(alignedFive[0]) -
 			context.Options.HeuristicAlignementWeight*multiplicator_opponent_aligned_5*(alignedFive[1]) +

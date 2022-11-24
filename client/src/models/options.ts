@@ -25,6 +25,7 @@ export default interface Options {
 		random: number;
 		show: boolean;
 		depth_divisor: number;
+		aggro: number;
 	};
 	suggestion: {
 		show: boolean;
