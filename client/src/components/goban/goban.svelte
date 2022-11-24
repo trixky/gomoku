@@ -72,6 +72,13 @@
 			});
 	}
 
+	function undoAll() {
+		playersInfoStore.undo();
+		WinStore.undo();
+		LastMoveStore.undo();
+		GobanStore.undo();
+	}
+
 	async function handleCellClick(x: number, y: number) {
 		if (!$LoadingStore && !winner) {
 			if ($GobanStore.cells[y][x].player === 0) {
@@ -131,11 +138,7 @@
 							}
 						} else {
 							alert("you can't play here");
-							LastMoveStore.undo();
-							GobanStore.undo();
-
-							// GobanStore.removePiece(x, y);
-							LastMoveStore.push(current_last_move.x, current_last_move.y);
+							undoAll();
 							LoadingStore.switch(false);
 						}
 					})
@@ -153,10 +156,7 @@
 		if (e.keyCode === 85) {
 			// If 'u' is pressed
 
-			playersInfoStore.undo();
-			WinStore.undo();
-			LastMoveStore.undo();
-			GobanStore.undo();
+			undoAll();
 		}
 
 		if (e.keyCode === 73) {

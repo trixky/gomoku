@@ -99,10 +99,22 @@ export default {
 			}
 		},
 		heuristics: {
-			values: {
-				min: 0,
-				max: 10,
-				default: 5
+			weights: {
+				alignement: {
+					min: 0,
+					max: 10,
+					default: 5
+				},
+				capture: {
+					min: 0,
+					max: 10,
+					default: 2
+				},
+				random: {
+					min: 0,
+					max: 10,
+					default: 0
+				}
 			},
 			show: {
 				default: false
