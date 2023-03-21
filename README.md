@@ -31,4 +31,4 @@ docker-compose up
 
 ## Online
 
-This project is online, so you can visit it by clicking [here](https://gomoku.trixky.com/)!
+This project is [online](https://gomoku.trixky.com/)!
